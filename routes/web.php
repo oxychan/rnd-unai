@@ -1,7 +1,14 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Management\MenuManagementController;
+use App\Http\Controllers\Management\RoleManagementController;
+use App\Http\Controllers\Management\UserManagementController;
+use App\Http\Requests\UserManagementRequest;
+use App\Models\Menu;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Models\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,17 +22,34 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('dashboard');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::name('auth.')->group(function () {
+    Route::get('login', [LoginController::class, 'index'])->name('index');
+    Route::post('login', [LoginController::class, 'authenticate'])->name('login');
 });
 
-require __DIR__.'/auth.php';
+Route::middleware(['auth'])->group(function () {
+    // dashboard prefix
+    Route::prefix('dashboard')->group(function () {
+        Route::view('/', 'dashboard.index')->name('dashboard');
+
+        Route::group(['prefix' => 'management', 'as' => 'management.'], function () {
+            // User Management
+            Route::model('user', User::class);
+            Route::resource('user', UserManagementController::class);
+
+            // Role Management
+            Route::model('role', Role::class);
+            Route::resource('role', RoleManagementController::class);
+
+            // Menu Management
+            Route::model('menu', Menu::class);
+            Route::resource('menu', MenuManagementController::class);
+        });
+    });
+
+    // logout
+    Route::post('logout', [LoginController::class, 'logout'])->name('auth.logout');
+});

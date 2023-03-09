@@ -179,6 +179,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        // custom menu helpers
+        App\Providers\MenuHelperServiceProvider::class,
+
+        Yajra\DataTables\DataTablesServiceProvider::class,
+
     ],
 
     /*
