@@ -82,7 +82,7 @@
                                 <option value="">Pilih Jenis</option>
                                 @foreach ($menus as $menuRoot)
                                     <option value="{{ $menuRoot->id }}"
-                                        {{ $menuRoot->id == $menu->id ? 'selected' : '' }}>
+                                        @if ($menu != null) {{ $menuRoot->id == $menu->id ? 'selected' : '' }} @endif>
                                         {{ $menuRoot->nama }}</option>
                                 @endforeach
                             </select>

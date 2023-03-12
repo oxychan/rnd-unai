@@ -1,5 +1,4 @@
 {{-- modal body --}}
-
 <!--begin::Modal content-->
 <div class="modal-content">
     <!--begin::Modal header-->
@@ -69,7 +68,7 @@
                                 <option value="">Pilih Jenis</option>
                                 @foreach ($roles as $role)
                                     <option value="{{ $role->name }}"
-                                        {{ $user->roles->pluck('name')[0] == $role->name ? 'selected' : '' }}>
+                                        @if ($user != null) {{ $user->roles->pluck('name')[0] == $role->name ? 'selected' : '' }} @endif>
                                         {{ $role->name }}</option>
                                 @endforeach
                             </select>

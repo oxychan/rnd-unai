@@ -5,36 +5,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
         integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <link href="{{ asset('') }}assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
 @endpush
 
 @section('content')
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-        <!--begin::Subheader-->
-        <div class="subheader subheader-solid" id="kt_subheader">
-            <div class="container-fluid " style="display: flex;justify-content: flex-end;">
-                <span class="pull-right" id="date"></span>&nbsp;&nbsp;
-                <span class="pull-right" id="time"></span>
-            </div>
-            <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
-                <!--begin::Info-->
-                <div class="d-flex align-items-center flex-wrap mr-2" style="column-gap: 3px">
-                    <!--begin::Page Title-->
-                    <span class="text-muted font-weight-bold mr-4">
-                        <i class="far fa-clipboard text-success"></i>
-                    </span>
-                    <!--end::Page Title-->
-                    <!--begin::Actions-->
-                    <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-4 bg-gray-200"></div>
-                    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">User Management</h5>
-                    <!--end::Actions-->
-                </div>
-                <!--end::Info-->
-                <!--begin::Toolbar-->
-                <!--end::Toolbar-->
-            </div>
-        </div>
         <!--end::Subheader-->
         <!--begin::Entry-->
         <div class="d-flex flex-column-fluid">
@@ -88,15 +62,12 @@
 
 @endsection
 
-@push('scripts')
+@push('data_tables')
     {{ $dataTable->scripts() }}
+@endpush
 
+@push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-    <!--begin::Vendors Javascript(used by this page)-->
-    <script src="{{ asset('') }}assets/plugins/custom/datatables/datatables.bundle.js"></script>
-    <!--end::Vendors Javascript-->
-    <script src="{{ asset('') }}assets/js/custom/apps/user-management/users/list/table.js"></script>
 
     <script>
         // create instance modal
@@ -108,6 +79,7 @@
                 method: 'GET',
                 url: '{{ route('management.user.create') }}',
                 success: function(response) {
+                    console.log(response)
                     const modalDialog = $('#modalCreateUpdate').find('.modal-dialog')
                     modalDialog.html(response)
                     modalCreateUpdate.show()

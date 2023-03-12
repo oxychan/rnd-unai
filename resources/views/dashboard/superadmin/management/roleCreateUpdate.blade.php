@@ -3,7 +3,7 @@
 <!--begin::Modal content-->
 <div class="modal-content">
     <!--begin::Modal header-->
-    <div class="modal-header" style="background-color: #153253">
+    <div class="modal-header">
         <!--begin::Modal title-->
         <h2 id="modal-judul" style="color: white"></h2>
         <!--end::Modal title-->

@@ -6,6 +6,7 @@ use App\DataTables\RolesDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RoleManagementStoreRequest;
 use App\Http\Requests\RoleManagementUpdateRequest;
+use App\Models\Menu;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
@@ -59,9 +60,10 @@ class RoleManagementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Role $role)
     {
-        //
+        $menus = Menu::whereNotNull('root')->get();
+        return view('dashboard.superadmin.management.roleConfigurePermission', compact('role', 'menus'));
     }
 
     /**

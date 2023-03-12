@@ -23,19 +23,19 @@ class PermissionToRole extends Seeder
 
         // user management
         $admin->givePermissionTo('read /dashboard/management/user');
-        $admin->givePermissionTo('create /dashboard/management/user/create');
-        $admin->givePermissionTo('store /dashboard/management/user/store');
-        $admin->givePermissionTo('delete /dashboard/management/user/delete');
+        $admin->givePermissionTo('create /dashboard/management/user');
+        $admin->givePermissionTo('update /dashboard/management/user');
+        $admin->givePermissionTo('delete /dashboard/management/user');
         // role management
         $admin->givePermissionTo('read /dashboard/management/role');
-        $admin->givePermissionTo('create /dashboard/management/role/create');
-        $admin->givePermissionTo('store /dashboard/management/role/store');
-        $admin->givePermissionTo('delete /dashboard/management/role/delete');
+        $admin->givePermissionTo('create /dashboard/management/role');
+        $admin->givePermissionTo('update /dashboard/management/role');
+        $admin->givePermissionTo('delete /dashboard/management/role');
         // menu management
         $admin->givePermissionTo('read /dashboard/management/menu');
-        $admin->givePermissionTo('create /dashboard/management/menu/create');
-        $admin->givePermissionTo('store /dashboard/management/menu/store');
-        $admin->givePermissionTo('delete /dashboard/management/menu/delete');
+        $admin->givePermissionTo('create /dashboard/management/menu');
+        $admin->givePermissionTo('update /dashboard/management/menu');
+        $admin->givePermissionTo('delete /dashboard/management/menu');
         // other
         $admin->givePermissionTo('read /dashboard');
         $admin->givePermissionTo('read /dashboard/management');

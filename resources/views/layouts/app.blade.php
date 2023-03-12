@@ -1,45 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 
 <head>
-    <title>SISI SUPER APPS| @yield('title') </title>
-    <meta charset="utf-8" />
+    <title>@yield('title')</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description"
-        content="The most advanced Bootstrap Admin Theme on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue &amp; Laravel versions. Grab your copy now and get life-time updates for free." />
-    <meta name="keywords"
-        content="Metronic, bootstrap, bootstrap 5, Angular, VueJs, React, Laravel, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" href="{{ asset('assets/media/logos/sisilogosuperapp.png') }}" />
+    <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
+    <link rel="shortcut icon" href="{{ asset('') }}assets/media/logos/favicon.ico" />
     <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
     <!--end::Fonts-->
     <!--begin::Vendor Stylesheets(used by this page)-->
-    <link href="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet"
+    <link href="{{ asset('') }}assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet"
         type="text/css" />
-    <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet"
+    <link href="{{ asset('') }}assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet"
         type="text/css" />
     <!--end::Vendor Stylesheets-->
     <!--begin::Global Stylesheets Bundle(used by all pages)-->
-    <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
-    {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css"> --}}
-
-    <link href="{{ asset('assets/plugins/custom/prismjs/prismjs.bundle.css') }}" rel="stylesheet" type="text/css" />
-    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
-    <!--font awesome-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
-        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+    <link href="{{ asset('') }}assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('') }}assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
-    @stack('additional_css')
     <!--Begin::Google Tag Manager -->
-    {{-- <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src= '../../../www.googletagmanager.com/gtm5445.html?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-5FS8GGP');</script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
+        integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <script>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&amp;l=' + l : '';
+            j.async = true;
+            j.src = '../../../www.googletagmanager.com/gtm5445.html?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-5FS8GGP');
+    </script>
     <!--End::Google Tag Manager -->
 </head>
 <!--end::Head-->
-
-
 <!--begin::Body-->
 
 <body data-kt-name="metronic" id="kt_app_body" data-kt-app-layout="dark-sidebar" data-kt-app-header-fixed="true"
@@ -63,23 +73,12 @@
         }
     </script>
     <!--end::Theme mode setup on page load-->
-    <!--Begin::Google Tag Manager (noscript) -->
-    <noscript>
-        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5FS8GGP" height="0" width="0"
-            style="display:none;visibility:hidden"></iframe>
-    </noscript>
-    <!--End::Google Tag Manager (noscript) -->
-
     <!--begin::App-->
     <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
         <!--begin::Page-->
         <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
             <!--begin::Header-->
-            <div id="kt_app_header" class="app-header">
-                <!--begin::Header container-->
-                @include('partials.header')
-                <!--end::Header container-->
-            </div>
+            @include('partials.header')
             <!--end::Header-->
             <!--begin::Wrapper-->
             <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
@@ -94,6 +93,31 @@
                         <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
                             <!--begin::Toolbar container-->
                             <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
+                                <!--begin::Page title-->
+                                <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+                                    <!--begin::Title-->
+                                    <h1
+                                        class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
+                                        {{ Str::ucfirst(getBreadCrumb()[0]) }}</h1>
+                                    <!--end::Title-->
+                                    <!--begin::Breadcrumb-->
+                                    <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                                        @foreach (getBreadCrumb() as $breadCrumbItem)
+                                            <li class="breadcrumb-item text-muted">
+                                                <a href="#"
+                                                    class="text-muted text-hover-primary">{{ Str::ucfirst($breadCrumbItem) }}</a>
+                                            </li>
+                                            @if ($loop->last !== true)
+                                                <li class="breadcrumb-item">
+                                                    <span class="bullet bg-gray-400 w-5px h-2px"></span>
+                                                </li>
+                                            @endif
+                                        @endforeach
+
+                                    </ul>
+                                    <!--end::Breadcrumb-->
+                                </div>
+                                <!--end::Page title-->
                             </div>
                             <!--end::Toolbar container-->
                         </div>
@@ -121,90 +145,30 @@
     </div>
     <!--end::App-->
 
+    @stack('data_tables')
+
     <!--begin::Javascript-->
     <!--begin::Global Javascript Bundle(used by all pages)-->
-    <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
-    <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
+    <script src="{{ asset('') }}assets/plugins/global/plugins.bundle.js"></script>
+    <script src="{{ asset('') }}assets/js/scripts.bundle.js"></script>
     <!--end::Global Javascript Bundle-->
     <!--begin::Vendors Javascript(used by this page)-->
-    <script src="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
+    <script src="{{ asset('') }}assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
+    <script src="{{ asset('') }}assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    @stack('scripts')
     <!--end::Vendors Javascript-->
     <!--begin::Custom Javascript(used by this page)-->
-    <script src="{{ asset('assets/js/widgets.bundle.js') }}"></script>
-    <script src="{{ asset('assets/js/custom/widgets.js') }}"></script>
-    <script src="{{ asset('assets/js/custom/apps/chat/chat.js') }}"></script>
-    <script>
-        if (document.documentElement) {
-            const defaultThemeMode = "system";
-            const name = document.body.getAttribute("data-kt-name");
-            let themeMode = localStorage.getItem("kt_" + (name !== null ? name + "_" : "") + "theme_mode_value");
-            if (themeMode === null) {
-                if (defaultThemeMode === "system") {
-                    themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-                } else {
-                    themeMode = defaultThemeMode;
-                }
-            }
-            document.documentElement.setAttribute("data-theme", themeMode);
-        }
-    </script>
-    <script>
-        if (document.documentElement) {
-            const defaultThemeMode = "system";
-            const name = document.body.getAttribute("data-kt-name");
-            let themeMode = localStorage.getItem("kt_" + (name !== null ? name + "_" : "") + "theme_mode_value");
-            if (themeMode === null) {
-                if (defaultThemeMode === "system") {
-                    themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-                } else {
-                    themeMode = defaultThemeMode;
-                }
-            }
-            document.documentElement.setAttribute("data-theme", themeMode);
-        }
-    </script>
-    <script>
-        if (document.documentElement) {
-            const defaultThemeMode = "system";
-            const name = document.body.getAttribute("data-kt-name");
-            let themeMode = localStorage.getItem("kt_" + (name !== null ? name + "_" : "") + "theme_mode_value");
-            if (themeMode === null) {
-                if (defaultThemeMode === "system") {
-                    themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-                } else {
-                    themeMode = defaultThemeMode;
-                }
-            }
-            document.documentElement.setAttribute("data-theme", themeMode);
-        }
-    </script>
-    <script>
-        if (document.documentElement) {
-            const defaultThemeMode = "system";
-            const name = document.body.getAttribute("data-kt-name");
-            let themeMode = localStorage.getItem("kt_" + (name !== null ? name + "_" : "") + "theme_mode_value");
-            if (themeMode === null) {
-                if (defaultThemeMode === "system") {
-                    themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-                } else {
-                    themeMode = defaultThemeMode;
-                }
-            }
-            document.documentElement.setAttribute("data-theme", themeMode);
-        }
-    </script>
-    <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
-
-    @stack('scripts')
-
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
+    <script src="{{ asset('') }}assets/js/widgets.bundle.js"></script>
+    <script src="{{ asset('') }}assets/js/custom/widgets.js"></script>
+    <script src="{{ asset('') }}assets/js/custom/apps/chat/chat.js"></script>
+    <script src="{{ asset('') }}assets/js/custom/intro.js"></script>
+    <script src="{{ asset('') }}assets/js/custom/utilities/modals/upgrade-plan.js"></script>
+    <script src="{{ asset('') }}assets/js/custom/utilities/modals/create-app.js"></script>
+    <script src="{{ asset('') }}assets/js/custom/utilities/modals/new-target.js"></script>
+    <script src="{{ asset('') }}assets/js/custom/utilities/modals/users-search.js"></script>
     <!--end::Custom Javascript-->
     <!--end::Javascript-->
+
 </body>
 <!--end::Body-->
 

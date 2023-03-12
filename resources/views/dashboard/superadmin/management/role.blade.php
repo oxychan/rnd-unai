@@ -11,31 +11,6 @@
 
 @section('content')
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-        <!--begin::Subheader-->
-        <div class="subheader subheader-solid" id="kt_subheader">
-            <div class="container-fluid " style="display: flex;justify-content: flex-end;">
-                <span class="pull-right" id="date"></span>&nbsp;&nbsp;
-                <span class="pull-right" id="time"></span>
-            </div>
-            <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
-                <!--begin::Info-->
-                <div class="d-flex align-items-center flex-wrap mr-2" style="column-gap: 3px">
-                    <!--begin::Page Title-->
-                    <span class="text-muted font-weight-bold mr-4">
-                        <i class="far fa-clipboard text-success"></i>
-                    </span>
-                    <!--end::Page Title-->
-                    <!--begin::Actions-->
-                    <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-4 bg-gray-200"></div>
-                    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Role Management</h5>
-                    <!--end::Actions-->
-                </div>
-                <!--end::Info-->
-                <!--begin::Toolbar-->
-                <!--end::Toolbar-->
-            </div>
-        </div>
-        <!--end::Subheader-->
         <!--begin::Entry-->
         <div class="d-flex flex-column-fluid">
             <!--begin::Container-->
@@ -80,27 +55,39 @@
     <!--begin::Modal - Create App-->
     <div class="modal fade" id="modalCreateUpdate" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
-        <div class="modal-dialog modal-dialog-centered mw-900px modal-dialog-scrollable"></div>
+        <div class="modal-dialog modal-dialog-centered mw-600px modal-dialog-scrollable"></div>
         <!--end::Modal dialog-->
     </div>
 
     {{-- end of modal for add and edit user data --}}
 
+    <!--begin::Modal-->
+    <!--begin::Modal - Update role-->
+    <div class="modal fade" id="modalConfigurePermission" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-900px  modal-dialog-scrollable">
+            <!--begin::Modal content-->
+
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - Update role-->
+    <!--end::Modal-->
+
 @endsection
 
-@push('scripts')
+@push('data_tables')
     {{ $dataTable->scripts() }}
+@endpush
 
+@push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-    <!--begin::Vendors Javascript(used by this page)-->
-    <script src="{{ asset('') }}assets/plugins/custom/datatables/datatables.bundle.js"></script>
-    <!--end::Vendors Javascript-->
-    <script src="{{ asset('') }}assets/js/custom/apps/user-management/users/list/table.js"></script>
 
     <script>
         // create instance modal
         const modalCreateUpdate = new bootstrap.Modal($('#modalCreateUpdate'))
+        const modalConfigurePermission = new bootstrap.Modal($('#modalConfigurePermission'))
 
         // add new user
         $('#addRoleButton').on('click', function() {
@@ -122,7 +109,6 @@
                     const formData = new FormData(form)
 
                     const url = this.getAttribute('action')
-                    console.log(url)
 
                     $.ajax({
                         method: 'POST',
@@ -226,6 +212,25 @@
 
                 }
             })
+        })
+
+        // permission
+        $('#roles-table').on('click', '#configurePermission', function(e) {
+            e.preventDefault()
+
+            let data = $(this).data()
+            let id = data.id
+
+            $.ajax({
+                method: 'GET',
+                url: '/dashboard/management/role/' + id,
+                success: function(response) {
+                    const modalDialog = $('#modalConfigurePermission').find('.modal-dialog')
+                    modalDialog.html(response)
+                    modalConfigurePermission.show()
+                }
+            })
+
         })
 
         $('#roles-table')

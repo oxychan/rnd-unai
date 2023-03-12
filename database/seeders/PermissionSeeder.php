@@ -17,24 +17,35 @@ class PermissionSeeder extends Seeder
     {
         // user management
         Permission::create(['name' => 'read /dashboard/management/user']);
-        Permission::create(['name' => 'create /dashboard/management/user/create']);
-        Permission::create(['name' => 'store /dashboard/management/user/store']);
-        Permission::create(['name' => 'delete /dashboard/management/user/delete']);
+        Permission::create(['name' => 'create /dashboard/management/user']);
+        Permission::create(['name' => 'update /dashboard/management/user']);
+        Permission::create(['name' => 'delete /dashboard/management/user']);
 
         // role management
         Permission::create(['name' => 'read /dashboard/management/role']);
-        Permission::create(['name' => 'create /dashboard/management/role/create']);
-        Permission::create(['name' => 'store /dashboard/management/role/store']);
-        Permission::create(['name' => 'delete /dashboard/management/role/delete']);
+        Permission::create(['name' => 'create /dashboard/management/role']);
+        Permission::create(['name' => 'update /dashboard/management/role']);
+        Permission::create(['name' => 'delete /dashboard/management/role']);
 
         // menu management
         Permission::create(['name' => 'read /dashboard/management/menu']);
-        Permission::create(['name' => 'create /dashboard/management/menu/create']);
-        Permission::create(['name' => 'store /dashboard/management/menu/store']);
-        Permission::create(['name' => 'delete /dashboard/management/menu/delete']);
+        Permission::create(['name' => 'create /dashboard/management/menu']);
+        Permission::create(['name' => 'update /dashboard/management/menu']);
+        Permission::create(['name' => 'delete /dashboard/management/menu']);
 
         Permission::create(['name' => 'read /dashboard']);
+        Permission::create(['name' => 'create /dashboard']);
+        Permission::create(['name' => 'update /dashboard']);
+        Permission::create(['name' => 'delete /dashboard']);
+
         Permission::create(['name' => 'read /dashboard/management']);
+        Permission::create(['name' => 'create /dashboard/management']);
+        Permission::create(['name' => 'update /dashboard/management']);
+        Permission::create(['name' => 'delete /dashboard/management']);
+
         Permission::create(['name' => 'read /dashboard/spv']);
+        Permission::create(['name' => 'create /dashboard/spv']);
+        Permission::create(['name' => 'update /dashboard/spv']);
+        Permission::create(['name' => 'delete /dashboard/spv']);
     }
 }

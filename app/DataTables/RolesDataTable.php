@@ -32,6 +32,7 @@ class RolesDataTable extends DataTable
                         <div class='dropdown-menu' aria-labelledby='actionButton'>
                             <a class='dropdown-item px-3' href='javascript:void(0)' id='editRole' data-id='" . $role->id . "'>Edit</a>
                             <a class='dropdown-item px-3' href='javascript:void(0)' id='deleteRole' data-id='" . $role->id . "'>Hapus</a>
+                            <a class='dropdown-item px-3' href='javascript:void(0)' id='configurePermission' data-id='" . $role->id . "'>Hak Akses</a>
                         </div>
                     </div>";
             })

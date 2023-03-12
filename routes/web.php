@@ -21,8 +21,8 @@ use Spatie\Permission\Models\Role;
 |
 */
 
-Route::get('/', function () {
-    return redirect()->route('dashboard');
+Route::get('/test', function () {
+    return view('index');
 });
 
 Route::name('auth.')->group(function () {
