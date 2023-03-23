@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Management;
 
+use App\DataTables\MenusDataTable;
 use App\DataTables\RolesDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RoleManagementStoreRequest;
 use App\Http\Requests\RoleManagementUpdateRequest;
+use App\Http\Requests\UpdatePermissionRequest;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
@@ -19,7 +21,7 @@ class RoleManagementController extends Controller
      */
     public function index(RolesDataTable $dataTables)
     {
-        return $dataTables->render('dashboard.superadmin.management.role');
+        return $dataTables->render('dashboard.management.role');
     }
 
     /**
@@ -30,7 +32,7 @@ class RoleManagementController extends Controller
     public function create()
     {
         $role = null;
-        return view('dashboard.superadmin.management.roleCreateUpdate', compact('role'));
+        return view('dashboard.management.roleCreateUpdate', compact('role'));
     }
 
     /**
@@ -62,8 +64,8 @@ class RoleManagementController extends Controller
      */
     public function show(Role $role)
     {
-        $menus = Menu::whereNotNull('root')->get();
-        return view('dashboard.superadmin.management.roleConfigurePermission', compact('role', 'menus'));
+        $menus = Menu::all();
+        return view('dashboard.management.roleConfigurePermission', compact('role', 'menus'));
     }
 
     /**
@@ -74,7 +76,7 @@ class RoleManagementController extends Controller
      */
     public function edit(Role $role)
     {
-        return view('dashboard.superadmin.management.roleCreateUpdate', compact('role'));
+        return view('dashboard.management.roleCreateUpdate', compact('role'));
     }
 
     /**
@@ -118,5 +120,45 @@ class RoleManagementController extends Controller
         return response()->json([
             'message' => 'Data role berhasil dihapus!'
         ], 200);
+    }
+
+    public function updatePermissions(UpdatePermissionRequest $request, Role $role)
+    {
+        // dd($request->all());
+        try {
+            $menus = Menu::all();
+            // Update permissions for each menu
+            $permissions = [];
+
+            foreach ($menus as $menu) {
+
+                if ($request["{$menu->nama}_read"]) {
+                    $permissions[] =  "read {$menu->url}";
+                }
+
+                if ($request["{$menu->nama}_update"]) {
+                    $permissions[] = "update {$menu->url}";
+                }
+
+                if ($request["{$menu->nama}_create"]) {
+                    $permissions[] = "create {$menu->url}";
+                }
+
+                if ($request["{$menu->nama}_delete"]) {
+                    $permissions[] = "delete {$menu->url}";
+                }
+
+                if ($menu->root != null) {
+                    $permissions[] = "read {$menu->parent->url}";
+                }
+            }
+
+            $role->syncPermissions($permissions);
+
+            return redirect()->back()->with('success', 'Role permissions updated successfully.');
+        } catch (\Exception $e) {
+            // Log the error or handle it in some other way
+            return redirect()->back()->with('error', 'An error occurred while updating role permissions.');
+        }
     }
 }

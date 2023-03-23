@@ -228,9 +228,42 @@
                     const modalDialog = $('#modalConfigurePermission').find('.modal-dialog')
                     modalDialog.html(response)
                     modalConfigurePermission.show()
+
+                    update()
                 }
             })
 
+            function update() {
+                $('#formUpdatePermission').on('submit', function(e) {
+                    e.preventDefault()
+                    const form = this
+                    const formData = new FormData(form)
+
+                    const url = this.getAttribute('action')
+                    console.log(url)
+
+                    $.ajax({
+                        method: 'POST',
+                        url,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                        },
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            Swal.fire(
+                                'Edited!',
+                                'Data user berhasil diedit.',
+                                'success'
+                            )
+                            window.LaravelDataTables["roles-table"].ajax.reload()
+                            modalConfigurePermission.hide()
+                        }
+                    })
+
+                })
+            }
         })
 
         $('#roles-table')

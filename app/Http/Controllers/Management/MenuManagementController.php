@@ -16,7 +16,7 @@ class MenuManagementController extends Controller
 {
     public function index(MenusDataTable $dataTables)
     {
-        return $dataTables->render('dashboard.superadmin.management.menu');
+        return $dataTables->render('dashboard.management.menu');
     }
 
     /**
@@ -28,7 +28,7 @@ class MenuManagementController extends Controller
     {
         $menus = Menu::where('root', null)->get();
         $menu = null;
-        return view('dashboard.superadmin.management.menuCreateUpdate', compact('menu', 'menus'));
+        return view('dashboard.management.menuCreateUpdate', compact('menu', 'menus'));
     }
 
     /**
@@ -42,8 +42,22 @@ class MenuManagementController extends Controller
         try {
             $menu = Menu::create($request->validated());
             $permission = Permission::create([
-                'name' => 'read ' . $menu->url
+                [
+                    'name' => 'read ' . $menu->url
+                ],
+                [
+                    'name' => 'update ' . $menu->url
+                ],
+                [
+                    'name' => 'create ' . $menu->url
+                ],
+                [
+                    'name' => 'delete ' . $menu->url
+                ]
             ]);
+
+            dd($permission);
+
             $admin = Role::findByName('admin');
             $admin->givePermissionTo($permission);
         } catch (\Exception $e) {
@@ -66,7 +80,7 @@ class MenuManagementController extends Controller
     public function edit(Menu $menu)
     {
         $menus = Menu::where('root', null)->get();
-        return view('dashboard.superadmin.management.menuCreateUpdate', compact('menu', 'menus'));
+        return view('dashboard.management.menuCreateUpdate', compact('menu', 'menus'));
     }
 
     /**

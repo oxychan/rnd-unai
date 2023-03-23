@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\UserAccountController;
 use App\Http\Controllers\Management\MenuManagementController;
 use App\Http\Controllers\Management\RoleManagementController;
 use App\Http\Controllers\Management\UserManagementController;
@@ -21,9 +22,7 @@ use Spatie\Permission\Models\Role;
 |
 */
 
-Route::get('/test', function () {
-    return view('index');
-});
+Route::redirect('/', 'dashboard', 301);
 
 Route::name('auth.')->group(function () {
     Route::get('login', [LoginController::class, 'index'])->name('index');
@@ -43,11 +42,19 @@ Route::middleware(['auth'])->group(function () {
             // Role Management
             Route::model('role', Role::class);
             Route::resource('role', RoleManagementController::class);
+            Route::put('role/{role}/permission', [RoleManagementController::class, 'updatePermissions'])->name('role.updatePermission');
 
             // Menu Management
             Route::model('menu', Menu::class);
             Route::resource('menu', MenuManagementController::class);
         });
+    });
+
+    Route::group(['prefix' => 'account', 'as' => 'account.'], function () {
+        // User Accout
+        Route::resource('profile', UserAccountController::class)->parameters([
+            'profile' => 'user'
+        ]);
     });
 
     // logout

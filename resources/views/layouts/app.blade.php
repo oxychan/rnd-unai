@@ -147,7 +147,6 @@
 
     @stack('data_tables')
 
-    <!--begin::Javascript-->
     <!--begin::Global Javascript Bundle(used by all pages)-->
     <script src="{{ asset('') }}assets/plugins/global/plugins.bundle.js"></script>
     <script src="{{ asset('') }}assets/js/scripts.bundle.js"></script>
@@ -155,6 +154,7 @@
     <!--begin::Vendors Javascript(used by this page)-->
     <script src="{{ asset('') }}assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
     <script src="{{ asset('') }}assets/plugins/custom/datatables/datatables.bundle.js"></script>
+
     @stack('scripts')
     <!--end::Vendors Javascript-->
     <!--begin::Custom Javascript(used by this page)-->
@@ -168,7 +168,6 @@
     <script src="{{ asset('') }}assets/js/custom/utilities/modals/users-search.js"></script>
     <!--end::Custom Javascript-->
     <!--end::Javascript-->
-
 </body>
 <!--end::Body-->
 
