@@ -175,38 +175,41 @@
                     <!--begin::Edit-->
                     <div id="kt_signin_password_edit" class="flex-row-fluid">
                         <!--begin::Form-->
-                        <form id="kt_signin_change_password" class="form" novalidate="novalidate">
+                        <form id="kt_signin_change_password" class="form"
+                            action="{{ route('account.profile.changePassword', $user) }}" novalidate="novalidate"
+                            method="POST">
+
+                            @method('PUT')
+                            @csrf
                             <div class="row mb-1">
                                 <div class="col-lg-4">
                                     <div class="fv-row mb-0">
-                                        <label for="currentpassword" class="form-label fs-6 fw-bold mb-3">Current
+                                        <label for="current_password" class="form-label fs-6 fw-bold mb-3">Current
                                             Password</label>
                                         <input type="password" class="form-control form-control-lg form-control-solid"
-                                            name="currentpassword" id="currentpassword" />
+                                            name="current_password" id="current_password" />
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="fv-row mb-0">
-                                        <label for="newpassword" class="form-label fs-6 fw-bold mb-3">New Password</label>
+                                        <label for="password" class="form-label fs-6 fw-bold mb-3">New Password</label>
                                         <input type="password" class="form-control form-control-lg form-control-solid"
-                                            name="newpassword" id="newpassword" />
+                                            name="password" id="password" />
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="fv-row mb-0">
-                                        <label for="confirmpassword" class="form-label fs-6 fw-bold mb-3">Confirm New
+                                        <label for="password_confirmation" class="form-label fs-6 fw-bold mb-3">Confirm
+                                            New
                                             Password</label>
                                         <input type="password" class="form-control form-control-lg form-control-solid"
-                                            name="confirmpassword" id="confirmpassword" />
+                                            name="password_confirmation" id="password_confirmation" />
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-text mb-5">Password must be at least 8 character and contain symbols</div>
-                            <div class="d-flex">
-                                <button id="kt_password_submit" type="button" class="btn btn-primary me-2 px-6">Update
+                            <div class="d-flex mt-4">
+                                <button id="kt_password_submit" type="submit" class="btn btn-primary me-2 px-6">Update
                                     Password</button>
-                                <button id="kt_password_cancel" type="button"
-                                    class="btn btn-color-gray-400 btn-active-light-primary px-6">Cancel</button>
                             </div>
                         </form>
                         <!--end::Form-->
@@ -221,3 +224,30 @@
     </div>
     <!--end::Sign-in Method-->
 @endsection
+
+@push('scripts')
+    <script>
+        $('#kt_signin_change_password').on('submit', function(e) {
+            e.preventDefault()
+
+            const form = this
+            const formData = new FormData(form)
+
+            const url = this.getAttribute('action')
+
+            $.ajax({
+                method: 'POST',
+                url,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                },
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    console.log(response);
+                }
+            });
+        });
+    </script>
+@endpush

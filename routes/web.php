@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\UserAccountController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\Management\MenuManagementController;
 use App\Http\Controllers\Management\RoleManagementController;
 use App\Http\Controllers\Management\UserManagementController;
@@ -52,9 +53,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['prefix' => 'account', 'as' => 'account.'], function () {
         // User Accout
-        Route::resource('profile', UserAccountController::class)->parameters([
-            'profile' => 'user'
-        ]);
+        Route::get('profile', [UserAccountController::class, 'index'])->name('profile.index');
+        Route::put('profile/{user}/password', [UserAccountController::class, 'updatePassword'])->name('profile.changePassword');
     });
 
     // logout

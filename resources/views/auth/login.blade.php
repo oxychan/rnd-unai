@@ -6,25 +6,14 @@
 <head>
     <title>Rnd Unair</title>
     <meta charset="utf-8" />
-    <meta name="description"
-        content="The most advanced Bootstrap Admin Theme on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue &amp; Laravel versions. Grab your copy now and get life-time updates for free." />
-    <meta name="keywords"
-        content="Metronic, bootstrap, bootstrap 5, Angular, VueJs, React, Laravel, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:type" content="article" />
-    <meta property="og:title"
-        content="Metronic - Bootstrap 5 HTML, VueJS, React, Angular &amp; Laravel Admin Dashboard Theme" />
-    <meta property="og:url" content="https://keenthemes.com/metronic" />
-    <meta property="og:site_name" content="Keenthemes | Metronic" />
-    <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
-    <link rel="shortcut icon" href="../../../assets/media/logos/sisilogosuperapp.png" />
+    <link rel="shortcut icon" href="{{ asset('') }}assets/media/logos/logo-removebg.png" />
     <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
     <!--end::Fonts-->
     <!--begin::Global Stylesheets Bundle(used by all pages)-->
-    <link href="../../../assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-    <link href="../../../assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('') }}assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('') }}assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
     <!--Begin::Google Tag Manager -->
     <script>
@@ -93,9 +82,9 @@
                 <div class="d-flex flex-column flex-center pb-0 pb-lg-10 p-10 w-100">
                     <!--begin::Image-->
                     <img class="theme-light-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20"
-                        src="../../../assets/media/auth/agency.png" alt="" />
+                        src="{{ asset('') }}assets/media/illustrasions/airo/pose2.png" alt="" />
                     <img class="theme-dark-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20"
-                        src="../../../assets/media/auth/agency-dark.png" alt="" />
+                        src="{{ asset('') }}assets/media/illustrations/airo/pose2.png" alt="" />
                     <!--end::Image-->
                     <!--begin::Title-->
                     <h1 class="text-gray-800 fs-2qx fw-bold text-center mb-7">Fast, Efficient and Productive</h1>
@@ -125,14 +114,14 @@
                             @csrf
                             <!--begin::Heading-->
                             <div class="text-center mb-11">
-                                <a href="/ "><img
-                                        class="theme-light-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20"
-                                        src="assets\media\logos\sisilogosuperapp.png" alt="" /></a>
+                                <a href="/ "><img class="mx-auto mw-100 w-150px w-lg-300px"
+                                        src="{{ asset('') }}assets/media/logos/logo-removebg.png"
+                                        alt="" /></a>
                                 <!--begin::Title-->
                                 <h1 class="text-dark fw-bolder mb-3">Sign In</h1>
                                 <!--end::Title-->
                                 <!--begin::Subtitle-->
-                                <div class="text-gray-500 fw-semibold fs-6">SISI SUPER APPS</div>
+                                <div class="text-gray-500 fw-semibold fs-6">RND UNAIR</div>
                                 <!--end::Subtitle=-->
                             </div>
                             <!--begin::Heading-->
@@ -157,12 +146,12 @@
                             </div>
                             <!--end::Input group=-->
                             <!--begin::Wrapper-->
-                            <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
+                            {{-- <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
                                 <div></div>
                                 <!--begin::Link-->
                                 <a href="/resetpass" class="link-primary">Forgot Password ?</a>
                                 <!--end::Link-->
-                            </div>
+                            </div> --}}
                             <!--end::Wrapper-->
                             <!--begin::Submit button-->
                             <div class="d-grid mb-10">

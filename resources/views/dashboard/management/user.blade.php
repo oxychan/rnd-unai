@@ -79,7 +79,6 @@
                 method: 'GET',
                 url: '{{ route('management.user.create') }}',
                 success: function(response) {
-                    console.log(response)
                     const modalDialog = $('#modalCreateUpdate').find('.modal-dialog')
                     modalDialog.html(response)
                     modalCreateUpdate.show()
@@ -94,7 +93,6 @@
                     const formData = new FormData(form)
 
                     const url = this.getAttribute('action')
-                    console.log(url)
 
                     $.ajax({
                         method: 'POST',
