@@ -54,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['prefix' => 'account', 'as' => 'account.'], function () {
         // User Accout
         Route::get('profile', [UserAccountController::class, 'index'])->name('profile.index');
+        Route::put('profile/{user}', [UserAccountController::class, 'edit'])->name('profile.edit');
         Route::put('profile/{user}/password', [UserAccountController::class, 'updatePassword'])->name('profile.changePassword');
     });
 

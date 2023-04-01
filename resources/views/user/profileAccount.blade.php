@@ -16,7 +16,10 @@
         <!--begin::Content-->
         <div id="kt_account_settings_profile_details" class="collapse show">
             <!--begin::Form-->
-            <form id="kt_account_profile_details_form" class="form">
+            <form id="kt_account_profile_details_form" class="form" action="{{ route('account.profile.edit', $user) }}"
+                method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
                 <!--begin::Card body-->
                 <div class="card-body border-top p-9">
                     <!--begin::Input group-->
@@ -27,11 +30,11 @@
                         <!--begin::Col-->
                         <div class="col-lg-8">
                             <!--begin::Image input-->
-                            <div class="image-input image-input-outline" data-kt-image-input="true"
-                                style="background-image: url('../assets/media/svg/avatars/blank.svg')">
+                            <div class="image-input image-input-outline" data-kt-image-input="true">
                                 <!--begin::Preview existing avatar-->
                                 <div class="image-input-wrapper w-125px h-125px"
-                                    style="background-image: url(../assets/media/avatars/300-1.jpg)"></div>
+                                    style="background-image: url('{{ asset('assets/media/avatars/' . $user->avatar) }}')">
+                                </div>
                                 <!--end::Preview existing avatar-->
                                 <!--begin::Label-->
                                 <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
@@ -39,7 +42,6 @@
                                     <i class="bi bi-pencil-fill fs-7"></i>
                                     <!--begin::Inputs-->
                                     <input type="file" name="avatar" accept=".png, .jpg, .jpeg" />
-                                    <input type="hidden" name="avatar_remove" />
                                     <!--end::Inputs-->
                                 </label>
                                 <!--end::Label-->
@@ -49,12 +51,6 @@
                                     <i class="bi bi-x fs-2"></i>
                                 </span>
                                 <!--end::Cancel-->
-                                <!--begin::Remove-->
-                                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                    data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
-                                    <i class="bi bi-x fs-2"></i>
-                                </span>
-                                <!--end::Remove-->
                             </div>
                             <!--end::Image input-->
                             <!--begin::Hint-->
@@ -67,21 +63,12 @@
                     <!--begin::Input group-->
                     <div class="row mb-6">
                         <!--begin::Label-->
-                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Name</label>
+                        <label class="col-lg-4 col-form-label fw-semibold fs-6">Name</label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-8">
-                            <!--begin::Row-->
-                            <div class="row">
-                                <!--begin::Col-->
-                                <div class="col-lg-8 fv-row">
-                                    <input type="text" name="name"
-                                        class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                        value="{{ $user->name }}" />
-                                </div>
-                                <!--end::Col-->
-                            </div>
-                            <!--end::Row-->
+                            <input type="text" name="name" class="form-control form-control-lg form-control-solid"
+                                value="{{ $user->name }}" />
                         </div>
                         <!--end::Col-->
                     </div>
@@ -89,12 +76,25 @@
                     <!--begin::Input group-->
                     <div class="row mb-6">
                         <!--begin::Label-->
-                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Email</label>
+                        <label class="col-lg-4 col-form-label fw-semibold fs-6">Username</label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-8 fv-row">
-                            <input type="text" name="company" class="form-control form-control-lg form-control-solid"
-                                value="{{ $user->email }}" />
+                            <input type="text" name="username" class="form-control form-control-lg form-control-solid"
+                                value="{{ $user->username }}" disabled />
+                        </div>
+                        <!--end::Col-->
+                    </div>
+                    <!--end::Input group-->
+                    <!--begin::Input group-->
+                    <div class="row mb-6">
+                        <!--begin::Label-->
+                        <label class="col-lg-4 col-form-label fw-semibold fs-6">Email</label>
+                        <!--end::Label-->
+                        <!--begin::Col-->
+                        <div class="col-lg-8 fv-row">
+                            <input type="text" name="email" class="form-control form-control-lg form-control-solid"
+                                value="{{ $user->email }}" disabled />
                         </div>
                         <!--end::Col-->
                     </div>
@@ -103,13 +103,13 @@
                     <div class="row mb-6">
                         <!--begin::Label-->
                         <label class="col-lg-4 col-form-label fw-semibold fs-6">
-                            <span class="required">No. Telp</span>
+                            <span class="">Telp</span>
                         </label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-8 fv-row">
-                            <input type="tel" name="phone" class="form-control form-control-lg form-control-solid"
-                                value="{{ $user->no_telp }}" />
+                            <input type="text" name="telp" class="form-control form-control-lg form-control-solid"
+                                value="{{ $user->telp }}" />
                         </div>
                         <!--end::Col-->
                     </div>
@@ -118,7 +118,7 @@
                     <div class="row mb-6">
                         <!--begin::Label-->
                         <label class="col-lg-4 col-form-label fw-semibold fs-6">
-                            <span class="required">Role</span>
+                            <span class="">Role</span>
                         </label>
                         <!--end::Label-->
                         <!--begin::Col-->
@@ -147,7 +147,7 @@
         <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
             data-bs-target="#kt_account_signin_method">
             <div class="card-title m-0">
-                <h3 class="fw-bold m-0">Sign-in Method</h3>
+                <h3 class="fw-bold m-0">Password</h3>
             </div>
         </div>
         <!--end::Card header-->
@@ -232,11 +232,29 @@
                 success: function(response) {
                     Swal.fire(
                         'Changed!',
-                        'Password berhasil dihapus!.',
+                        'Password berhasil diubah!.',
                         'success'
-                    )
+                    ).then((result) => {
+                        if (result.isConfirmed) {
+                            $('#frmLogout').submit();
+                        } else {
+                            $('#frmLogout').submit();
+                        }
+                    })
+
+                    clear()
                 }
             });
+
+            function clear() {
+                $('#current_password').val('')
+                $('#password').val('')
+                $('#password_confirmation').val('')
+            }
         });
+
+        // $('#kt_account_profile_details_form').on('submit', function(e) {
+
+        // });
     </script>
 @endpush

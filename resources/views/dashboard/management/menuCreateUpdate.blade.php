@@ -83,11 +83,11 @@
                                 <option value="">Choose Parent</option>
                                 @foreach ($menus as $menuRoot)
                                     <option value="{{ $menuRoot->id }}"
-                                        @if ($menu != null) {{ $menuRoot->id == $menu->id ? 'selected' : '' }} @endif>
+                                        @if ($menu != null && $menu->root != null) {{ $menuRoot->name == $menu->parent->name ? 'selected' : '' }} @endif>
                                         {{ $menuRoot->name }}</option>
                                 @endforeach
                             </select>
-                            <span class="form-text text-muted">Please enter user id</span>
+                            <span class="form-text text-muted">Please choose parent</span>
                         </div>
                     </div><br>
                     <div class="form-group row">

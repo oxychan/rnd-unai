@@ -50,7 +50,7 @@ class MenusDataTable extends DataTable
                 return "<i class='" . $menu->icon . " text-dark'></i>";
             })
             ->editColumn('root', function ($menu) {
-                $root = $menu->parent->nama ?? 'root';
+                $root = $menu->parent->name ?? 'root';
                 return "<div class='badge badge-light-info fw-bold'>" . $root . "</div>";
             })
             ->rawColumns(['action', 'url', 'icon', 'root'])
