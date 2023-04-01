@@ -5,7 +5,7 @@
     <!--begin::Modal header-->
     <div class="modal-header">
         <!--begin::Modal title-->
-        <h2 id="modal-judul" style="color: white"></h2>
+        <h2 id="modal-judul" style="color: white">{{ $role != null ? 'Edit Role' : 'Add Role' }}</h2>
         <!--end::Modal title-->
         <!--begin::Close-->
         <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
@@ -37,10 +37,10 @@
                 <div class="mb-7">
                     <input type="hidden" name="id" id="id">
                     <div class="form-group row">
-                        <label class="col-lg-3 col-form-label">NAMA ROLE:</label>
+                        <label class="col-lg-3 col-form-label">Role Name</label>
                         <div class="col-lg-9">
                             <input type="text" class="form-control" id="name" name="name"
-                                placeholder="e.g: John Dypth" value="{{ $role->name ?? '' }}" required />
+                                placeholder="e.g: worker" value="{{ $role->name ?? '' }}" required />
                             <span class="form-text text-muted">Please enter role name</span>
                         </div>
                     </div> <br>

@@ -38,14 +38,14 @@ class UserDataTable extends DataTable
             ->addColumn('role', function ($user) {
                 return '<div class="badge badge-light-info fw-bold">' . $user->roles->pluck('name')[0] . '</div>';
             })
-            ->addColumn('foto', function ($user) {
-                $photoPath = asset('assets/media/img/profile/' . $user->foto);
+            ->addColumn('avatar', function ($user) {
+                $photoPath = asset('assets/media/img/profile/' . $user->avatar);
                 return '<div class="symbol symbol-50px me-5">
                             <img alt="Logo" src="' . $photoPath . '" />
                         </div>';
             })
             ->addIndexColumn()
-            ->rawColumns(['action', 'foto', 'role'])
+            ->rawColumns(['action', 'avatar', 'role'])
             ->setRowId('id');
     }
 
@@ -93,21 +93,24 @@ class UserDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false),
-            Column::make('name'),
-            Column::make('username'),
-            Column::make('email'),
-            Column::make('no_telp'),
+            Column::make('name')->title('Name'),
+            Column::make('username')->title('Username'),
+            Column::make('email')->title('Email'),
+            Column::make('telp')->title('Phone Number'),
             Column::computed('role')
+                ->title('Role')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)
                 ->addClass('text-center'),
-            Column::computed('foto')
+            Column::computed('avatar')
+                ->title('Avatar')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)
                 ->addClass('text-center'),
             Column::computed('action')
+                ->title('Action')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)

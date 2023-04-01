@@ -42,68 +42,37 @@ class UserAccountController extends Controller
         return view('user.profileAccount', compact('user'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    // public function edit(Request $request)
+    // {
+    //     // Get the authenticated user
+    //     $user = Auth::user();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    //     // Validate the form data
+    //     $request->validate([
+    //         'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    //         'name' => 'required|string|max:255',
+    //         'company' => 'required|email|string|max:255|unique:users,email,' . $user->id,
+    //         'phone' => 'nullable|string|max:20',
+    //     ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        //
-    }
+    //     // Update the user's details
+    //     $user->name = $request->name;
+    //     $user->email = $request->company;
+    //     $user->no_telp = $request->phone;
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        //
-    }
+    //     // Handle avatar upload
+    //     if ($request->hasFile('avatar')) {
+    //         $avatar = $request->file('avatar');
+    //         $filename = time() . '.' . $avatar->getClientOriginalExtension();
+    //         $avatar->move(public_path('uploads/avatars'), $filename);
+    //         $user->avatar = $filename;
+    //     } elseif ($request->has('avatar_remove')) {
+    //         $user->avatar = null;
+    //     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
-    {
-    }
+    //     $user->save();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        //
-    }
+    //     // Redirect the user back with a success message
+    //     return redirect()->back()->with('success', 'Profile updated successfully.');
+    // }
 }

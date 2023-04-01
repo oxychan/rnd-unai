@@ -2,9 +2,9 @@
 <!--begin::Modal content-->
 <div class="modal-content">
     <!--begin::Modal header-->
-    <div class="modal-header" style="background-color: #153253">
+    <div class="modal-header">
         <!--begin::Modal title-->
-        <h2 id="modal-judul" style="color: white"></h2>
+        <h2 id="modal-judul" style="color: white">{{ $user != null ? 'Edit User' : 'Add User' }}</h2>
         <!--end::Modal title-->
         <!--begin::Close-->
         <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
@@ -36,15 +36,15 @@
                 <div class="mb-7">
                     <input type="hidden" name="id" id="id">
                     <div class="form-group row">
-                        <label class="col-lg-3 col-form-label">NAMA USER:</label>
+                        <label class="col-lg-3 col-form-label">Name</label>
                         <div class="col-lg-9">
                             <input type="text" class="form-control" id="name" name="name"
                                 placeholder="e.g: John Dypth" value="{{ $user->name ?? '' }}" required />
-                            <span class="form-text text-muted">Please enter name user</span>
+                            <span class="form-text text-muted">Please enter name</span>
                         </div>
                     </div> <br>
                     <div class="form-group row">
-                        <label class="col-lg-3 col-form-label">USERNAME:</label>
+                        <label class="col-lg-3 col-form-label">Username</label>
                         <div class="col-lg-9">
                             <input type="text" class="form-control" id="username" name="username"
                                 placeholder="e.g: john_dypth" value="{{ $user->username ?? '' }}" required />
@@ -53,7 +53,7 @@
                         </div>
                     </div> <br>
                     <div class="form-group row">
-                        <label class="col-lg-3 col-form-label">EMAIL:</label>
+                        <label class="col-lg-3 col-form-label">Email</label>
                         <div class="col-lg-9">
                             <input type="text" class="form-control" id="email" name="email"
                                 placeholder="e.g: johndypth@gmail.com" value="{{ $user->email ?? '' }}" />
@@ -61,26 +61,26 @@
                         </div>
                     </div> <br>
                     <div class="form-group row">
-                        <label class="col-lg-3 col-form-label">ROLE USER :</label>
+                        <label class="col-lg-3 col-form-label">User Role</label>
                         <div class="col-lg-9">
                             <select class="form-control select2" id="role" name="role" style="width: 100%;"
                                 required>
-                                <option value="">Pilih Jenis</option>
+                                <option value="">Choose Role</option>
                                 @foreach ($roles as $role)
                                     <option value="{{ $role->name }}"
                                         @if ($user != null) {{ $user->roles->pluck('name')[0] == $role->name ? 'selected' : '' }} @endif>
                                         {{ $role->name }}</option>
                                 @endforeach
                             </select>
-                            <span class="form-text text-muted">Please enter user id</span>
+                            <span class="form-text text-muted">Please enter role</span>
                         </div>
                     </div><br>
                     <div class="form-group row">
-                        <label class="col-lg-3 col-form-label">NO HP:</label>
+                        <label class="col-lg-3 col-form-label">Telp</label>
                         <div class="col-lg-9">
-                            <input type="text" class="form-control" id="no_telp" name="no_telp"
-                                placeholder="e.g: 0882215551" value="{{ $user->no_telp ?? '' }}" />
-                            <span class="form-text text-muted">Please Enter Your Phone Number</span>
+                            <input type="text" class="form-control" id="telp" name="telp"
+                                placeholder="e.g: 0882215551" value="{{ $user->telp ?? '' }}" />
+                            <span class="form-text text-muted">Please enter phone number</span>
                         </div>
                     </div><br>
                 </div>

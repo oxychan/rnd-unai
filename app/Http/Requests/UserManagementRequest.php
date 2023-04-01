@@ -27,7 +27,7 @@ class UserManagementRequest extends FormRequest
             'name' => 'required|string|min:3',
             'username' => 'required|unique:users',
             'email' => 'required|email|unique:users',
-            'no_telp' => 'required|min:10|max:13',
+            'telp' => 'required|min:10|max:13',
             'role' => 'required',
         ];
     }

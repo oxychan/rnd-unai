@@ -102,14 +102,15 @@ class MenusDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false),
-            Column::make('nama'),
-            Column::make('url'),
-            Column::make('icon'),
-            Column::make('root'),
-            Column::make('urutan'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::make('name')->title('Name'),
+            Column::make('url')->title('Url'),
+            Column::make('icon')->title('Icon'),
+            Column::make('root')->title('Root'),
+            Column::make('order')->title('Order'),
+            Column::make('created_at')->title('Created At'),
+            Column::make('updated_at')->title('Updated At'),
             Column::computed('action')
+                ->title('Action')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)

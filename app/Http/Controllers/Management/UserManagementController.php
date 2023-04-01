@@ -45,7 +45,7 @@ class UserManagementController extends Controller
     public function store(UserManagementRequest $request)
     {
         $defaultValue = [
-            'foto' => 'default.jpg',
+            'avatar' => 'default.jpg',
             'password' => Hash::make('password')
         ];
 

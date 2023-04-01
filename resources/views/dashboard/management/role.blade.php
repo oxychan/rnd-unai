@@ -21,7 +21,7 @@
                 <div class="card card-custom gutter-b">
                     <div class="card-header flex-wrap py-3">
                         <div class="card-title">
-                            <h3 class="card-label">Data Role
+                            <h3 class="card-label">Role Data
                                 <span class="d-block text-muted pt-2 font-size-sm"></span>
                             </h3>
                         </div>
@@ -32,7 +32,7 @@
                                 <span class="svg-icon svg-icon-md">
                                     <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
                                     <!--end::Svg Icon-->
-                                </span>+ Tambah</a>
+                                </span>+ Add</a>
                             </a>
                             <!--end::Button-->
                         </div>
@@ -185,8 +185,7 @@
             let data = $(this).data()
             let id = data.id
             Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
+                title: 'Delete this role?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',

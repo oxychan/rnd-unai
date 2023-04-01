@@ -67,24 +67,17 @@
                     <!--begin::Input group-->
                     <div class="row mb-6">
                         <!--begin::Label-->
-                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Full Name</label>
+                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Name</label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-8">
                             <!--begin::Row-->
                             <div class="row">
                                 <!--begin::Col-->
-                                <div class="col-lg-6 fv-row">
-                                    <input type="text" name="fname"
+                                <div class="col-lg-8 fv-row">
+                                    <input type="text" name="name"
                                         class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                        placeholder="First name" value="Max" />
-                                </div>
-                                <!--end::Col-->
-                                <!--begin::Col-->
-                                <div class="col-lg-6 fv-row">
-                                    <input type="text" name="lname"
-                                        class="form-control form-control-lg form-control-solid" placeholder="Last name"
-                                        value="Smith" />
+                                        value="{{ $user->name }}" />
                                 </div>
                                 <!--end::Col-->
                             </div>
@@ -96,12 +89,12 @@
                     <!--begin::Input group-->
                     <div class="row mb-6">
                         <!--begin::Label-->
-                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Company</label>
+                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Email</label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-8 fv-row">
                             <input type="text" name="company" class="form-control form-control-lg form-control-solid"
-                                placeholder="Company name" value="Keenthemes" />
+                                value="{{ $user->email }}" />
                         </div>
                         <!--end::Col-->
                     </div>
@@ -110,15 +103,13 @@
                     <div class="row mb-6">
                         <!--begin::Label-->
                         <label class="col-lg-4 col-form-label fw-semibold fs-6">
-                            <span class="required">Contact Phone</span>
-                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
-                                title="Phone number must be active"></i>
+                            <span class="required">No. Telp</span>
                         </label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-8 fv-row">
                             <input type="tel" name="phone" class="form-control form-control-lg form-control-solid"
-                                placeholder="Phone number" value="044 3276 454 935" />
+                                value="{{ $user->no_telp }}" />
                         </div>
                         <!--end::Col-->
                     </div>
@@ -126,12 +117,13 @@
                     <!--begin::Input group-->
                     <div class="row mb-6">
                         <!--begin::Label-->
-                        <label class="col-lg-4 col-form-label fw-semibold fs-6">Company Site</label>
+                        <label class="col-lg-4 col-form-label fw-semibold fs-6">
+                            <span class="required">Role</span>
+                        </label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-8 fv-row">
-                            <input type="text" name="website" class="form-control form-control-lg form-control-solid"
-                                placeholder="Company website" value="keenthemes.com" />
+                            <span class="badge py-3 px-4 fs-7 badge-light-info">{{ $user->roles->pluck('name')[0] }}</span>
                         </div>
                         <!--end::Col-->
                     </div>
@@ -140,7 +132,6 @@
                 <!--end::Card body-->
                 <!--begin::Actions-->
                 <div class="card-footer d-flex justify-content-end py-6 px-9">
-                    <button type="reset" class="btn btn-light btn-active-light-primary me-2">Discard</button>
                     <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save
                         Changes</button>
                 </div>
@@ -166,12 +157,6 @@
             <div class="card-body border-top p-9">
                 <!--begin::Password-->
                 <div class="d-flex align-items-center mb-10">
-                    <!--begin::Label-->
-                    {{-- <div id="kt_signin_password">
-                        <div class="fs-6 fw-bold mb-1">Password</div>
-                        <div class="fw-semibold text-gray-600">************</div>
-                    </div> --}}
-                    <!--end::Label-->
                     <!--begin::Edit-->
                     <div id="kt_signin_password_edit" class="flex-row-fluid">
                         <!--begin::Form-->
@@ -245,7 +230,11 @@
                 processData: false,
                 contentType: false,
                 success: function(response) {
-                    console.log(response);
+                    Swal.fire(
+                        'Changed!',
+                        'Password berhasil dihapus!.',
+                        'success'
+                    )
                 }
             });
         });

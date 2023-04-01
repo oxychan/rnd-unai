@@ -3,9 +3,9 @@
 <!--begin::Modal content-->
 <div class="modal-content">
     <!--begin::Modal header-->
-    <div class="modal-header" style="background-color: #153253">
+    <div class="modal-header">
         <!--begin::Modal title-->
-        <h2 id="modal-judul" style="color: white"></h2>
+        <h2 id="modal-judul" style="color: white">{{ $menu != null ? 'Edit Menu' : 'Add Menu' }}</h2>
         <!--end::Modal title-->
         <!--begin::Close-->
         <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
@@ -37,7 +37,7 @@
                 <div class="mb-7">
                     <input type="hidden" name="id" id="id">
                     <div class="form-group row">
-                        <label class="col-lg-3 col-form-label">ADD PARENT MENU:</label>
+                        <label class="col-lg-3 col-form-label">Add Menu Parent</label>
                         <div class="col-lg-9">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="addParentMenuCheckbox"
@@ -51,49 +51,50 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-lg-3 col-form-label">NAMA MENU:</label>
+                        <label class="col-lg-3 col-form-label">Menu Name</label>
                         <div class="col-lg-9">
-                            <input type="text" class="form-control" id="nama" name="nama"
-                                placeholder="e.g: John Dypth" value="{{ $menu->nama ?? '' }}" required />
+                            <input type="text" class="form-control" id="name" name="name"
+                                placeholder="e.g: Development" value="{{ $menu->name ?? '' }}" required />
                             <span class="form-text text-muted">Please enter menu name</span>
                         </div>
                     </div> <br>
                     <div class="form-group row">
-                        <label class="col-lg-3 col-form-label">URL:</label>
+                        <label class="col-lg-3 col-form-label">Url</label>
                         <div class="col-lg-9">
                             <input type="text" class="form-control" id="url" name="url"
-                                placeholder="e.g: John Dypth" value="{{ $menu->url ?? '' }}" required />
+                                placeholder="e.g: /dashboard/user" value="{{ $menu->url ?? '' }}" required />
                             <span class="form-text text-muted">Please enter menu url</span>
                         </div>
                     </div> <br>
                     <div class="form-group row">
-                        <label class="col-lg-3 col-form-label">NAMA ICON:</label>
+                        <label class="col-lg-3 col-form-label">Icon Name</label>
                         <div class="col-lg-9">
                             <input type="text" class="form-control" id="icon" name="icon"
-                                placeholder="e.g: John Dypth" value="{{ $menu->icon ?? '' }}" required />
-                            <span class="form-text text-muted">Please enter menu icon</span>
+                                placeholder="e.g: fas fa-list" value="{{ $menu->icon ?? '' }}" required />
+                            <span class="form-text text-muted">Please enter menu icon, refer to <a
+                                    href="https://fontawesome.com/v4/icons/">this</a></span>
                         </div>
                     </div> <br>
                     <div class="form-group row" id="isRoot">
-                        <label class="col-lg-3 col-form-label">ROOT MENU:</label>
+                        <label class="col-lg-3 col-form-label">Root Menu</label>
                         <div class="col-lg-9">
                             <select class="form-control select2" id="root" name="root" style="width: 100%;"
                                 required>
-                                <option value="">Pilih Jenis</option>
+                                <option value="">Choose Parent</option>
                                 @foreach ($menus as $menuRoot)
                                     <option value="{{ $menuRoot->id }}"
                                         @if ($menu != null) {{ $menuRoot->id == $menu->id ? 'selected' : '' }} @endif>
-                                        {{ $menuRoot->nama }}</option>
+                                        {{ $menuRoot->name }}</option>
                                 @endforeach
                             </select>
                             <span class="form-text text-muted">Please enter user id</span>
                         </div>
                     </div><br>
                     <div class="form-group row">
-                        <label class="col-lg-3 col-form-label">URUTAN MENU:</label>
+                        <label class="col-lg-3 col-form-label">Menu Order</label>
                         <div class="col-lg-9">
-                            <input type="number" class="form-control" id="urutan" name="urutan"
-                                placeholder="e.g: John Dypth" value="{{ $menu->urutan ?? '' }}" required />
+                            <input type="number" class="form-control" id="order" name="order"
+                                placeholder="e.g: 0" value="{{ $menu->order ?? '' }}" required />
                             <span class="form-text text-muted">Please enter menu order</span>
                         </div>
                     </div> <br>

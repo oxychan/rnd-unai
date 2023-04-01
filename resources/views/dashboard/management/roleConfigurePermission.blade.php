@@ -2,7 +2,7 @@
     <!--begin::Modal header-->
     <div class="modal-header">
         <!--begin::Modal title-->
-        <h2 class="fw-bold">Edit Hak Akses</h2>
+        <h2 class="fw-bold">Edit Permission</h2>
         <!--end::Modal title-->
         <!--begin::Close-->
         <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
@@ -35,11 +35,12 @@
                 <div class="fv-row mb-10">
                     <!--begin::Label-->
                     <label class="fs-5 fw-bold form-label mb-2">
-                        <span class="required">NAMA ROLE:</span>
+                        <span class="required">Role Name</span>
                     </label>
                     <!--end::Label-->
                     <!--begin::Input-->
-                    <input class="form-control form-control-solid" name="name" value="{{ $role->name ?? '' }}" />
+                    <input class="form-control form-control-solid" name="name" value="{{ $role->name ?? '' }}"
+                        disabled />
                     <!--end::Input-->
                 </div>
                 <!--end::Input group-->
@@ -59,7 +60,7 @@
                                     @if ($menu->root != null || ($menu->root == null && $menu->subMenus->count() <= 0))
                                         <tr>
                                             <!--begin::Label-->
-                                            <td class="text-gray-800">{{ $menu->nama }}</td>
+                                            <td class="text-gray-800">{{ $menu->name }}</td>
                                             <!--end::Label-->
                                             <!--begin::Input group-->
                                             <td>
@@ -69,7 +70,7 @@
                                                     <label
                                                         class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
                                                         <input class="form-check-input" type="checkbox" value="true"
-                                                            name="{{ $menu->nama }}_read"
+                                                            name="{{ $menu->name }}_read"
                                                             @if ($role->hasPermissionTo("read $menu->url")) checked @endif />
                                                         <span class="form-check-label">Read</span>
                                                     </label>
@@ -78,7 +79,7 @@
                                                     <label
                                                         class="form-check form-check-custom form-check-solid me-5 me-lg-20">
                                                         <input class="form-check-input" type="checkbox" value="true"
-                                                            name="{{ $menu->nama }}_update"
+                                                            name="{{ $menu->name }}_update"
                                                             @if ($role->hasPermissionTo("update $menu->url")) checked @endif />
                                                         <span class="form-check-label">Update</span>
                                                     </label>
@@ -87,7 +88,7 @@
                                                     <label
                                                         class="form-check form-check-custom form-check-solid me-5 me-lg-20">
                                                         <input class="form-check-input" type="checkbox" value="true"
-                                                            name="{{ $menu->nama }}_create"
+                                                            name="{{ $menu->name }}_create"
                                                             @if ($role->hasPermissionTo("create $menu->url")) checked @endif />
                                                         <span class="form-check-label">Create</span>
                                                     </label>
@@ -95,7 +96,7 @@
                                                     <!--begin::Checkbox-->
                                                     <label class="form-check form-check-custom form-check-solid">
                                                         <input class="form-check-input" type="checkbox" value="true"
-                                                            name="{{ $menu->nama }}_delete"
+                                                            name="{{ $menu->name }}_delete"
                                                             @if ($role->hasPermissionTo("delete $menu->url")) checked @endif />
                                                         <span class="form-check-label">Delete</span>
                                                     </label>

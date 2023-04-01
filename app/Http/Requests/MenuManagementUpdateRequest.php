@@ -24,11 +24,11 @@ class MenuManagementUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'nama' => 'required|string',
+            'name' => 'required|string',
             'url' => 'required|string',
             'icon' => 'required|string',
             'root' => 'nullable|integer',
-            'urutan' => 'integer',
+            'order' => 'integer',
         ];
     }
 }

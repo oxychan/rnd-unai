@@ -21,8 +21,8 @@ class UserSeeder extends Seeder
             'username' => 'admin',
             'email' => 'admin@mail.com',
             'password' => Hash::make('password'),
-            'no_telp' => '08212423493',
-            'foto' => 'default.jpg'
+            'telp' => '08212423493',
+            'avatar' => 'default.jpg'
         ]);
 
         User::create([
@@ -30,8 +30,8 @@ class UserSeeder extends Seeder
             'username' => 'user',
             'email' => 'user@mail.com',
             'password' => Hash::make('password'),
-            'no_telp' => '1234567891',
-            'foto' => 'default.jpg'
+            'telp' => '1234567891',
+            'avatar' => 'default.jpg'
         ]);
 
         User::create([
@@ -39,8 +39,8 @@ class UserSeeder extends Seeder
             'username' => 'spv',
             'email' => 'spv@mail.com',
             'password' => Hash::make('password'),
-            'no_telp' => '1234567892',
-            'foto' => 'default.jpg'
+            'telp' => '1234567892',
+            'avatar' => 'default.jpg'
         ]);
 
         User::create([
@@ -48,8 +48,8 @@ class UserSeeder extends Seeder
             'username' => 'worker',
             'email' => 'worker@mail.com',
             'password' => Hash::make('password'),
-            'no_telp' => '1234567893',
-            'foto' => 'default.jpg'
+            'telp' => '1234567893',
+            'avatar' => 'default.jpg'
         ]);
 
         User::create([
@@ -57,8 +57,8 @@ class UserSeeder extends Seeder
             'username' => 'helpdesk',
             'email' => 'helpdesk@mail.com',
             'password' => Hash::make('password'),
-            'no_telp' => '1234567894',
-            'foto' => 'default.jpg'
+            'telp' => '1234567894',
+            'avatar' => 'default.jpg'
         ]);
     }
 }

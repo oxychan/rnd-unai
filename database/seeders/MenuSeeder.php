@@ -16,51 +16,51 @@ class MenuSeeder extends Seeder
     public function run()
     {
         Menu::create([
-            'nama' => 'Dashboard',
+            'name' => 'Dashboard',
             'url' => '/dashboard',
             'icon' => 'fas fa-list',
             'root' => null,
-            'urutan' => 0,
+            'order' => 0,
         ]);
 
         Menu::create([
-            'nama' => 'User',
+            'name' => 'User',
             'url' => '/dashboard/management/user',
             'icon' => 'fas fa-list',
             'root' => 1,
-            'urutan' => 0,
+            'order' => 0,
         ]);
 
         Menu::create([
-            'nama' => 'Role',
+            'name' => 'Role',
             'url' => '/dashboard/management/role',
             'icon' => 'fas fa-list',
             'root' => 1,
-            'urutan' => 0,
+            'order' => 0,
         ]);
 
         Menu::create([
-            'nama' => 'Menu',
+            'name' => 'Menu',
             'url' => '/dashboard/management/menu',
             'icon' => 'fas fa-list',
             'root' => 1,
-            'urutan' => 0,
+            'order' => 0,
         ]);
 
         Menu::create([
-            'nama' => 'SPV',
+            'name' => 'SPV',
             'url' => '/dashboard/spv',
             'icon' => 'fas fa-list',
             'root' => 1,
-            'urutan' => 0,
+            'order' => 0,
         ]);
 
         Menu::create([
-            'nama' => 'Management',
+            'name' => 'Management',
             'url' => '/dashboard/management',
             'icon' => 'fas fa-list',
             'root' => null,
-            'urutan' => 0,
+            'order' => 0,
         ]);
     }
 }

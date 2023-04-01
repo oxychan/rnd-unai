@@ -92,10 +92,11 @@ class RolesDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false),
-            Column::make('name'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::make('name')->title('Name'),
+            Column::make('created_at')->title('Created At'),
+            Column::make('updated_at')->title('Updated At'),
             Column::computed('action')
+                ->title('Action')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)

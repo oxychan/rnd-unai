@@ -31,7 +31,7 @@
                                 <span class="menu-icon">
                                     <i class="{{ $menu->icon }}"></i>
                                 </span>
-                                <span class="menu-title">{{ $menu->nama }}</span>
+                                <span class="menu-title">{{ $menu->name }}</span>
                                 @if ($menu->subMenus->count() > 0)
                                     <span class="menu-arrow"></span>
                                 @endif
@@ -46,7 +46,7 @@
                                                     <span class="menu-icon">
                                                         <i class="{{ $subMenu->icon }}"></i>
                                                     </span>
-                                                    <span class="menu-title">{{ $subMenu->nama }}</span>
+                                                    <span class="menu-title">{{ $subMenu->name }}</span>
                                                 </a>
                                             </div>
                                         @endcan

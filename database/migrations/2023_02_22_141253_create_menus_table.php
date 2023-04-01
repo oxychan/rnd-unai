@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
-            $table->string('nama')->unique();
+            $table->string('name')->unique();
             $table->string('url');
             $table->string('icon');
             $table->unsignedBigInteger('root')->nullable();
-            $table->integer('urutan');
+            $table->integer('order');
             $table->timestamps();
         });
     }

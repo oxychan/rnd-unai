@@ -40,26 +40,19 @@ class MenuManagementController extends Controller
     public function store(MenuManagementStoreRequest $request)
     {
         try {
-            $menu = Menu::create($request->validated());
-            $permission = Permission::create([
-                [
-                    'name' => 'read ' . $menu->url
-                ],
-                [
-                    'name' => 'update ' . $menu->url
-                ],
-                [
-                    'name' => 'create ' . $menu->url
-                ],
-                [
-                    'name' => 'delete ' . $menu->url
-                ]
-            ]);
+            $menu = Menu::create($request->all());
 
-            dd($permission);
+            $permissions = [
+                Permission::create(['name' => 'read ' . $menu->url]),
+                Permission::create(['name' => 'update ' . $menu->url]),
+                Permission::create(['name' => 'create ' . $menu->url]),
+                Permission::create(['name' => 'delete ' . $menu->url])
+            ];
+
+            $permissions = array_column($permissions, 'name');
 
             $admin = Role::findByName('admin');
-            $admin->givePermissionTo($permission);
+            $admin->givePermissionTo($permissions);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Gagal menambahkan menu!'
@@ -97,8 +90,25 @@ class MenuManagementController extends Controller
         }
 
         try {
+            $oldUrl = $menu->url;
+            $menu->update($request->all());
+            $newUrl = $menu->url;
 
-            $menu->update($request->validated());
+            if ($oldUrl != $newUrl) {
+                $permissions = [
+                    'read ' . $oldUrl,
+                    'update ' . $oldUrl,
+                    'create ' . $oldUrl,
+                    'delete ' . $oldUrl,
+                ];
+
+                foreach ($permissions as $permission) {
+                    $newPermissionName = str_replace($oldUrl, $newUrl, $permission);
+                    $permissionModel = Permission::where('name', $permission)->first();
+                    $permissionModel->name = $newPermissionName;
+                    $permissionModel->save();
+                }
+            }
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Gagal memperbarui menu!'
@@ -119,6 +129,19 @@ class MenuManagementController extends Controller
     public function destroy(Menu $menu)
     {
         try {
+            $permissions = [
+                'read ' . $menu->url,
+                'update ' . $menu->url,
+                'create ' . $menu->url,
+                'delete ' . $menu->url,
+            ];
+            Permission::whereIn('name', $permissions)->delete();
+
+            $roles = Role::all();
+            foreach ($roles as $role) {
+                $role->revokePermissionTo($permissions);
+            }
+
             $menu->delete();
         } catch (\Exception $e) {
             return response()->json([

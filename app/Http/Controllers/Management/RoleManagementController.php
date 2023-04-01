@@ -44,7 +44,8 @@ class RoleManagementController extends Controller
     public function store(RoleManagementStoreRequest $request)
     {
         try {
-            $role = Role::create($request->validated());
+            $request['name'] = strtolower($request->name);
+            $role = Role::create($request->all());
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Gagal menambahkan role!'
@@ -89,7 +90,8 @@ class RoleManagementController extends Controller
     public function update(RoleManagementUpdateRequest $request, Role $role)
     {
         try {
-            $role->update($request->validated());
+            $request['name'] = strtolower($request->name);
+            $role->update($request->all());
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Gagal memperbarui role!'
@@ -124,7 +126,6 @@ class RoleManagementController extends Controller
 
     public function updatePermissions(UpdatePermissionRequest $request, Role $role)
     {
-        // dd($request->all());
         try {
             $menus = Menu::all();
             // Update permissions for each menu
@@ -132,19 +133,19 @@ class RoleManagementController extends Controller
 
             foreach ($menus as $menu) {
 
-                if ($request["{$menu->nama}_read"]) {
+                if ($request["{$menu->name}_read"]) {
                     $permissions[] =  "read {$menu->url}";
                 }
 
-                if ($request["{$menu->nama}_update"]) {
+                if ($request["{$menu->name}_update"]) {
                     $permissions[] = "update {$menu->url}";
                 }
 
-                if ($request["{$menu->nama}_create"]) {
+                if ($request["{$menu->name}_create"]) {
                     $permissions[] = "create {$menu->url}";
                 }
 
-                if ($request["{$menu->nama}_delete"]) {
+                if ($request["{$menu->name}_delete"]) {
                     $permissions[] = "delete {$menu->url}";
                 }
 
@@ -153,12 +154,19 @@ class RoleManagementController extends Controller
                 }
             }
 
+            $permissions = array_unique($permissions);
+
             $role->syncPermissions($permissions);
 
             return redirect()->back()->with('success', 'Role permissions updated successfully.');
         } catch (\Exception $e) {
-            // Log the error or handle it in some other way
-            return redirect()->back()->with('error', 'An error occurred while updating role permissions.');
+            return response()->json([
+                'message' => 'Permission gagal diperbarui!'
+            ], 500);
         }
+
+        return response()->json([
+            'message' => 'Permission berhasil diperbarui!'
+        ], 200);
     }
 }

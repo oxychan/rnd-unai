@@ -29,10 +29,10 @@ class UpdatePermissionRequest extends FormRequest
         $menus = Menu::all();
 
         foreach ($menus as $menu) {
-            $rules["{$menu->nama}_read"] = 'nullable|boolean';
-            $rules["{$menu->nama}_update"] = 'nullable|boolean';
-            $rules["{$menu->nama}_create"] = 'nullable|boolean';
-            $rules["{$menu->nama}_delete"] = 'nullable|boolean';
+            $rules["{$menu->name}_read"] = 'nullable|boolean';
+            $rules["{$menu->name}_update"] = 'nullable|boolean';
+            $rules["{$menu->name}_create"] = 'nullable|boolean';
+            $rules["{$menu->name}_delete"] = 'nullable|boolean';
         }
 
         return $rules;
@@ -44,10 +44,10 @@ class UpdatePermissionRequest extends FormRequest
         $menus = Menu::all();
 
         foreach ($menus as $menu) {
-            $request["{$menu->nama}_read"] = filter_var($this->input("{$menu->nama}_read"), FILTER_VALIDATE_BOOLEAN);
-            $request["{$menu->nama}_update"] = filter_var($this->input("{$menu->nama}_update"), FILTER_VALIDATE_BOOLEAN);;
-            $request["{$menu->nama}_create"] = filter_var($this->input("{$menu->nama}_create"), FILTER_VALIDATE_BOOLEAN);;
-            $request["{$menu->nama}_delete"] = filter_var($this->input("{$menu->nama}_delete"), FILTER_VALIDATE_BOOLEAN);;
+            $request["{$menu->name}_read"] = filter_var($this->input("{$menu->name}_read"), FILTER_VALIDATE_BOOLEAN);
+            $request["{$menu->name}_update"] = filter_var($this->input("{$menu->name}_update"), FILTER_VALIDATE_BOOLEAN);;
+            $request["{$menu->name}_create"] = filter_var($this->input("{$menu->name}_create"), FILTER_VALIDATE_BOOLEAN);;
+            $request["{$menu->name}_delete"] = filter_var($this->input("{$menu->name}_delete"), FILTER_VALIDATE_BOOLEAN);;
         }
 
         $this->merge($request);

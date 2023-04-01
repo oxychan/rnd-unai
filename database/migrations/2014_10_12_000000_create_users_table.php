@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('username')->unique();
-            $table->string('no_telp', 13)->unique();
-            $table->string('foto');
+            $table->string('telp', 13)->unique();
+            $table->string('avatar');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

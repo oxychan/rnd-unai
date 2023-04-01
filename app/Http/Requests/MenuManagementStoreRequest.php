@@ -24,11 +24,11 @@ class MenuManagementStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'nama' => 'required|string|unique:menus',
+            'name' => 'required|string|unique:menus',
             'url' => 'required|string',
             'icon' => 'required|string',
             'root' => 'nullable|integer',
-            'urutan' => 'required|integer',
+            'order' => 'required|integer',
         ];
     }
 }

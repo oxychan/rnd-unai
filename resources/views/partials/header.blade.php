@@ -22,7 +22,7 @@
         <!--begin::Mobile logo-->
         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
             <a href="index.html" class="d-lg-none">
-                <img alt="Logo" src="{{ asset('') }}assets/media/avatars/{{ auth()->user()->foto }}"
+                <img alt="Logo" src="{{ asset('') }}assets/media/avatars/{{ auth()->user()->avatar }}"
                     class="h-30px" />
             </a>
         </div>
@@ -46,7 +46,8 @@
                     <!--begin::Menu wrapper-->
                     <div class="cursor-pointer symbol symbol-35px symbol-md-40px" data-kt-menu-trigger="click"
                         data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-                        <img src="{{ asset('') }}assets/media/avatars/{{ auth()->user()->foto }}" alt="user" />
+                        <img src="{{ asset('') }}assets/media/avatars/{{ auth()->user()->avatar }}"
+                            alt="user" />
                     </div>
                     <!--begin::User account menu-->
                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-semibold py-4 fs-6 w-275px"
@@ -57,7 +58,7 @@
                                 <!--begin::Avatar-->
                                 <div class="symbol symbol-50px me-5">
                                     <img alt="Logo"
-                                        src="{{ asset('') }}assets/media/avatars/{{ auth()->user()->foto }}" />
+                                        src="{{ asset('') }}assets/media/avatars/{{ auth()->user()->avatar }}" />
                                 </div>
                                 <!--end::Avatar-->
                                 <!--begin::Username-->
