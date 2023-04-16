@@ -13,16 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('menus', function (Blueprint $table) {
+        Schema::create('request_items', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('url');
-            $table->string('icon');
-            $table->unsignedBigInteger('root')->nullable();
-            $table->integer('order');
+            $table->string('subject');
+            $table->string('description');
+            $table->unsignedBigInteger('id_request');
             $table->timestamps();
-
-            $table->foreign('root')->references('id')->on('menus')->onDelete('cascade');
         });
     }
 
@@ -33,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menus');
+        Schema::dropIfExists('request_items');
     }
 };

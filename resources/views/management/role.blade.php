@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Menu Management')
+@section('title', 'Role Management')
 
 @push('additional_css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
@@ -21,18 +21,18 @@
                 <div class="card card-custom gutter-b">
                     <div class="card-header flex-wrap py-3">
                         <div class="card-title">
-                            <h3 class="card-label">Menu Data
+                            <h3 class="card-label">Data Role
                                 <span class="d-block text-muted pt-2 font-size-sm"></span>
                             </h3>
                         </div>
                         <div class="card-toolbar">
                             <!--begin::Button-->
-                            <a id="addMenuButton" name="addRole" class="btn btn-primary font-weight-bolder btn-sm"
+                            <a id="addRoleButton" name="addRole" class="btn btn-primary font-weight-bolder btn-sm"
                                 href="javascript:void(0)">
                                 <span class="svg-icon svg-icon-md">
                                     <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
                                     <!--end::Svg Icon-->
-                                </span>+ Add</a>
+                                </span>+ Tambah</a>
                             </a>
                             <!--end::Button-->
                         </div>
@@ -55,11 +55,25 @@
     <!--begin::Modal - Create App-->
     <div class="modal fade" id="modalCreateUpdate" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
-        <div class="modal-dialog modal-dialog-centered mw-900px modal-dialog-scrollable"></div>
+        <div class="modal-dialog modal-dialog-centered mw-600px modal-dialog-scrollable"></div>
         <!--end::Modal dialog-->
     </div>
 
     {{-- end of modal for add and edit user data --}}
+
+    <!--begin::Modal-->
+    <!--begin::Modal - Update role-->
+    <div class="modal fade" id="modalConfigurePermission" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-900px  modal-dialog-scrollable">
+            <!--begin::Modal content-->
+
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - Update role-->
+    <!--end::Modal-->
 
 @endsection
 
@@ -73,12 +87,13 @@
     <script>
         // create instance modal
         const modalCreateUpdate = new bootstrap.Modal($('#modalCreateUpdate'))
+        const modalConfigurePermission = new bootstrap.Modal($('#modalConfigurePermission'))
 
         // add new user
-        $('#addMenuButton').on('click', function() {
+        $('#addRoleButton').on('click', function() {
             $.ajax({
                 method: 'GET',
-                url: '{{ route('management.menu.create') }}',
+                url: '{{ route('management.role.create') }}',
                 success: function(response) {
                     const modalDialog = $('#modalCreateUpdate').find('.modal-dialog')
                     modalDialog.html(response)
@@ -88,13 +103,12 @@
             })
 
             function store() {
-                $('#formCreateUpdateMenu').on('submit', function(e) {
+                $('#formCreateUpdateRole').on('submit', function(e) {
                     e.preventDefault()
                     const form = this
                     const formData = new FormData(form)
 
                     const url = this.getAttribute('action')
-                    console.log(url)
 
                     $.ajax({
                         method: 'POST',
@@ -111,7 +125,7 @@
                                 'User berhasil ditambahkan.',
                                 'success'
                             )
-                            window.LaravelDataTables["menus-table"].ajax.reload()
+                            window.LaravelDataTables["roles-table"].ajax.reload()
                             modalCreateUpdate.hide()
                         }
                     })
@@ -120,23 +134,22 @@
             }
         })
 
-        $('#menus-table').on('click', '#editMenu', function() {
+        $('#roles-table').on('click', '#editRole', function() {
             let data = $(this).data()
             let id = data.id
             $.ajax({
                 method: 'get',
-                url: '/dashboard/management/menu/' + id + '/edit',
+                url: '/management/role/' + id + '/edit',
                 success: function(response) {
                     const modalDialog = $('#modalCreateUpdate').find('.modal-dialog')
                     modalDialog.html(response)
                     modalCreateUpdate.show()
-                    isParent()
                     update(id)
                 }
             })
 
             function update(userId) {
-                $('#formCreateUpdateMenu').on('submit', function(e) {
+                $('#formCreateUpdateRole').on('submit', function(e) {
                     e.preventDefault()
                     const form = this
                     const formData = new FormData(form)
@@ -159,29 +172,20 @@
                                 'Data user berhasil diedit.',
                                 'success'
                             )
-                            window.LaravelDataTables["menus-table"].ajax.reload()
+                            window.LaravelDataTables["roles-table"].ajax.reload()
                             modalCreateUpdate.hide()
                         }
                     })
 
                 })
             }
-
-            function isParent() {
-                if ($('#addParentMenuCheckbox').is(':checked')) {
-                    $('#isRoot').hide()
-                    $('#root').removeAttr('required')
-                    $('#root').val(null)
-                }
-            }
         })
 
-        $('#menus-table').on('click', '#deleteMenu', function() {
+        $('#roles-table').on('click', '#deleteRole', function() {
             let data = $(this).data()
             let id = data.id
             Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
+                title: 'Delete this role?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -191,7 +195,7 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         method: 'DELETE',
-                        url: '/dashboard/management/menu/' + id,
+                        url: '/management/role/' + id,
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
                         },
@@ -201,7 +205,7 @@
                                 'User berhasil dihapus.',
                                 'success'
                             )
-                            window.LaravelDataTables["menus-table"].ajax.reload()
+                            window.LaravelDataTables["roles-table"].ajax.reload()
                         }
                     })
 
@@ -209,22 +213,63 @@
             })
         })
 
+        // permission
+        $('#roles-table').on('click', '#configurePermission', function(e) {
+            e.preventDefault()
 
-        $('#menus-table')
-            .on('processing.dt', function(e, settings, processing) {
-                if (settings) {
-                    $('#menus-table_processing').css('display', 'none')
+            let data = $(this).data()
+            let id = data.id
+
+            $.ajax({
+                method: 'GET',
+                url: '/management/role/' + id,
+                success: function(response) {
+                    const modalDialog = $('#modalConfigurePermission').find('.modal-dialog')
+                    modalDialog.html(response)
+                    modalConfigurePermission.show()
+
+                    update()
                 }
             })
 
-        $('#modalCreateUpdate').on('click', '#addParentMenuCheckbox', function() {
-            if ($(this).is(':checked')) {
-                $('#isRoot').hide()
-                $('#root').removeAttr('required')
-                $('#root').val(null)
-            } else {
-                $('#isRoot').show()
+            function update() {
+                $('#formUpdatePermission').on('submit', function(e) {
+                    e.preventDefault()
+                    const form = this
+                    const formData = new FormData(form)
+
+                    const url = this.getAttribute('action')
+                    console.log(url)
+
+                    $.ajax({
+                        method: 'POST',
+                        url,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                        },
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            Swal.fire(
+                                'Edited!',
+                                'Data user berhasil diedit.',
+                                'success'
+                            )
+                            window.LaravelDataTables["roles-table"].ajax.reload()
+                            modalConfigurePermission.hide()
+                        }
+                    })
+
+                })
             }
-        });
+        })
+
+        $('#roles-table')
+            .on('processing.dt', function(e, settings, processing) {
+                if (settings) {
+                    $('#roles-table_processing').css('display', 'none')
+                }
+            })
     </script>
 @endpush

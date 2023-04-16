@@ -4,10 +4,14 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\UserAccountController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Management\MenuManagementController;
+use App\Http\Controllers\Management\RequestTypeController;
 use App\Http\Controllers\Management\RoleManagementController;
 use App\Http\Controllers\Management\UserManagementController;
+use App\Http\Controllers\RequestItemController;
+use App\Http\Controllers\UserRequestController;
 use App\Http\Requests\UserManagementRequest;
 use App\Models\Menu;
+use App\Models\RequestType;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
@@ -34,21 +38,29 @@ Route::middleware(['auth'])->group(function () {
     // dashboard prefix
     Route::prefix('dashboard')->group(function () {
         Route::view('/', 'dashboard.index')->name('dashboard');
+    });
 
-        Route::group(['prefix' => 'management', 'as' => 'management.'], function () {
-            // User Management
-            Route::model('user', User::class);
-            Route::resource('user', UserManagementController::class);
+    Route::group(['prefix' => 'management', 'as' => 'management.'], function () {
+        // User Management
+        Route::model('user', User::class);
+        Route::resource('user', UserManagementController::class);
 
-            // Role Management
-            Route::model('role', Role::class);
-            Route::resource('role', RoleManagementController::class);
-            Route::put('role/{role}/permission', [RoleManagementController::class, 'updatePermissions'])->name('role.updatePermission');
+        // Role Management
+        Route::model('role', Role::class);
+        Route::resource('role', RoleManagementController::class);
+        Route::put('role/{role}/permission', [RoleManagementController::class, 'updatePermissions'])->name('role.updatePermission');
 
-            // Menu Management
-            Route::model('menu', Menu::class);
-            Route::resource('menu', MenuManagementController::class);
-        });
+        // Menu Management
+        Route::model('menu', Menu::class);
+        Route::resource('menu', MenuManagementController::class);
+
+        // Request Type Management
+        Route::model('request', RequestType::class);
+        Route::resource('request-type', RequestTypeController::class, [
+            'parameters' => [
+                'request-type' => 'requestType'
+            ]
+        ]);
     });
 
     Route::group(['prefix' => 'account', 'as' => 'account.'], function () {
@@ -56,6 +68,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('profile', [UserAccountController::class, 'index'])->name('profile.index');
         Route::put('profile/{user}', [UserAccountController::class, 'edit'])->name('profile.edit');
         Route::put('profile/{user}/password', [UserAccountController::class, 'updatePassword'])->name('profile.changePassword');
+    });
+
+    Route::group(['prefix' => 'permohonan', 'as' => 'permohonan.'], function () {
+        // Permohonan user
+        Route::get('user', [UserRequestController::class, 'index'])->name('user.index');
+        Route::post('user', [UserRequestController::class, 'store'])->name('user.store');
+
+        // Permohonan user item
+        Route::post('user/items/{id}', [RequestItemController::class, 'store'])->name('item.store');
     });
 
     // logout

@@ -38,11 +38,11 @@ class RolesDataTable extends DataTable
             })
             ->editColumn('created_at', function ($role) {
                 $formatedDate = Carbon::parse($role->created_at);
-                return $formatedDate->format('l, d-m-Y, h:i:s A');
+                return $formatedDate->format('d M Y');
             })
             ->editColumn('updated_at', function ($role) {
                 $formatedDate = Carbon::parse($role->updated_at);
-                return $formatedDate->format('l, d-m-Y, h:i:s A');
+                return $formatedDate->format('d M Y');
             })
             ->addIndexColumn()
             ->setRowId('id');

@@ -37,11 +37,11 @@ class MenusDataTable extends DataTable
             })
             ->editColumn('created_at', function ($menu) {
                 $formatedDate = Carbon::parse($menu->created_at);
-                return $formatedDate->format('l, d-m-Y, h:i:s A');
+                return $formatedDate->format('d M Y');
             })
             ->editColumn('updated_at', function ($menu) {
                 $formatedDate = Carbon::parse($menu->updated_at);
-                return $formatedDate->format('l, d-m-Y, h:i:s A');
+                return $formatedDate->format('d M Y');
             })
             ->editColumn('url', function ($menu) {
                 return "<a href=" . $menu->url . " class='badge badge-light fw-bold'>" . $menu->url  . "</a>";

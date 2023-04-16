@@ -36,4 +36,24 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function requests()
+    {
+        return $this->hasMany(Request::class, 'id_user');
+    }
+
+    public function helpdeskRequests()
+    {
+        return $this->hasMany(Request::class, 'id_helpdesk');
+    }
+
+    public function spvRequests()
+    {
+        return $this->hasMany(Request::class, 'id_spv');
+    }
+
+    public function workerRequests()
+    {
+        return $this->hasMany(Request::class, 'id_worker');
+    }
 }

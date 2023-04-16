@@ -16,7 +16,7 @@ class MenuManagementController extends Controller
 {
     public function index(MenusDataTable $dataTables)
     {
-        return $dataTables->render('dashboard.management.menu');
+        return $dataTables->render('management.menu');
     }
 
     /**
@@ -28,7 +28,7 @@ class MenuManagementController extends Controller
     {
         $menus = Menu::where('root', null)->get();
         $menu = null;
-        return view('dashboard.management.menuCreateUpdate', compact('menu', 'menus'));
+        return view('management.menuCreateUpdate', compact('menu', 'menus'));
     }
 
     /**
@@ -73,7 +73,7 @@ class MenuManagementController extends Controller
     public function edit(Menu $menu)
     {
         $menus = Menu::where('root', null)->get();
-        return view('dashboard.management.menuCreateUpdate', compact('menu', 'menus'));
+        return view('management.menuCreateUpdate', compact('menu', 'menus'));
     }
 
     /**

@@ -22,39 +22,37 @@ class PermissionToRole extends Seeder
         $helpdesk = Role::find(5);
 
         // user management
-        $admin->givePermissionTo('read /dashboard/management/user');
-        $admin->givePermissionTo('create /dashboard/management/user');
-        $admin->givePermissionTo('update /dashboard/management/user');
-        $admin->givePermissionTo('delete /dashboard/management/user');
+        $admin->givePermissionTo('read /management/user');
+        $admin->givePermissionTo('create /management/user');
+        $admin->givePermissionTo('update /management/user');
+        $admin->givePermissionTo('delete /management/user');
         // role management
-        $admin->givePermissionTo('read /dashboard/management/role');
-        $admin->givePermissionTo('create /dashboard/management/role');
-        $admin->givePermissionTo('update /dashboard/management/role');
-        $admin->givePermissionTo('delete /dashboard/management/role');
+        $admin->givePermissionTo('read /management/role');
+        $admin->givePermissionTo('create /management/role');
+        $admin->givePermissionTo('update /management/role');
+        $admin->givePermissionTo('delete /management/role');
         // menu management
-        $admin->givePermissionTo('read /dashboard/management/menu');
-        $admin->givePermissionTo('create /dashboard/management/menu');
-        $admin->givePermissionTo('update /dashboard/management/menu');
-        $admin->givePermissionTo('delete /dashboard/management/menu');
+        $admin->givePermissionTo('read /management/menu');
+        $admin->givePermissionTo('create /management/menu');
+        $admin->givePermissionTo('update /management/menu');
+        $admin->givePermissionTo('delete /management/menu');
+        // request type management
+        $admin->givePermissionTo('read /management/request-type');
+        $admin->givePermissionTo('create /management/request-type');
+        $admin->givePermissionTo('update /management/request-type');
+        $admin->givePermissionTo('delete /management/request-type');
         // other
         $admin->givePermissionTo('read /dashboard');
-        $admin->givePermissionTo('read /dashboard/management');
-        $admin->givePermissionTo('read /dashboard/spv');
+        $admin->givePermissionTo('read /management');
+        $admin->givePermissionTo('read /permohonan');
 
         $user->givePermissionTo('read /dashboard');
-        $user->givePermissionTo('read /dashboard/management');
-        $user->givePermissionTo('read /dashboard/spv');
+        $user->givePermissionTo('read /permohonan/user');
 
         $spv->givePermissionTo('read /dashboard');
-        $spv->givePermissionTo('read /dashboard/management');
-        $spv->givePermissionTo('read /dashboard/spv');
 
         $worker->givePermissionTo('read /dashboard');
-        $worker->givePermissionTo('read /dashboard/management');
-        $worker->givePermissionTo('read /dashboard/spv');
 
         $helpdesk->givePermissionTo('read /dashboard');
-        $helpdesk->givePermissionTo('read /dashboard/management');
-        $helpdesk->givePermissionTo('read /dashboard/spv');
     }
 }

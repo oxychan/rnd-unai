@@ -2,18 +2,18 @@
 
 namespace App\DataTables;
 
-use App\Models\User;
-use GrahamCampbell\ResultType\Success;
-use Illuminate\Database\Eloquent\Builder as QueryBuilder;
-use Yajra\DataTables\EloquentDataTable;
-use Yajra\DataTables\Html\Builder as HtmlBuilder;
+use Carbon\Carbon;
+use App\Models\RequestType;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
+use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use Yajra\DataTables\Html\Builder as HtmlBuilder;
+use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 
-class UserDataTable extends DataTable
+class RequestTypesDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -24,38 +24,37 @@ class UserDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', function ($user) {
+            ->addColumn('action', function ($requestType) {
                 return "<div class='dropdown'>
                             <button class='btn btn-light btn-active-light-primary btn-sm dropdown-toggle' type='button' id='actionButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                             Action
                             </button>
                             <div class='dropdown-menu' aria-labelledby='actionButton'>
-                                <a class='dropdown-item px-3' href='javascript:void(0)' id='editUser' data-id='" . $user->id . "'>Edit</a>
-                                <a class='dropdown-item px-3' href='javascript:void(0)' id='deleteUser' data-id='" . $user->id . "'>Hapus</a>
+                                <a class='dropdown-item px-3' href='javascript:void(0)' id='editRequestType' data-id='" . $requestType->id . "'>Edit</a>
+                                <a class='dropdown-item px-3' href='javascript:void(0)' id='deleteRequestType' data-id='" . $requestType->id . "'>Hapus</a>
                             </div>
                         </div>";
             })
-            ->addColumn('role', function ($user) {
-                return '<div class="badge badge-light-info fw-bold">' . $user->roles->pluck('name')[0] . '</div>';
+            ->editColumn('created_at', function ($requestType) {
+                $formatedDate = Carbon::parse($requestType->created_at);
+                return $formatedDate->format('d M Y');
             })
-            ->addColumn('avatar', function ($user) {
-                $photoPath = asset('assets/media/avatars/' . $user->avatar);
-                return '<div class="symbol symbol-50px me-5">
-                            <img alt="Logo" src="' . $photoPath . '" />
-                        </div>';
+            ->editColumn('updated_at', function ($requestType) {
+                $formatedDate = Carbon::parse($requestType->updated_at);
+                return $formatedDate->format('d M Y');
             })
+            ->rawColumns(['action', 'created_at', 'updated_at'])
             ->addIndexColumn()
-            ->rawColumns(['action', 'avatar', 'role'])
             ->setRowId('id');
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\User $model
+     * @param \App\Models\RequestType $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(User $model): QueryBuilder
+    public function query(RequestType $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -68,12 +67,12 @@ class UserDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('user-table')
+            ->setTableId('requesttypes-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
-            ->serverSide()
             ->orderBy(1)
+            ->serverSide()
             ->buttons([
                 Button::make('excel'),
                 Button::make('csv'),
@@ -94,23 +93,9 @@ class UserDataTable extends DataTable
         return [
             Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false),
             Column::make('name')->title('Name'),
-            Column::make('username')->title('Username'),
-            Column::make('email')->title('Email'),
-            Column::make('telp')->title('Phone Number'),
-            Column::computed('role')
-                ->title('Role')
-                ->exportable(false)
-                ->printable(false)
-                ->width(60)
-                ->addClass('text-center'),
-            Column::computed('avatar')
-                ->title('Avatar')
-                ->exportable(false)
-                ->printable(false)
-                ->width(60)
-                ->addClass('text-center'),
+            Column::make('created_at')->title('Created At'),
+            Column::make('updated_at')->title('Updated At'),
             Column::computed('action')
-                ->title('Action')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)
@@ -125,6 +110,6 @@ class UserDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'User_' . date('YmdHis');
+        return 'RequestTypes_' . date('YmdHis');
     }
 }

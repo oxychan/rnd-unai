@@ -44,10 +44,11 @@ class UpdatePermissionRequest extends FormRequest
         $menus = Menu::all();
 
         foreach ($menus as $menu) {
-            $request["{$menu->name}_read"] = filter_var($this->input("{$menu->name}_read"), FILTER_VALIDATE_BOOLEAN);
-            $request["{$menu->name}_update"] = filter_var($this->input("{$menu->name}_update"), FILTER_VALIDATE_BOOLEAN);;
-            $request["{$menu->name}_create"] = filter_var($this->input("{$menu->name}_create"), FILTER_VALIDATE_BOOLEAN);;
-            $request["{$menu->name}_delete"] = filter_var($this->input("{$menu->name}_delete"), FILTER_VALIDATE_BOOLEAN);;
+            $menuName = str_replace(' ', '_', $menu->name);
+            $request["{$menuName}_read"] = filter_var($this->input("{$menuName}_read"), FILTER_VALIDATE_BOOLEAN);
+            $request["{$menuName}_update"] = filter_var($this->input("{$menuName}_update"), FILTER_VALIDATE_BOOLEAN);;
+            $request["{$menuName}_create"] = filter_var($this->input("{$menuName}_create"), FILTER_VALIDATE_BOOLEAN);;
+            $request["{$menuName}_delete"] = filter_var($this->input("{$menuName}_delete"), FILTER_VALIDATE_BOOLEAN);;
         }
 
         $this->merge($request);

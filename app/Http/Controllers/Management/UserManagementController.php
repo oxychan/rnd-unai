@@ -21,7 +21,7 @@ class UserManagementController extends Controller
      */
     public function index(UserDataTable $dataTables)
     {
-        return $dataTables->render('dashboard.management.user');
+        return $dataTables->render('management.user');
     }
 
     /**
@@ -33,7 +33,7 @@ class UserManagementController extends Controller
     {
         $roles = Role::all();
         $user = null;
-        return view('dashboard.management.userCreateUpdate', compact('roles', 'user'));
+        return view('management.userCreateUpdate', compact('roles', 'user'));
     }
 
     /**
@@ -85,7 +85,7 @@ class UserManagementController extends Controller
     public function edit(User $user)
     {
         $roles = Role::all();
-        return view('dashboard.management.userCreateUpdate', compact('roles', 'user'));
+        return view('management.userCreateUpdate', compact('roles', 'user'));
     }
 
     /**

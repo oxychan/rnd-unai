@@ -21,7 +21,7 @@ class RoleManagementController extends Controller
      */
     public function index(RolesDataTable $dataTables)
     {
-        return $dataTables->render('dashboard.management.role');
+        return $dataTables->render('management.role');
     }
 
     /**
@@ -32,7 +32,7 @@ class RoleManagementController extends Controller
     public function create()
     {
         $role = null;
-        return view('dashboard.management.roleCreateUpdate', compact('role'));
+        return view('management.roleCreateUpdate', compact('role'));
     }
 
     /**
@@ -45,7 +45,7 @@ class RoleManagementController extends Controller
     {
         try {
             $request['name'] = strtolower($request->name);
-            $role = Role::create($request->all());
+            Role::create($request->all());
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Gagal menambahkan role!'
@@ -66,7 +66,7 @@ class RoleManagementController extends Controller
     public function show(Role $role)
     {
         $menus = Menu::all();
-        return view('dashboard.management.roleConfigurePermission', compact('role', 'menus'));
+        return view('management.roleConfigurePermission', compact('role', 'menus'));
     }
 
     /**
@@ -77,7 +77,7 @@ class RoleManagementController extends Controller
      */
     public function edit(Role $role)
     {
-        return view('dashboard.management.roleCreateUpdate', compact('role'));
+        return view('management.roleCreateUpdate', compact('role'));
     }
 
     /**
@@ -132,25 +132,18 @@ class RoleManagementController extends Controller
             $permissions = [];
 
             foreach ($menus as $menu) {
+                $menuName = str_replace(' ', '_', $menu->name);
 
-                if ($request["{$menu->name}_read"]) {
-                    $permissions[] =  "read {$menu->url}";
-                }
+                $actions = ['read', 'update', 'create', 'delete'];
 
-                if ($request["{$menu->name}_update"]) {
-                    $permissions[] = "update {$menu->url}";
-                }
+                foreach ($actions as $action) {
+                    if ($request["{$menuName}_{$action}"]) {
+                        $permissions[] = "{$action} {$menu->url}";
 
-                if ($request["{$menu->name}_create"]) {
-                    $permissions[] = "create {$menu->url}";
-                }
-
-                if ($request["{$menu->name}_delete"]) {
-                    $permissions[] = "delete {$menu->url}";
-                }
-
-                if ($menu->root != null) {
-                    $permissions[] = "read {$menu->parent->url}";
+                        if ($menu->root != null) {
+                            $permissions[] = "read {$menu->parent->url}";
+                        }
+                    }
                 }
             }
 

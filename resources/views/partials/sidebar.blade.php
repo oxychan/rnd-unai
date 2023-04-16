@@ -25,35 +25,49 @@
                 data-kt-menu="true" data-kt-menu-expand="false">
                 @foreach (getMenus() as $menu)
                     @can('read ' . $menu->url)
-                        <div data-kt-menu-trigger="click"
-                            class="menu-item {{ $menu->subMenus->count() > 0 ? 'menu-accordion' : '' }} {{ isParentExpanded($menu->url) ? 'here show' : '' }}">
-                            <span class="menu-link">
-                                <span class="menu-icon">
-                                    <i class="{{ $menu->icon }}"></i>
+                        @if ($menu->subMenus->count() > 0)
+                            <div data-kt-menu-trigger="click"
+                                class="menu-item menu-accordion {{ isParentExpanded($menu->url) ? 'here show' : '' }}">
+                                <span class="menu-link">
+                                    <span class="menu-icon">
+                                        <i class="{{ $menu->icon }}"></i>
+                                    </span>
+                                    <span class="menu-title">{{ $menu->name }}</span>
+                                    @if ($menu->subMenus->count() > 0)
+                                        <span class="menu-arrow"></span>
+                                    @endif
                                 </span>
-                                <span class="menu-title">{{ $menu->name }}</span>
                                 @if ($menu->subMenus->count() > 0)
-                                    <span class="menu-arrow"></span>
+                                    <div class="menu-sub menu-sub-accordion">
+                                        @foreach ($menu->subMenus as $subMenu)
+                                            @can('read ' . $subMenu->url)
+                                                <div class="menu-item">
+                                                    <a class="menu-link {{ url()->current() == url($subMenu->url) ? 'active' : '' }}"
+                                                        href="{{ $subMenu->url }}">
+                                                        <span class="menu-icon">
+                                                            <i class="{{ $subMenu->icon }}"></i>
+                                                        </span>
+                                                        <span class="menu-title">{{ $subMenu->name }}</span>
+                                                    </a>
+                                                </div>
+                                            @endcan
+                                        @endforeach
+                                    </div>
                                 @endif
-                            </span>
-                            @if ($menu->subMenus->count() > 0)
-                                <div class="menu-sub menu-sub-accordion">
-                                    @foreach ($menu->subMenus as $subMenu)
-                                        @can('read ' . $subMenu->url)
-                                            <div class="menu-item">
-                                                <a class="menu-link {{ url()->current() == url($subMenu->url) ? 'active' : '' }}"
-                                                    href="{{ $subMenu->url }}">
-                                                    <span class="menu-icon">
-                                                        <i class="{{ $subMenu->icon }}"></i>
-                                                    </span>
-                                                    <span class="menu-title">{{ $subMenu->name }}</span>
-                                                </a>
-                                            </div>
-                                        @endcan
-                                    @endforeach
-                                </div>
-                            @endif
-                        </div>
+                            </div>
+                        @else
+                            <div class="menu-item">
+                                <!--begin:Menu link-->
+                                <a class="menu-link {{ url()->current() == url($menu->url) ? 'active' : '' }}"
+                                    href="{{ $menu->url }}">
+                                    <span class="menu-icon">
+                                        <i class="{{ $menu->icon }}"></i>
+                                    </span>
+                                    <span class="menu-title">{{ $menu->name }}</span>
+                                </a>
+                                <!--end:Menu link-->
+                            </div>
+                        @endif
                     @endcan
                 @endforeach
             </div>

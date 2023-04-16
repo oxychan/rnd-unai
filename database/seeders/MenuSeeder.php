@@ -18,49 +18,65 @@ class MenuSeeder extends Seeder
         Menu::create([
             'name' => 'Dashboard',
             'url' => '/dashboard',
-            'icon' => 'fas fa-list',
+            'icon' => 'fa-solid fa-house',
             'root' => null,
-            'order' => 0,
-        ]);
-
-        Menu::create([
-            'name' => 'User',
-            'url' => '/dashboard/management/user',
-            'icon' => 'fas fa-list',
-            'root' => 1,
-            'order' => 0,
-        ]);
-
-        Menu::create([
-            'name' => 'Role',
-            'url' => '/dashboard/management/role',
-            'icon' => 'fas fa-list',
-            'root' => 1,
-            'order' => 0,
-        ]);
-
-        Menu::create([
-            'name' => 'Menu',
-            'url' => '/dashboard/management/menu',
-            'icon' => 'fas fa-list',
-            'root' => 1,
-            'order' => 0,
-        ]);
-
-        Menu::create([
-            'name' => 'SPV',
-            'url' => '/dashboard/spv',
-            'icon' => 'fas fa-list',
-            'root' => 1,
             'order' => 0,
         ]);
 
         Menu::create([
             'name' => 'Management',
-            'url' => '/dashboard/management',
-            'icon' => 'fas fa-list',
+            'url' => '/management',
+            'icon' => 'fa-solid fa-bars-progress',
             'root' => null,
+            'order' => 1,
+        ]);
+
+        Menu::create([
+            'name' => 'Permohonan',
+            'url' => '/permohonan',
+            'icon' => 'fa-solid fa-circle-info',
+            'root' => null,
+            'order' => 3
+        ]);
+
+        Menu::create([
+            'name' => 'User',
+            'url' => '/management/user',
+            'icon' => 'fa-solid fa-user',
+            'root' => 2,
             'order' => 0,
+        ]);
+
+        Menu::create([
+            'name' => 'Role',
+            'url' => '/management/role',
+            'icon' => 'fa-solid fa-user-tie',
+            'root' => 2,
+            'order' => 1,
+        ]);
+
+        Menu::create([
+            'name' => 'Menu',
+            'url' => '/management/menu',
+            'icon' => 'fa-solid fa-bars',
+            'root' => 2,
+            'order' => 2,
+        ]);
+
+        Menu::create([
+            'name' => 'Jenis Permohonan',
+            'url' => '/management/request-type',
+            'icon' => 'fa-solid fa-keyboard',
+            'root' => 2,
+            'order' => 3,
+        ]);
+
+        Menu::create([
+            'name' => 'Permohonan Saya',
+            'url' => '/permohonan/user',
+            'icon' => 'fa-solid fa-circle-info',
+            'root' => null,
+            'order' => 3,
         ]);
     }
 }
