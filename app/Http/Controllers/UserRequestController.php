@@ -16,18 +16,19 @@ class UserRequestController extends Controller
     public function index(UserRequestDataTable $dataTable)
     {
         $user = Auth::user();
-        $requestTypes = RequestType::all();
+
         // display the data tables with data from current user
-        return $dataTable->with(['user' => $user])->render('request.user.index', compact('requestTypes'));
+        return $dataTable->with(['user' => $user])->render('request.user.index');
     }
 
     public function create()
     {
+        $requestTypes = RequestType::all();
+        return view('request.user.requestCreateUpdate', compact('requestTypes'));
     }
 
     public function store(UserReqRequest $request)
     {
-        // dd($request->all());
         try {
             $currentUser = Auth::user();
 
@@ -51,5 +52,15 @@ class UserRequestController extends Controller
                 'error' => $e->getMessage(),
             ], 500);
         }
+    }
+
+    public function edit($id)
+    {
+        $currentReq = ModelsRequest::find($id);
+        return view('request.user.requestDetail', compact('currentReq'));
+    }
+
+    public function update()
+    {
     }
 }

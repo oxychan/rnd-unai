@@ -10,6 +10,7 @@ use App\Http\Controllers\Management\UserManagementController;
 use App\Http\Controllers\RequestItemController;
 use App\Http\Controllers\UserRequestController;
 use App\Http\Requests\UserManagementRequest;
+use App\Http\Requests\UserReqRequest;
 use App\Models\Menu;
 use App\Models\RequestType;
 use App\Models\User;
@@ -74,6 +75,8 @@ Route::middleware(['auth'])->group(function () {
         // Permohonan user
         Route::get('user', [UserRequestController::class, 'index'])->name('user.index');
         Route::post('user', [UserRequestController::class, 'store'])->name('user.store');
+        Route::get('user/create', [UserRequestController::class, 'create'])->name('user.create');
+        Route::get('user/edit/{id}', [UserRequestController::class, 'edit'])->name('user.edit');
 
         // Permohonan user item
         Route::post('user/items/{id}', [RequestItemController::class, 'store'])->name('item.store');
