@@ -201,13 +201,32 @@
         function showDetail(id) {
             $.ajax({
                 method: 'GET',
-                url: 'user/edit/' + id,
+                url: 'user/show/' + id,
                 success: function(response) {
                     const modalDialog = $('#modalDetailRequest').find('.modal-dialog')
                     modalDialog.html(response)
                     modalDetailRequest.show()
+
+                    edit(id)
                 }
             })
+
+            function edit(id) {
+                $('#btnRevise').on('click', function() {
+                    $.ajax({
+                        method: 'GET',
+                        url: 'user/edit/' + id,
+                        success: function(response) {
+                            modalDetailRequest.hide()
+
+                            const modalDialog = $('#modalCreateUpdateRequest').find('.modal-dialog')
+                            modalDialog.html(response)
+
+                            modalCreateUpdateRequest.show()
+                        }
+                    })
+                })
+            }
         }
 
         $('#userrequest-table')

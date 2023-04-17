@@ -24,7 +24,8 @@ class UserRequestController extends Controller
     public function create()
     {
         $requestTypes = RequestType::all();
-        return view('request.user.requestCreateUpdate', compact('requestTypes'));
+        $currentReq = null;
+        return view('request.user.requestCreateUpdate', compact('currentReq', 'requestTypes'));
     }
 
     public function store(UserReqRequest $request)
@@ -54,10 +55,17 @@ class UserRequestController extends Controller
         }
     }
 
-    public function edit($id)
+    public function show($id)
     {
         $currentReq = ModelsRequest::find($id);
         return view('request.user.requestDetail', compact('currentReq'));
+    }
+
+    public function edit($id)
+    {
+        $requestTypes = RequestType::all();
+        $currentReq = ModelsRequest::find($id);
+        return view('request.user.requestCreateUpdate', compact('currentReq', 'requestTypes'));
     }
 
     public function update()

@@ -76,7 +76,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('user', [UserRequestController::class, 'index'])->name('user.index');
         Route::post('user', [UserRequestController::class, 'store'])->name('user.store');
         Route::get('user/create', [UserRequestController::class, 'create'])->name('user.create');
+        Route::get('user/show/{id}', [UserRequestController::class, 'show'])->name('user.show');
         Route::get('user/edit/{id}', [UserRequestController::class, 'edit'])->name('user.edit');
+        Route::put('user/update/{id}', [UserRequestController::class, 'update'])->name('user.update');
 
         // Permohonan user item
         Route::post('user/items/{id}', [RequestItemController::class, 'store'])->name('item.store');

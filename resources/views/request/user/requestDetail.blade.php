@@ -141,7 +141,7 @@
                                     <div class="text-gray-600">
                                         <p>{{ $currentReq->revise_note }}</p>
                                     </div>
-                                    <button class="btn btn-warning">Revisi</button>
+                                    <button class="btn btn-warning" id="btnRevise">Revisi</button>
                                 @endif
                             </div>
                             <!--end::Wrapper-->
