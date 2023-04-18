@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Request;
 use App\Models\RequestItem;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,16 +16,18 @@ class RequestItemSeeder extends Seeder
      */
     public function run()
     {
-        RequestItem::create([
-            'subject' => 'Kursi',
-            'description' => 'Kaki patah satu',
-            'id_request' => 1
-        ]);
+        foreach (Request::all() as $value) {
+            RequestItem::create([
+                'subject' => 'Item 1',
+                'description' => 'Item ke satu list permohonan',
+                'id_request' => $value->id
+            ]);
 
-        RequestItem::create([
-            'subject' => 'Meja',
-            'description' => 'Daun meja rusak',
-            'id_request' => 1
-        ]);
+            RequestItem::create([
+                'subject' => 'Item 2',
+                'description' => 'Item ke dua list permohonan',
+                'id_request' => $value->id
+            ]);
+        }
     }
 }

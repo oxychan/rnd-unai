@@ -2,15 +2,16 @@
 
 namespace App\DataTables;
 
+use Carbon\Carbon;
 use App\Models\Request;
-use Illuminate\Database\Eloquent\Builder as QueryBuilder;
-use Yajra\DataTables\EloquentDataTable;
-use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
+use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use Yajra\DataTables\Html\Builder as HtmlBuilder;
+use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 
 class UserRequestDataTable extends DataTable
 {
@@ -23,11 +24,15 @@ class UserRequestDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', function ($user) {
-                return "<a class='btn btn-info' >Detail</a>";
+            ->addColumn('action', function ($req) {
+                return "<a class='btn btn-info' id='btnDetail' data-id='" . $req->id . "'>Detail</a>";
             })
             ->editColumn('status', function ($req) {
                 return setStatus($req->status);
+            })
+            ->editColumn('updated_at', function ($req) {
+                $formatedDate = Carbon::parse($req->updated_at);
+                return $formatedDate->format('d M Y');
             })
             ->addIndexColumn()
             ->rawColumns(['action', 'status'])
@@ -84,6 +89,7 @@ class UserRequestDataTable extends DataTable
             Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false),
             Column::make('title')->title('Judul'),
             Column::make('description')->title('Deskripsi'),
+            Column::make('updated_at')->title('Tgl Pengajuan'),
             Column::make('status')->title('Status'),
             Column::computed('action')
                 ->exportable(false)

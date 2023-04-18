@@ -30,4 +30,26 @@ class RequestItemController extends Controller
             'message' => 'Berhasil mengirimkan permohonan Item!',
         ], 201);
     }
+
+    public function update(ReqItemsRequest $request)
+    {
+        try {
+            foreach ($request['subject'] as $key => $value) {
+                $reqItem = RequestItem::findOrFail($request['id'][$key]);
+                $reqItem->subject = $request['subject'][$key];
+                $reqItem->description = $request['description'][$key];
+                $reqItem->save();
+            }
+        } catch (Exception $e) {
+            dd($e->getMessage());
+            return response()->json([
+                'message' => 'Gagal mengupdate permohonan item!',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+
+        return response()->json([
+            'message' => 'Berhasil mengupdate permohonan Item!',
+        ], 200);
+    }
 }
