@@ -71,6 +71,16 @@
                                     <div class="text-gray-600">
                                         <p>{{ $currentReq->description }}</p>
                                     </div>
+
+                                    <div class="fw-bold mt-5 mb-2">File</div>
+                                    <div class="text-gray-600">
+                                        @if ($currentReq->file_name)
+                                            <a
+                                                href="{{ asset('assets/media/files/permohonan/' . $currentReq->file_name) }}">Lihat</a>
+                                        @else
+                                            <p>Tidak Ada</p>
+                                        @endif
+                                    </div>
                                 </div>
                                 <div class="separator my-2"></div>
                                 <div class="d-flex flex-column">

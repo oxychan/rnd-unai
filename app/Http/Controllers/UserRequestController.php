@@ -7,6 +7,7 @@ use App\Http\Requests\UserReqRequest;
 use App\Models\Request as ModelsRequest;
 use App\Models\RequestType;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,11 +44,20 @@ class UserRequestController extends Controller
 
             $requestUser =  ModelsRequest::create($newRequest);
 
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $fileName = $currentUser->name . '_' . Carbon::now()->format('d-m-Y') . '_' . $file->getClientOriginalName();
+                $file->move(public_path('assets/media/files/permohonan/'), $fileName);
+                $requestUser->file_name = $fileName;
+                $requestUser->save();
+            }
+
             return response()->json([
                 'message' => 'Berhasil mengirimkan permohonan!',
                 'request_id' => $requestUser->id
             ], 201);
         } catch (Exception $e) {
+            dd($e->getMessage());
             return response()->json([
                 'message' => 'Gagal mengirimkan permohonan!',
                 'error' => $e->getMessage(),
