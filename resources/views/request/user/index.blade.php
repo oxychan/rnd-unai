@@ -223,6 +223,69 @@
                             modalDialog.html(response)
 
                             modalCreateUpdateRequest.show()
+
+                            $('#submitBtn').on('click', function() {
+                                $('#formRequest').submit()
+                            })
+
+                            update()
+                        }
+                    })
+                })
+            }
+
+            function update(id) {
+                $('#formRequest').on('submit', function(e) {
+                    e.preventDefault()
+
+                    const form = this
+                    const formData = new FormData(form)
+                    const url = this.getAttribute('action')
+
+                    $.ajax({
+                        method: 'POST',
+                        url,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                        },
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            updateItems(response.request_id)
+                            $('#formRequestList').submit()
+                            form.reset()
+                        }
+                    })
+                })
+            }
+
+            function updateItems(id) {
+                console.log('updated items');
+                $('#formRequestList').on('submit', function(e) {
+                    e.preventDefault()
+
+                    const form = this
+                    const formDataItems = new FormData(form)
+
+                    $.ajax({
+                        method: 'POST',
+                        url: 'user/items/' + id,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                        },
+                        data: formDataItems,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            Swal.fire(
+                                'Added!',
+                                'Permohonan berhasil diperbarui.',
+                                'success'
+                            )
+                            window.LaravelDataTables["userrequest-table"].ajax.reload()
+                            modalCreateUpdateRequest.hide()
+                            form.reset()
                         }
                     })
                 })

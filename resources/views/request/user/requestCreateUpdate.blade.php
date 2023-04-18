@@ -28,6 +28,10 @@
             method="POST"
             action="{{ $currentReq != null ? route('permohonan.user.update', ['id' => $currentReq->id]) : route('permohonan.user.store') }}">
             @csrf
+
+            @if ($currentReq != null)
+                @method('PUT')
+            @endif
             <div class="modal-body">
                 <div class="mb-7">
                     <input type="hidden" name="id" id="id">
@@ -129,6 +133,8 @@
                         </div> <br>
                     @else
                         @foreach ($currentReq->items as $item)
+                            <input type="text" class="form-control" id="id" name="id[]"
+                                placeholder="e.g: Komputer" value={{ $item->id }} hidden />
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label">Subyek</label>
                                 <div class="col-lg-9">

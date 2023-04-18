@@ -82,6 +82,7 @@ Route::middleware(['auth'])->group(function () {
 
         // Permohonan user item
         Route::post('user/items/{id}', [RequestItemController::class, 'store'])->name('item.store');
+        Route::put('user/items/{id}', [RequestItemController::class, 'update'])->name('item.update');
     });
 
     // logout

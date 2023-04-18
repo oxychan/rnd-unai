@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\UserRequestDataTable;
-use App\Http\Requests\UserReqRequest;
-use App\Models\Request as ModelsRequest;
-use App\Models\RequestType;
-use App\Models\User;
-use Carbon\Carbon;
 use Exception;
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\RequestType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\UserReqRequest;
+use Illuminate\Support\Facades\Storage;
+use App\DataTables\UserRequestDataTable;
+use App\Models\Request as ModelsRequest;
 
 class UserRequestController extends Controller
 {
@@ -46,7 +47,7 @@ class UserRequestController extends Controller
 
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
-                $fileName = $currentUser->name . '_' . Carbon::now()->format('d-m-Y') . '_' . $file->getClientOriginalName();
+                $fileName = $currentUser->name . '_' . Carbon::now()->format('d-m-Y-h-i-s') . '_' . $file->getClientOriginalName();
                 $file->move(public_path('assets/media/files/permohonan/'), $fileName);
                 $requestUser->file_name = $fileName;
                 $requestUser->save();
@@ -57,7 +58,6 @@ class UserRequestController extends Controller
                 'request_id' => $requestUser->id
             ], 201);
         } catch (Exception $e) {
-            dd($e->getMessage());
             return response()->json([
                 'message' => 'Gagal mengirimkan permohonan!',
                 'error' => $e->getMessage(),
@@ -78,7 +78,44 @@ class UserRequestController extends Controller
         return view('request.user.requestCreateUpdate', compact('currentReq', 'requestTypes'));
     }
 
-    public function update()
+    public function update(UserReqRequest $request, $id)
     {
+        try {
+            $currentUser = Auth::user();
+            $requestUser = ModelsRequest::findOrFail($id);
+
+            $oldFile = public_path('assets/media/files/permohonan/' . $requestUser->file_name);
+
+            $updatedRequest = $request->except('request_type', 'id_user', 'id_type', 'status');
+
+
+            $requestUser->update($updatedRequest);
+
+            $requestUser->status = 0;
+            $requestUser->save();
+
+            if ($request->hasFile('file')) {
+                // delete old file
+                if ($requestUser->file_name && file_exists($oldFile)) {
+                    unlink($oldFile);
+                }
+
+                $file = $request->file('file');
+                $fileName = $currentUser->name . '_' . Carbon::now()->format('d-m-Y-h-i-s') . '_' . $file->getClientOriginalName();
+                $file->move(public_path('assets/media/files/permohonan/'), $fileName);
+                $requestUser->file_name = $fileName;
+                $requestUser->save();
+            }
+
+            return response()->json([
+                'message' => 'Permohonan berhasil diperbarui!',
+                'request_id' => $requestUser->id,
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Gagal memperbarui permohonan!',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 }
