@@ -41,6 +41,12 @@ class PermissionToRole extends Seeder
         $admin->givePermissionTo('create /management/request-type');
         $admin->givePermissionTo('update /management/request-type');
         $admin->givePermissionTo('delete /management/request-type');
+
+        // permohonan user
+        $admin->givePermissionTo('read /permohonan/user/masuk');
+        $admin->givePermissionTo('read /permohonan/user/proses');
+        $admin->givePermissionTo('read /permohonan/user/selesai');
+
         // other
         $admin->givePermissionTo('read /dashboard');
         $admin->givePermissionTo('read /management');

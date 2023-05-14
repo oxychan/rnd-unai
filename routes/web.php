@@ -83,6 +83,13 @@ Route::middleware(['auth'])->group(function () {
         // Permohonan user item
         Route::post('user/items/{id}', [RequestItemController::class, 'store'])->name('item.store');
         Route::put('user/items/{id}', [RequestItemController::class, 'update'])->name('item.update');
+
+        // Permohonan user on admin side
+        Route::get('user/masuk', [UserRequestController::class, 'incommingRequest'])->name('user.incomming');
+        Route::get('user/proses', [UserRequestController::class, 'processedRequest'])->name('user.processed');
+        Route::get('user/selesai', [UserRequestController::class, 'doneRequest'])->name('user.done');
+
+        Route::get('user/view/{id}', [UserRequestController::class, 'showAdminSide'])->name('user.view');
     });
 
     // logout

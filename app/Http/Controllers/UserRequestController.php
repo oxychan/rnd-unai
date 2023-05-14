@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\DoneRequestDataTable;
+use App\DataTables\IncommingRequestDataTable;
+use App\DataTables\ProcessedRequestDataTable;
 use Exception;
 use Carbon\Carbon;
 use App\Models\User;
@@ -21,6 +24,21 @@ class UserRequestController extends Controller
 
         // display the data tables with data from current user
         return $dataTable->with(['user' => $user])->render('request.user.index');
+    }
+
+    public function incommingRequest(IncommingRequestDataTable $dataTable)
+    {
+        return $dataTable->render('request.admin.incomming.index');
+    }
+
+    public function processedRequest(ProcessedRequestDataTable $dataTable)
+    {
+        return $dataTable->render('request.admin.processed.index');
+    }
+
+    public function doneRequest(DoneRequestDataTable $dataTable)
+    {
+        return $dataTable->render('request.admin.done.index');
     }
 
     public function create()
@@ -69,6 +87,12 @@ class UserRequestController extends Controller
     {
         $currentReq = ModelsRequest::find($id);
         return view('request.user.requestDetail', compact('currentReq'));
+    }
+
+    public function showAdminSide($id)
+    {
+        $currentReq = ModelsRequest::find($id);
+        return view('request.admin.detail', compact('currentReq'));
     }
 
     public function edit($id)

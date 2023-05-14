@@ -78,5 +78,29 @@ class MenuSeeder extends Seeder
             'root' => null,
             'order' => 3,
         ]);
+
+        Menu::create([
+            'name' => 'Masuk',
+            'url' => '/permohonan/user/masuk',
+            'icon' => 'fa-solid fa-inboxes',
+            'root' => 3,
+            'order' => 1,
+        ]);
+
+        Menu::create([
+            'name' => 'Proses',
+            'url' => '/permohonan/user/proses',
+            'icon' => 'fa-solid fa-bars-progresse',
+            'root' => 3,
+            'order' => 2,
+        ]);
+
+        Menu::create([
+            'name' => 'Selesai',
+            'url' => '/permohonan/user/selesai',
+            'icon' => 'fa-solid fa-box-check',
+            'root' => 3,
+            'order' => 3,
+        ]);
     }
 }
