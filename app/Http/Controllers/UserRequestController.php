@@ -15,6 +15,7 @@ use App\Http\Requests\UserReqRequest;
 use Illuminate\Support\Facades\Storage;
 use App\DataTables\UserRequestDataTable;
 use App\Models\Request as ModelsRequest;
+use App\Models\RequestItem;
 
 class UserRequestController extends Controller
 {
@@ -112,6 +113,7 @@ class UserRequestController extends Controller
 
             $updatedRequest = $request->except('request_type', 'id_user', 'id_type', 'status');
 
+            $requestUser->is_revised = 0;
 
             $requestUser->update($updatedRequest);
 
@@ -128,6 +130,7 @@ class UserRequestController extends Controller
                 $fileName = $currentUser->name . '_' . Carbon::now()->format('d-m-Y-h-i-s') . '_' . $file->getClientOriginalName();
                 $file->move(public_path('assets/media/files/permohonan/'), $fileName);
                 $requestUser->file_name = $fileName;
+                $requestUser->is_revised = 0;
                 $requestUser->save();
             }
 
@@ -141,5 +144,25 @@ class UserRequestController extends Controller
                 'error' => $e->getMessage(),
             ], 500);
         }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $currentReq = ModelsRequest::find($id);
+            if ($currentReq) {
+                RequestItem::where('id_request', $currentReq->id)->delete();
+                $currentReq->delete();
+            }
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Gagal menghapus permohonan!',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+
+        return response()->json([
+            'message' => 'Permohonan berhasil dihapus!',
+        ], 200);
     }
 }

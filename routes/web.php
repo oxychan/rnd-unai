@@ -79,6 +79,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('user/show/{id}', [UserRequestController::class, 'show'])->name('user.show');
         Route::get('user/edit/{id}', [UserRequestController::class, 'edit'])->name('user.edit');
         Route::put('user/update/{id}', [UserRequestController::class, 'update'])->name('user.update');
+        Route::delete('user/{id}', [UserRequestController::class, 'destroy'])->name('user.destroy');
 
         // Permohonan user item
         Route::post('user/items/{id}', [RequestItemController::class, 'store'])->name('item.store');

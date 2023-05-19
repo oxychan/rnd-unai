@@ -39,7 +39,13 @@
                                 </div>
                             </div>
                             <div class="col-md-6 d-flex align-items-center justify-content-end">
-                                <button class="btn btn-danger">Hapus permohonan</button>
+                                <form action="{{ route('permohonan.user.destroy', $currentReq->id) }}"
+                                    id="formDeletePermohonan" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="submit" id="btnDeletePermohonan" class="btn btn-danger"
+                                        value="Hapus Permohonan" />
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -88,13 +94,16 @@
                                             id="kt_stats_widget_16_tab_link_2" data-bs-toggle="pill"
                                             href="#kt_stats_widget_16_tab_2" aria-selected="false" tabindex="-1"
                                             role="tab">
-                                            <!--begin::Icon-->
-                                            {{-- <div class="symbol symbol-50px mb-1">
-                                                <img src="{{ asset('assets/media/avatars/default.jpg') }}">
-                                            </div> --}}
-                                            <div class="nav-icon mb-3">
-                                                <i class="fa-solid fa-window-restore fs-1 p-0"></i>
-                                            </div>
+                                            @if ($currentReq->id_helpdesk != null)
+                                                <div class="symbol symbol-50px mb-1">
+                                                    <img
+                                                        src="{{ asset('assets/media/avatars/' . $currentReq->helpdesk->avatar) }}">
+                                                </div>
+                                            @else
+                                                <div class="nav-icon mb-3">
+                                                    <i class="fa-solid fa-window-restore fs-1 p-0"></i>
+                                                </div>
+                                            @endif
                                             <!--end::Icon-->
                                             <!--begin::Title-->
                                             <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">Helpdesk</span>
@@ -332,6 +341,16 @@
                                     <div class="tab-pane fade" id="kt_stats_widget_16_tab_2" role="tabpanel"
                                         aria-labelledby="#kt_stats_widget_16_tab_link_2">
                                         <!--begin::Stats-->
+                                        <div class="d-flex justify-content-end my-5">
+                                            <a href="javascript:void(0)" class="btn btn-warning mx-2"
+                                                id="btnRevise">Revisi User</a>
+                                            <a href="javascript:void(0)" class="btn btn-primary mx-2"
+                                                id="btnForward">Teruskan</a>
+                                            <a href="javascript:void(0)" class="btn btn-info mx-2"
+                                                id="btnDuplicate">Duplikasi Task</a>
+                                            <a href="javascript:void(0)" class="btn btn-success mx-2"
+                                                id="btnClose">Tutup Task</a>
+                                        </div>
                                         <div class="d-flex flex-wrap flex-stack px-4 rounded"
                                             style="border-style: solid;">
                                             <!--begin::Wrapper-->
@@ -424,8 +443,186 @@
     </div>
     <!--end::Content-->
 
+    {{-- modal for revised task --}}
+    <div class="modal fade" id="modalRevisedTask" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog mw-600px">
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <!--begin::Modal header-->
+                <div class="modal-header">
+                    <!--begin::Modal title-->
+                    <h2 id="modal-judul" style="color: white">Revisi User Task</h2>
+                    <!--end::Modal title-->
+                    <!--begin::Close-->
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2"
+                                    rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                    transform="rotate(45 7.41422 6)" fill="currentColor" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <!--end::Modal header-->
+                <!--begin::Modal body-->
+                <div class="modal-body" id="actionRevisedUserTask">
+                    <div class="card mb-5 mb-xl-10">
+                        <div class="card-body pb-0">
+                            <form action="#">
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Revise</label>
+                                    <div class="col-lg-9">
+                                        <textarea class="form-control" rows="3" id="revise_note" name="revise_note"
+                                            placeholder="e.g: Revisi bagian item" required></textarea>
+                                    </div>
+                                </div> <br>
+                                <div class="form-group row justify-content-end">
+                                    <div class="col-md-3">
+                                        <input class="btn btn-primary" type="submit" id="btnSubmitRevise"
+                                            value="Submit" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!--end::Modal body-->
+            </div>
+            <!-- end::Modal content -->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    {{-- end of modal revised task --}}
+
+    {{-- modal for forward to helpdesk --}}
+    <div class="modal fade" id="modalForwardToHelpdesk" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog mw-600px">
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <!--begin::Modal header-->
+                <div class="modal-header">
+                    <!--begin::Modal title-->
+                    <h2 id="modal-judul" style="color: white">Teruskan ke Helpdesk</h2>
+                    <!--end::Modal title-->
+                    <!--begin::Close-->
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2"
+                                    rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                    transform="rotate(45 7.41422 6)" fill="currentColor" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <!--end::Modal header-->
+                <!--begin::Modal body-->
+                <div class="modal-body" id="actionForwardToHelpdesk">
+                    <div class="card mb-5 mb-xl-10">
+                        <div class="card-body pb-0">
+                            <form action="#">
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Pilih supervisor</label>
+                                    <div class="col-lg-9">
+                                        <select class="form-control select2" id="supervisor" name="supervisor"
+                                            style="width: 100%;" required>
+                                            <option value="">Choose SPV</option>
+                                            {{-- @foreach ($menus as $menuRoot)
+                                                <option value="{{ $menuRoot->id }}"
+                                                    @if ($menu != null && $menu->root != null) {{ $menuRoot->name == $menu->parent->name ? 'selected' : '' }} @endif>
+                                                    {{ $menuRoot->name }}</option>
+                                            @endforeach --}}
+                                            <option value="test">Satu</option>
+                                            <option value="test2">Dua</option>
+                                        </select>
+                                        <span class="form-text text-muted">Please choose supervisor</span>
+                                    </div>
+                                </div> <br>
+                                <div class="form-group row justify-content-end">
+                                    <div class="col-md-3">
+                                        <input class="btn btn-primary" type="submit" id="btnSubmitRevise"
+                                            value="Teruskan" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!--end::Modal body-->
+            </div>
+            <!-- end::Modal content -->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    {{-- end of modal forward to helpdesk --}}
+
 @endsection
 
 @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script>
+        // create instance modal
+        const modalRevisedTask = new bootstrap.Modal($('#modalRevisedTask'))
+        const modalForwardToHelpdesk = new bootstrap.Modal($('#modalForwardToHelpdesk'))
+
+        $('#formDeletePermohonan').on('submit', function(e) {
+            e.preventDefault()
+            const url = this.getAttribute('action')
+
+            Swal.fire({
+                title: 'Are you sure to delete this?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        method: 'DELETE',
+                        url,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                        },
+                        success: function(response) {
+                            Swal.fire(
+                                'Deleted!',
+                                'User berhasil dihapus.',
+                                'success'
+                            ).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = '/permohonan/user/masuk';
+                                }
+                            })
+
+                        }
+                    })
+
+                }
+            })
+        })
+
+        $('#btnRevise').on('click', function() {
+            modalRevisedTask.show()
+        })
+
+        $('#btnForward').on('click', function() {
+            modalForwardToHelpdesk.show()
+        })
+    </script>
 @endpush
