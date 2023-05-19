@@ -324,13 +324,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                @if ($currentReq->status == 2 && $currentReq->is_revised)
-                                                    <div class="fw-bold mt-5 mb-2">Revisi</div>
-                                                    <div class="text-gray-600">
-                                                        <p>{{ $currentReq->revise_note }}</p>
-                                                    </div>
-                                                    <button class="btn btn-warning" id="btnRevise">Revisi</button>
-                                                @endif
                                             </div>
                                             <!--end::Wrapper-->
                                         </div>
@@ -342,16 +335,36 @@
                                         aria-labelledby="#kt_stats_widget_16_tab_link_2">
                                         <!--begin::Stats-->
                                         <div class="d-flex justify-content-end my-5">
-                                            <a href="javascript:void(0)" class="btn btn-warning mx-2"
-                                                id="btnRevise">Revisi User</a>
-                                            <a href="javascript:void(0)" class="btn btn-primary mx-2"
-                                                id="btnForward">Teruskan</a>
+                                            <button href="javascript:void(0)" class="btn btn-warning mx-2" id="btnRevise"
+                                                {{ $currentReq->is_revised == 1 ? 'disabled' : '' }}>Revisi User</button>
+                                            <button href="javascript:void(0)" class="btn btn-primary mx-2"
+                                                id="btnForward"
+                                                {{ $currentReq->id_helpdesk && $currentReq->is_helpdesk_approved ? 'disabled' : '' }}>Teruskan</button>
                                             <a href="javascript:void(0)" class="btn btn-info mx-2"
                                                 id="btnDuplicate">Duplikasi Task</a>
                                             <a href="javascript:void(0)" class="btn btn-success mx-2"
                                                 id="btnClose">Tutup Task</a>
                                         </div>
-                                        <div class="d-flex flex-wrap flex-stack px-4 rounded"
+                                        @if ($currentReq->is_revised == 1)
+                                            <div class="d-flex flex-wrap flex-stack px-4 rounded"
+                                                style="border-style: solid; border-color: yellow;">
+                                                <!--begin::Wrapper-->
+                                                <div class="d-flex flex-column flex-grow-1 pe-8">
+                                                    <div class="py-5 fs-6">
+                                                        <div class="fw-bold mt-5 mb-2">Tanggal Revisi</div>
+                                                        <div class="text-gray-600">
+                                                            {{ Carbon::parse($currentReq->updated_at)->format('d M Y') }}
+                                                        </div>
+                                                        <div class="fw-bold mt-5 mb-2">Catatan</div>
+                                                        <div class="text-gray-600">
+                                                            {{ $currentReq->revise_note }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--end::Wrapper-->
+                                            </div>
+                                        @endif
+                                        <div class="d-flex flex-wrap flex-stack px-4 rounded mt-4"
                                             style="border-style: solid;">
                                             <!--begin::Wrapper-->
                                             <div class="d-flex flex-column flex-grow-1 pe-8">
@@ -475,9 +488,12 @@
                 <div class="modal-body" id="actionRevisedUserTask">
                     <div class="card mb-5 mb-xl-10">
                         <div class="card-body pb-0">
-                            <form action="#">
+                            <form action="{{ route('permohonan.user.revise', $currentReq->id) }}" id="formRevise"
+                                method="POST">
+                                @csrf
+                                @method('PUT')
                                 <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label">Revise</label>
+                                    <label class="col-lg-3 col-form-label">Revisi</label>
                                     <div class="col-lg-9">
                                         <textarea class="form-control" rows="3" id="revise_note" name="revise_note"
                                             placeholder="e.g: Revisi bagian item" required></textarea>
@@ -535,25 +551,21 @@
                         <div class="card-body pb-0">
                             <form action="#">
                                 <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label">Pilih supervisor</label>
+                                    <label class="col-lg-3 col-form-label">Pilih helpdesk</label>
                                     <div class="col-lg-9">
-                                        <select class="form-control select2" id="supervisor" name="supervisor"
+                                        <select class="form-control select2" id="helpdesk" name="helpdesk"
                                             style="width: 100%;" required>
-                                            <option value="">Choose SPV</option>
-                                            {{-- @foreach ($menus as $menuRoot)
-                                                <option value="{{ $menuRoot->id }}"
-                                                    @if ($menu != null && $menu->root != null) {{ $menuRoot->name == $menu->parent->name ? 'selected' : '' }} @endif>
-                                                    {{ $menuRoot->name }}</option>
-                                            @endforeach --}}
-                                            <option value="test">Satu</option>
-                                            <option value="test2">Dua</option>
+                                            <option value="">Choose helpdesk</option>
+                                            @foreach ($helpdesks as $helpdesk)
+                                                <option value="{{ $helpdesk->id }}">{{ $helpdesk->name }}</option>
+                                            @endforeach
                                         </select>
-                                        <span class="form-text text-muted">Please choose supervisor</span>
+                                        <span class="form-text text-muted">Please choose helpdesk</span>
                                     </div>
                                 </div> <br>
                                 <div class="form-group row justify-content-end">
                                     <div class="col-md-3">
-                                        <input class="btn btn-primary" type="submit" id="btnSubmitRevise"
+                                        <input class="btn btn-primary" type="submit" id="btnSubmitHelpdesk"
                                             value="Teruskan" />
                                     </div>
                                 </div>
@@ -616,6 +628,36 @@
                 }
             })
         })
+
+        $('#formRevise').on('submit', function(e) {
+            e.preventDefault()
+            const form = this
+            const formData = new FormData(form)
+
+            const url = this.getAttribute('action')
+
+            $.ajax({
+                method: 'POST',
+                url,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                },
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    Swal.fire(
+                        'Revised!',
+                        'Data berhasil direvisi.',
+                        'success'
+                    )
+                    modalRevisedTask.hide()
+                    location.reload()
+                }
+            })
+
+        })
+
 
         $('#btnRevise').on('click', function() {
             modalRevisedTask.show()

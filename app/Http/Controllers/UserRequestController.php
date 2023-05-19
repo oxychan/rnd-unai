@@ -14,8 +14,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserReqRequest;
 use Illuminate\Support\Facades\Storage;
 use App\DataTables\UserRequestDataTable;
+use App\Http\Requests\UserReqRevise;
 use App\Models\Request as ModelsRequest;
 use App\Models\RequestItem;
+use Spatie\Permission\Models\Role;
 
 class UserRequestController extends Controller
 {
@@ -93,7 +95,8 @@ class UserRequestController extends Controller
     public function showAdminSide($id)
     {
         $currentReq = ModelsRequest::find($id);
-        return view('request.admin.detail', compact('currentReq'));
+        $helpdesks = Role::find(5)->users;
+        return view('request.admin.detail', compact('currentReq', 'helpdesks'));
     }
 
     public function edit($id)
@@ -118,6 +121,7 @@ class UserRequestController extends Controller
             $requestUser->update($updatedRequest);
 
             $requestUser->status = 0;
+            $requestUser->revise_note = "";
             $requestUser->save();
 
             if ($request->hasFile('file')) {
@@ -131,6 +135,7 @@ class UserRequestController extends Controller
                 $file->move(public_path('assets/media/files/permohonan/'), $fileName);
                 $requestUser->file_name = $fileName;
                 $requestUser->is_revised = 0;
+                $requestUser->revise_note = "";
                 $requestUser->save();
             }
 
@@ -144,6 +149,26 @@ class UserRequestController extends Controller
                 'error' => $e->getMessage(),
             ], 500);
         }
+    }
+
+    public function updateRequestRevise(UserReqRevise $request, $id)
+    {
+        try {
+            $currentReq = ModelsRequest::findOrFail($id);
+            $currentReq->revise_note = $request["revise_note"];
+            $currentReq->is_revised = 1;
+            $currentReq->status = 2;
+            $currentReq->save();
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Gagal mengirimm revisi!',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+
+        return response()->json([
+            'message' => 'Revisi berhasil dikirim!',
+        ], 200);
     }
 
     public function destroy($id)

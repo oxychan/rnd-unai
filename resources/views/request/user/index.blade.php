@@ -261,7 +261,6 @@
             }
 
             function updateItems(id) {
-                console.log('updated items');
                 $('#formRequestList').on('submit', function(e) {
                     e.preventDefault()
 
