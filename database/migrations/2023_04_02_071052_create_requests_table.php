@@ -26,8 +26,10 @@ return new class extends Migration
             $table->unsignedBigInteger('id_worker')->nullable();
             $table->integer('status');
             $table->boolean('is_revised')->default(0);
-            $table->boolean('is_helpdesk_approved')->default(0);
+            $table->boolean('is_spv_approved')->default(0);
+            $table->boolean('is_duplicated')->default(0);
             $table->string('revise_note')->nullable();
+            $table->string('close_note')->nullable();
             $table->timestamps();
 
             $table->foreign('id_type')->references('id')->on('request_types');

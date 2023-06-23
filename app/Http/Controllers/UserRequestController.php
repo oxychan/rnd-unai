@@ -14,7 +14,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserReqRequest;
 use Illuminate\Support\Facades\Storage;
 use App\DataTables\UserRequestDataTable;
+use App\Http\Requests\UserReqCloseTask;
 use App\Http\Requests\UserReqRevise;
+use App\Http\Requests\UserReqUpdateHelpdesk;
+use App\Http\Requests\UserReqUpdateSpv;
 use App\Models\Request as ModelsRequest;
 use App\Models\RequestItem;
 use Spatie\Permission\Models\Role;
@@ -25,23 +28,22 @@ class UserRequestController extends Controller
     {
         $user = Auth::user();
 
-        // display the data tables with data from current user
         return $dataTable->with(['user' => $user])->render('request.user.index');
     }
 
     public function incommingRequest(IncommingRequestDataTable $dataTable)
     {
-        return $dataTable->render('request.admin.incomming.index');
+        return $dataTable->render('request.helpdesk.incomming.index');
     }
 
     public function processedRequest(ProcessedRequestDataTable $dataTable)
     {
-        return $dataTable->render('request.admin.processed.index');
+        return $dataTable->render('request.helpdesk.processed.index');
     }
 
     public function doneRequest(DoneRequestDataTable $dataTable)
     {
-        return $dataTable->render('request.admin.done.index');
+        return $dataTable->render('request.helpdesk.done.index');
     }
 
     public function create()
@@ -86,17 +88,43 @@ class UserRequestController extends Controller
         }
     }
 
+    public function duplicateRequest($id)
+    {
+        try {
+            $currentReq = ModelsRequest::findOrFail($id);
+            $helpdesk = auth()->user();
+
+            $newReq = $currentReq->replicate();
+            $newReq->id_helpdesk = $helpdesk->id;
+            $newReq->status = 1;
+            $newReq->is_duplicated = 1;
+            $newReq->save();
+
+            $currentReq->id_helpdesk = $helpdesk->id;
+            $currentReq->save();
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Duplikasi data gagal!',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+
+        return response()->json([
+            'message' => 'Duplikasi data berhasil!',
+        ], 201);
+    }
+
     public function show($id)
     {
         $currentReq = ModelsRequest::find($id);
         return view('request.user.requestDetail', compact('currentReq'));
     }
 
-    public function showAdminSide($id)
+    public function showHelpdeskSide($id)
     {
         $currentReq = ModelsRequest::find($id);
-        $helpdesks = Role::find(5)->users;
-        return view('request.admin.detail', compact('currentReq', 'helpdesks'));
+        $spvs = Role::find(3)->users;
+        return view('request.helpdesk.detail', compact('currentReq', 'spvs'));
     }
 
     public function edit($id)
@@ -155,9 +183,12 @@ class UserRequestController extends Controller
     {
         try {
             $currentReq = ModelsRequest::findOrFail($id);
+            $helpdesk = auth()->user();
+
             $currentReq->revise_note = $request["revise_note"];
             $currentReq->is_revised = 1;
             $currentReq->status = 2;
+            $currentReq->id_helpdesk = $helpdesk->id;
             $currentReq->save();
         } catch (Exception $e) {
             return response()->json([
@@ -171,10 +202,54 @@ class UserRequestController extends Controller
         ], 200);
     }
 
+    public function refuseRequest($id)
+    {
+        try {
+            $currentReq = ModelsRequest::findOrFail($id);
+            $helpdesk = auth()->user();
+
+            $currentReq->is_revised = 0;
+            $currentReq->status = 2;
+            $currentReq->id_helpdesk = $helpdesk->id;
+            $currentReq->save();
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Gagal menolak permohonan!',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+
+        return response()->json([
+            'message' => 'Permohonan berhasil ditolak!',
+        ], 200);
+    }
+
+    public function forwardToSpv(UserReqUpdateSpv $request, $id)
+    {
+        try {
+            $currentReq = ModelsRequest::findOrFail($id);
+            $helpdesk = auth()->user();
+
+            $currentReq->id_helpdesk = $helpdesk->id;
+            $currentReq->id_spv = $request['spv'];
+            $currentReq->status = 1;
+            $currentReq->save();
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Gagal meneruskan ke helpdesk!',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+
+        return response()->json([
+            'message' => 'Berhasil meneruskan permohonan ke helpdesk!',
+        ], 200);
+    }
+
     public function destroy($id)
     {
         try {
-            $currentReq = ModelsRequest::find($id);
+            $currentReq = ModelsRequest::findOrFail($id);
             if ($currentReq) {
                 RequestItem::where('id_request', $currentReq->id)->delete();
                 $currentReq->delete();
@@ -188,6 +263,28 @@ class UserRequestController extends Controller
 
         return response()->json([
             'message' => 'Permohonan berhasil dihapus!',
+        ], 200);
+    }
+
+    public function closeTask(UserReqCloseTask $request, $id)
+    {
+        try {
+            $currentReq = ModelsRequest::findOrFail($id);
+            $helpdesk = auth()->user();
+
+            $currentReq->status = 3;
+            $currentReq->id_helpdesk = $helpdesk->id;
+            $currentReq->close_note = $request['close_note'];
+            $currentReq->save();
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Gagal menutup permohonan!',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+
+        return response()->json([
+            'message' => 'Permohonan telah diselesaikan!',
         ], 200);
     }
 }

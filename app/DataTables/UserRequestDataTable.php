@@ -51,7 +51,8 @@ class UserRequestDataTable extends DataTable
 
         return $model->newQuery()
             ->from('requests')
-            ->where('id_user', $user->id);
+            ->where('id_user', $user->id)
+            ->where('is_duplicated', 0);
     }
 
     /**

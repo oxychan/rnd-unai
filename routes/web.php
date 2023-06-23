@@ -79,19 +79,23 @@ Route::middleware(['auth'])->group(function () {
         Route::get('user/show/{id}', [UserRequestController::class, 'show'])->name('user.show');
         Route::get('user/edit/{id}', [UserRequestController::class, 'edit'])->name('user.edit');
         Route::put('user/update/{id}', [UserRequestController::class, 'update'])->name('user.update');
-        Route::put('user/revise/{id}', [UserRequestController::class, 'updateRequestRevise'])->name('user.revise');
-        Route::delete('user/{id}', [UserRequestController::class, 'destroy'])->name('user.destroy');
+
 
         // Permohonan user item
         Route::post('user/items/{id}', [RequestItemController::class, 'store'])->name('item.store');
         Route::put('user/items/{id}', [RequestItemController::class, 'update'])->name('item.update');
 
-        // Permohonan user on admin side
+        // Permohonan user on helpdesk side
         Route::get('user/masuk', [UserRequestController::class, 'incommingRequest'])->name('user.incomming');
         Route::get('user/proses', [UserRequestController::class, 'processedRequest'])->name('user.processed');
         Route::get('user/selesai', [UserRequestController::class, 'doneRequest'])->name('user.done');
 
-        Route::get('user/view/{id}', [UserRequestController::class, 'showAdminSide'])->name('user.view');
+        Route::get('user/view/{id}', [UserRequestController::class, 'showHelpdeskSide'])->name('user.view');
+        Route::put('user/revise/{id}', [UserRequestController::class, 'updateRequestRevise'])->name('user.revise');
+        Route::delete('user/{id}', [UserRequestController::class, 'refuseRequest'])->name('user.refuse');
+        Route::post('user/duplicate/{id}', [UserRequestController::class, 'duplicateRequest'])->name('user.duplicate');
+        Route::put('user/forward/{id}', [UserRequestController::class, 'forwardToSpv'])->name('user.forward');
+        Route::put('user/close/{id}', [UserRequestController::class, 'closeTask'])->name('user.close');
     });
 
     // logout
