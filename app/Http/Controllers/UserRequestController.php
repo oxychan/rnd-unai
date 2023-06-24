@@ -116,8 +116,15 @@ class UserRequestController extends Controller
 
     public function show($id)
     {
-        $currentReq = ModelsRequest::find($id);
+        $currentReq = ModelsRequest::findOrFail($id);
         return view('request.user.requestDetail', compact('currentReq'));
+    }
+
+    public function showResult($id)
+    {
+        $currentReq = ModelsRequest::findOrFail($id);
+        $spvs = Role::findOrFail(3)->users;
+        return view('request.helpdesk.done.detail', compact('currentReq', 'spvs'));
     }
 
     public function showHelpdeskSide($id)

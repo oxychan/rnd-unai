@@ -91,6 +91,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('user/selesai', [UserRequestController::class, 'doneRequest'])->name('user.done');
 
         Route::get('user/view/{id}', [UserRequestController::class, 'showHelpdeskSide'])->name('user.view');
+        Route::get('user/view/result/{id}', [UserRequestController::class, 'showResult'])->name('user.view.result');
         Route::put('user/revise/{id}', [UserRequestController::class, 'updateRequestRevise'])->name('user.revise');
         Route::delete('user/{id}', [UserRequestController::class, 'refuseRequest'])->name('user.refuse');
         Route::post('user/duplicate/{id}', [UserRequestController::class, 'duplicateRequest'])->name('user.duplicate');

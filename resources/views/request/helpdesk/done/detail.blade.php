@@ -39,15 +39,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6 d-flex align-items-center justify-content-end">
-                                <form action="{{ route('permohonan.user.refuse', $currentReq->id) }}"
-                                    id="formDeletePermohonan" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" id="btnDeletePermohonan" class="btn btn-danger"
-                                        {{ ($currentReq->id_spv && $currentReq->is_spv_approved) || $currentReq->status == 3 ? 'disabled' : '' }}>
-                                        Hapus Permohonan
-                                    </button>
-                                </form>
+
                             </div>
                         </div>
                     </div>
@@ -118,58 +110,59 @@
                                         <!--end::Link-->
                                     </li>
                                     <!--end::Item-->
-                                    <!--begin::Item-->
-                                    <li class="nav-item mb-3 me-3 me-lg-6" role="presentation">
-                                        <!--begin::Link-->
-                                        <a class="nav-link btn btn-outline btn-flex btn-color-muted flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                                            id="kt_stats_widget_16_tab_link_3" data-bs-toggle="pill"
-                                            href="#kt_stats_widget_16_tab_3" aria-selected="false" tabindex="-1"
-                                            role="tab">
-                                            <!--begin::Icon-->
-                                            {{-- <div class="symbol symbol-50px mb-1">
+                                    @if ($currentReq->id_spv && $currentReq->is_spv_approved)
+                                        <!--begin::Item-->
+                                        <li class="nav-item mb-3 me-3 me-lg-6" role="presentation">
+                                            <!--begin::Link-->
+                                            <a class="nav-link btn btn-outline btn-flex btn-color-muted flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
+                                                id="kt_stats_widget_16_tab_link_3" data-bs-toggle="pill"
+                                                href="#kt_stats_widget_16_tab_3" aria-selected="false" tabindex="-1"
+                                                role="tab">
+                                                <div class="nav-icon mb-3">
+                                                    <i class="fa-solid fa-address-card fs-1 p-0"></i>
+                                                </div>
+                                                <!--end::Icon-->
+                                                <!--begin::Title-->
+                                                <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">SPV</span>
+                                                <!--end::Title-->
+                                                <!--begin::Bullet-->
+                                                <span
+                                                    class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
+                                                <!--end::Bullet-->
+                                            </a>
+                                            <!--end::Link-->
+                                        </li>
+                                        <!--end::Item-->
+                                    @endif
+
+                                    @if ($currentReq->id_worker && $currentReq->is_worker_approved)
+                                        <!--begin::Item-->
+                                        <li class="nav-item mb-3 me-3 me-lg-6" role="presentation">
+                                            <!--begin::Link-->
+                                            <a class="nav-link btn btn-outline btn-flex btn-color-muted flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
+                                                id="kt_stats_widget_16_tab_link_4" data-bs-toggle="pill"
+                                                href="#kt_stats_widget_16_tab_4" aria-selected="false" tabindex="-1"
+                                                role="tab">
+                                                <!--begin::Icon-->
+                                                {{-- <div class="symbol symbol-50px mb-1">
                                                 <img src="{{ asset('assets/media/avatars/default.jpg') }}">
                                             </div> --}}
-                                            <div class="nav-icon mb-3">
-                                                <i class="fa-solid fa-address-card fs-1 p-0"></i>
-                                            </div>
-                                            <!--end::Icon-->
-                                            <!--begin::Title-->
-                                            <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">SPV</span>
-                                            <!--end::Title-->
-                                            <!--begin::Bullet-->
-                                            <span
-                                                class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
-                                            <!--end::Bullet-->
-                                        </a>
-                                        <!--end::Link-->
-                                    </li>
-                                    <!--end::Item-->
-                                    <!--begin::Item-->
-                                    <li class="nav-item mb-3 me-3 me-lg-6" role="presentation">
-                                        <!--begin::Link-->
-                                        <a class="nav-link btn btn-outline btn-flex btn-color-muted flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                                            id="kt_stats_widget_16_tab_link_4" data-bs-toggle="pill"
-                                            href="#kt_stats_widget_16_tab_4" aria-selected="false" tabindex="-1"
-                                            role="tab">
-                                            <!--begin::Icon-->
-                                            {{-- <div class="symbol symbol-50px mb-1">
-                                                <img src="{{ asset('assets/media/avatars/default.jpg') }}">
-                                            </div> --}}
-                                            <div class="nav-icon mb-3">
-                                                <i class="fa-solid fa-briefcase fs-1 p-0"></i>
-                                            </div>
-                                            <!--end::Icon-->
-                                            <!--begin::Title-->
-                                            <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">Worker</span>
-                                            <!--end::Title-->
-                                            <!--begin::Bullet-->
-                                            <span
-                                                class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
-                                            <!--end::Bullet-->
-                                        </a>
-                                        <!--end::Link-->
-                                    </li>
-                                    <!--end::Item-->
+                                                <div class="nav-icon mb-3">
+                                                    <i class="fa-solid fa-briefcase fs-1 p-0"></i>
+                                                </div>
+                                                <!--end::Icon-->
+                                                <!--begin::Title-->
+                                                <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">Worker</span>
+                                                <!--end::Title-->
+                                                <!--begin::Bullet-->
+                                                <span
+                                                    class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
+                                                <!--end::Bullet-->
+                                            </a>
+                                            <!--end::Link-->
+                                        </li>
+                                        <!--end::Item-->
+                                    @endif
 
                                     <!--begin::Item-->
                                     <li class="nav-item mb-3 me-3 me-lg-6" role="presentation">
@@ -181,8 +174,7 @@
                                             <!--begin::Icon-->
                                             <div class="nav-icon mb-3">
                                                 @if ($currentReq->status == 3)
-                                                    <i class="fa-solid fa-check-circle fs-1 p-0"
-                                                        style="color: green;"></i>
+                                                    <i class="fa-solid fa-check-circle fs-1 p-0" style="color: green;"></i>
                                                 @else
                                                     <i class="fa-solid fa-check-circle fs-1 p-0"></i>
                                                 @endif
@@ -313,23 +305,6 @@
                                     <div class="tab-pane fade" id="kt_stats_widget_16_tab_2" role="tabpanel"
                                         aria-labelledby="#kt_stats_widget_16_tab_link_2">
                                         <!--begin::Stats-->
-                                        <div class="d-flex justify-content-end my-5">
-                                            <button class="btn btn-warning mx-2" id="btnRevise"
-                                                {{ $currentReq->is_revised ? 'disabled' : '' }}
-                                                {{ $currentReq->id_spv ? 'disabled' : '' }}
-                                                {{ $currentReq->status == 3 ? 'disabled' : '' }}>Revisi User</button>
-                                            <button class="btn btn-primary mx-2" id="btnForward"
-                                                {{ $currentReq->id_spv || $currentReq->is_revised || $currentReq->status == 3 ? 'disabled' : '' }}>Teruskan</button>
-                                            <form action="{{ route('permohonan.user.duplicate', $currentReq->id) }}"
-                                                method="POST" id="formDuplicate">
-                                                <button type="submit" class="btn btn-info mx-2" id="btnDuplicate"
-                                                    {{ $currentReq->id_spv || $currentReq->is_revised || $currentReq->status == 3 ? 'disabled' : '' }}>Duplikasi
-                                                    Task</button>
-                                            </form>
-                                            <button class="btn btn-success mx-2" id="btnCloseTask"
-                                                {{ $currentReq->id_spv || $currentReq->is_revised || $currentReq->status == 3 ? 'disabled' : '' }}>Tutup
-                                                Task</button>
-                                        </div>
                                         @if ($currentReq->is_revised)
                                             <div class="d-flex flex-wrap flex-stack px-4 rounded"
                                                 style="border-style: solid; border-color: yellow;">
@@ -414,9 +389,133 @@
                                         <div class="d-flex flex-wrap flex-stack px-4 rounded"
                                             style="border-style: solid;">
                                             <div class="d-flex flex-column flex-grow-1 pe-8">
-                                                <div class="d-flex justify-content-center">
-                                                    <h4 class="fs-4 my-4">Permohonan belum selesai!</h4>
-                                                </div>
+                                                @if ($currentReq->status == 3)
+                                                    <div class="py-5 fs-6">
+                                                        <!--begin::Details item-->
+                                                        <div class="fw-bold mt-5 mb-2">Tanggal Pengajuan</div>
+                                                        <div class="text-gray-600">
+                                                            {{ Carbon::parse($currentReq->created_at)->format('d M Y') }}
+                                                        </div>
+
+                                                        <div class="fw-bold mt-5 mb-2">Tanggal Selesai</div>
+                                                        <div class="text-gray-600">
+                                                            {{ Carbon::parse($currentReq->updated_at)->format('d M Y') }}
+                                                        </div>
+
+                                                        <div class="fw-bold mt-5 mb-2">Nama Pemohon</div>
+                                                        <div class="text-gray-600">
+                                                            {{ $currentReq->user->name }}
+                                                        </div>
+
+                                                        <div class="fw-bold mt-5 mb-2">Helpdesk</div>
+                                                        <div class="text-gray-600">
+                                                            {{ $currentReq->helpdesk->name }}
+                                                        </div>
+
+                                                        @if ($currentReq->id_spv && $currentReq->is_spv_approved)
+                                                            <div class="fw-bold mt-5 mb-2">Supervisor</div>
+                                                            <div class="text-gray-600">
+                                                                {{ $currentReq->spv->name }}
+                                                            </div>
+                                                        @endif
+
+                                                        <div class="fw-bold mt-5 mb-2">Jenis Permohonan</div>
+                                                        <div class="text-gray-600">
+                                                            {{ $currentReq->type->name }}
+                                                        </div>
+
+                                                        <div class="fw-bold mt-5 mb-2">Deskripsi</div>
+                                                        <div class="text-gray-600">
+                                                            <p>{{ $currentReq->description }}</p>
+                                                        </div>
+
+                                                        <div class="fw-bold mt-5 mb-2">File</div>
+                                                        <div class="text-gray-600">
+                                                            @if ($currentReq->file_name)
+                                                                <a
+                                                                    href="{{ asset('assets/media/files/permohonan/' . $currentReq->file_name) }}">Lihat</a>
+                                                            @else
+                                                                <p>Tidak Ada</p>
+                                                            @endif
+                                                        </div>
+
+                                                        <div class="fw-bold mt-5 mb-2">Catatan</div>
+                                                        <div class="text-gray-600">
+                                                            <p>{{ $currentReq->close_note }}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="separator my-2"></div>
+                                                    <div class="d-flex flex-column">
+                                                        <div class="fw-bold mt-5 mb-2 fs-6">List Permohonan</div>
+                                                        <span class="text-muted mt-1 fw-semibold fs-7">Daftar item
+                                                            permohonan
+                                                            yang
+                                                            diajukan</span>
+                                                        <div class="mt-5">
+                                                            <div class="table-responsive">
+                                                                <!--begin::Table-->
+                                                                <table class="table">
+                                                                    <!--begin::Table head-->
+                                                                    <thead>
+                                                                        <tr class="fw-bold text-muted bg-light">
+                                                                            <th class="ps-4 rounded-start">No</th>
+                                                                            <th>Suyek</th>
+                                                                            <th class="pe-4 rounded-end">Deskripsi
+                                                                            </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <!--end::Table head-->
+                                                                    <!--begin::Table body-->
+                                                                    <tbody>
+                                                                        @foreach ($currentReq->items as $index => $item)
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <div class="d-flex align-items-center">
+                                                                                        <div
+                                                                                            class="d-flex justify-content-start flex-column ps-4">
+                                                                                            <span
+                                                                                                class="text-dark fw-bold text-hover-primary mb-1 fs-6">
+                                                                                                {{ ++$index }}
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <div class="d-flex align-items-center">
+                                                                                        <div
+                                                                                            class="d-flex justify-content-start flex-column">
+                                                                                            <span
+                                                                                                class="text-dark fw-bold text-hover-primary mb-1 fs-6">
+                                                                                                {{ $item->subject }}
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <div class="d-flex align-items-center">
+                                                                                        <div
+                                                                                            class="d-flex justify-content-start flex-column">
+                                                                                            <span
+                                                                                                class="text-dark fw-bold text-hover-primary mb-1 fs-6">
+                                                                                                {{ $item->description }}
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                    <!--end::Table body-->
+                                                                </table>
+                                                                <!--end::Table-->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @else
+                                                    <div class="d-flex justify-content-center">
+                                                        <h4 class="fs-4 my-4">Permohonan belum selesai!</h4>
+                                                    </div>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

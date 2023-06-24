@@ -31,8 +31,11 @@ class DoneRequestDataTable extends DataTable
             ->editColumn('status', function ($req) {
                 return setStatus($req->status);
             })
+            ->editColumn('title', function ($req) {
+                return "<a href='" . route('permohonan.user.view.result', $req->id) . "'>" . $req->title . "<a/>";
+            })
             ->addIndexColumn()
-            ->rawColumns(['status'])
+            ->rawColumns(['status', 'title'])
             ->setRowId('id');
     }
 

@@ -28,7 +28,11 @@ class ProcessedRequestDataTable extends DataTable
                 $formatedDate = Carbon::parse($req->updated_at);
                 return $formatedDate->format('d M Y');
             })
+            ->editColumn('title', function ($req) {
+                return "<a href='" . route('permohonan.user.view', $req->id) . "'>" . $req->title . "</a>";
+            })
             ->addIndexColumn()
+            ->rawColumns(['title'])
             ->setRowId('id');
     }
 

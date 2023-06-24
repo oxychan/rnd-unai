@@ -27,6 +27,7 @@ return new class extends Migration
             $table->integer('status');
             $table->boolean('is_revised')->default(0);
             $table->boolean('is_spv_approved')->default(0);
+            $table->boolean('is_worker_approved')->default(0);
             $table->boolean('is_duplicated')->default(0);
             $table->string('revise_note')->nullable();
             $table->string('close_note')->nullable();
