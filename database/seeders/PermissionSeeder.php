@@ -63,5 +63,17 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'read /permohonan/user/masuk']);
         Permission::create(['name' => 'read /permohonan/user/proses']);
         Permission::create(['name' => 'read /permohonan/user/selesai']);
+
+        Permission::create(['name' => 'update /permohonan/user/masuk']);
+        Permission::create(['name' => 'update /permohonan/user/proses']);
+        Permission::create(['name' => 'update /permohonan/user/selesai']);
+
+        Permission::create(['name' => 'create /permohonan/user/masuk']);
+        Permission::create(['name' => 'create /permohonan/user/proses']);
+        Permission::create(['name' => 'create /permohonan/user/selesai']);
+
+        Permission::create(['name' => 'delete /permohonan/user/masuk']);
+        Permission::create(['name' => 'delete /permohonan/user/proses']);
+        Permission::create(['name' => 'delete /permohonan/user/selesai']);
     }
 }
