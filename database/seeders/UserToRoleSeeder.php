@@ -17,14 +17,18 @@ class UserToRoleSeeder extends Seeder
     {
         $admin = User::find(1);
         $user = User::find(2);
-        $spv = User::find(3);
+        $spvs = User::where('username', 'LIKE', '%' . 'spv' . '%')->get();
         $worker = User::find(4);
-        $helpdesk = User::find(5);
+        $helpdesks = User::where('username',  'LIKE', '%' . 'helpdesk' . '%')->get();
 
         $admin->assignRole('admin');
         $user->assignRole('user');
-        $spv->assignRole('spv');
         $worker->assignRole('worker');
-        $helpdesk->assignRole('helpdesk');
+        foreach ($spvs as $spv) {
+            $spv->assignRole('spv');
+        }
+        foreach ($helpdesks as $helpdesk) {
+            $helpdesk->assignRole('helpdesk');
+        }
     }
 }

@@ -53,6 +53,9 @@
                     </div>
                 </div>
                 <div class="card mb-4">
+                    @if ($currentReq->is_duplicated)
+                        <div class='badge badge-light-info fw-bold'>Data duplikat</div>
+                    @endif
                     <!--begin::Body-->
                     <div class="card-body py-12">
                         <div class="card card-flush h-xl-100">
@@ -317,13 +320,14 @@
                                             <button class="btn btn-warning mx-2" id="btnRevise"
                                                 {{ $currentReq->is_revised ? 'disabled' : '' }}
                                                 {{ $currentReq->id_spv ? 'disabled' : '' }}
-                                                {{ $currentReq->status == 3 ? 'disabled' : '' }}>Revisi User</button>
+                                                {{ $currentReq->status == 3 || $currentReq->is_duplicated ? 'disabled' : '' }}>Revisi
+                                                User</button>
                                             <button class="btn btn-primary mx-2" id="btnForward"
-                                                {{ $currentReq->id_spv || $currentReq->is_revised || $currentReq->status == 3 ? 'disabled' : '' }}>Teruskan</button>
+                                                {{ $currentReq->id_spv || $currentReq->is_revised || $currentReq->status == 3 || $currentReq->is_duplicated ? 'disabled' : '' }}>Teruskan</button>
                                             <form action="{{ route('permohonan.user.duplicate', $currentReq->id) }}"
                                                 method="POST" id="formDuplicate">
                                                 <button type="submit" class="btn btn-info mx-2" id="btnDuplicate"
-                                                    {{ $currentReq->id_spv || $currentReq->is_revised || $currentReq->status == 3 ? 'disabled' : '' }}>Duplikasi
+                                                    {{ $currentReq->id_spv || $currentReq->is_revised || $currentReq->status == 3 || $currentReq->is_duplicated ? 'disabled' : '' }}>Duplikasi
                                                     Task</button>
                                             </form>
                                             <button class="btn btn-success mx-2" id="btnCloseTask"
@@ -350,16 +354,17 @@
                                             </div>
                                         @endif
                                         <div class="d-flex flex-wrap flex-stack px-4 rounded mt-4"
-                                            style="{{ $currentReq->id_helpdesk == null || $currentReq->id_spv ? 'border-style: solid;' : '' }}">
+                                            style="{{ $currentReq->id_helpdesk == null || $currentReq->id_spv || $currentReq->id_helpdesk ? 'border-style: solid;' : '' }}">
                                             <!--begin::Wrapper-->
                                             <div class="d-flex flex-column flex-grow-1 pe-8">
                                                 @if ($currentReq->id_helpdesk == null)
                                                     <div class="d-flex justify-content-center">
                                                         <h4 class="fs-4 my-4">Helpdesk belum melakukan disposisi!</h4>
                                                     </div>
-                                                @elseif ($currentReq->id_spv && $currentReq->is_spv_approved == 0)
+                                                @elseif($currentReq->id_helpdesk)
                                                     <div class="d-flex justify-content-center">
-                                                        <h4 class="fs-4 my-4">Menunggu persetujuan supervisor!</h4>
+                                                        <h4 class="fs-4 my-4">Task didisposisi oleh
+                                                            {{ $currentReq->helpdesk->name }}</h4>
                                                     </div>
                                                 @endif
                                             </div>
@@ -376,10 +381,18 @@
                                             style="border-style: solid;">
                                             <!--begin::Wrapper-->
                                             <div class="d-flex flex-column flex-grow-1 pe-8">
-                                                @if ($currentReq->id_spv != null)
-                                                @else
+                                                @if ($currentReq->id_spv && $currentReq->is_spv_approved == 0)
+                                                    <div class="d-flex justify-content-center">
+                                                        <h4 class="fs-4 my-4">Menunggu persetujuan supervisor!</h4>
+                                                    </div>
+                                                @elseif ($currentReq->id_spv == null)
                                                     <div class="d-flex justify-content-center">
                                                         <h4 class="fs-4 my-4">Supervisor belum melakukan disposisi!</h4>
+                                                    </div>
+                                                @elseif ($currentReq->id_spv && $currentReq->is_spv_approved == 1)
+                                                    <div class="d-flex justify-content-center">
+                                                        <h4 class="fs-4 my-4">Task didisposisi oleh
+                                                            {{ $currentReq->spv->name }}</h4>
                                                     </div>
                                                 @endif
                                             </div>

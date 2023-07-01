@@ -75,5 +75,26 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'delete /permohonan/user/masuk']);
         Permission::create(['name' => 'delete /permohonan/user/proses']);
         Permission::create(['name' => 'delete /permohonan/user/selesai']);
+
+        Permission::create(['name' => 'read /permohonan/spv']);
+        Permission::create(['name' => 'create /permohonan/spv']);
+        Permission::create(['name' => 'update /permohonan/spv']);
+        Permission::create(['name' => 'delete /permohonan/spv']);
+
+        Permission::create(['name' => 'read /permohonan/spv/masuk']);
+        Permission::create(['name' => 'read /permohonan/spv/proses']);
+        Permission::create(['name' => 'read /permohonan/spv/selesai']);
+
+        Permission::create(['name' => 'update /permohonan/spv/masuk']);
+        Permission::create(['name' => 'update /permohonan/spv/proses']);
+        Permission::create(['name' => 'update /permohonan/spv/selesai']);
+
+        Permission::create(['name' => 'create /permohonan/spv/masuk']);
+        Permission::create(['name' => 'create /permohonan/spv/proses']);
+        Permission::create(['name' => 'create /permohonan/spv/selesai']);
+
+        Permission::create(['name' => 'delete /permohonan/spv/masuk']);
+        Permission::create(['name' => 'delete /permohonan/spv/proses']);
+        Permission::create(['name' => 'delete /permohonan/spv/selesai']);
     }
 }

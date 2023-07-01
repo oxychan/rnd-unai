@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\DoneRequestDataTable;
 use App\DataTables\IncommingRequestDataTable;
+use App\DataTables\IncommingRequestSpvDataTable;
 use App\DataTables\ProcessedRequestDataTable;
 use Exception;
 use Carbon\Carbon;
@@ -31,6 +32,7 @@ class UserRequestController extends Controller
         return $dataTable->with(['user' => $user])->render('request.user.index');
     }
 
+    // for helpdesk
     public function incommingRequest(IncommingRequestDataTable $dataTable)
     {
         return $dataTable->render('request.helpdesk.incomming.index');
@@ -45,6 +47,15 @@ class UserRequestController extends Controller
     {
         return $dataTable->render('request.helpdesk.done.index');
     }
+    // for helpdesk end scope
+
+    // for supervisor 
+    public function incommingRequestSpv(IncommingRequestSpvDataTable $dataTable)
+    {
+        $user = Auth::user();
+        return $dataTable->with(['user' => $user])->render('request.supervisor.incomming.index');
+    }
+    // for supervisor end scope
 
     public function create()
     {
@@ -101,7 +112,15 @@ class UserRequestController extends Controller
             $newReq->save();
 
             $currentReq->id_helpdesk = $helpdesk->id;
+            $currentReq->status = 1;
             $currentReq->save();
+
+            $items = $currentReq->items;
+            foreach ($items as $item) {
+                $newItems = $item->replicate();
+                $newItems->id_request = $newReq->id;
+                $newItems->save();
+            }
         } catch (Exception $e) {
             return response()->json([
                 'message' => 'Duplikasi data gagal!',

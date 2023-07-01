@@ -80,7 +80,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('user/edit/{id}', [UserRequestController::class, 'edit'])->name('user.edit');
         Route::put('user/update/{id}', [UserRequestController::class, 'update'])->name('user.update');
 
-
         // Permohonan user item
         Route::post('user/items/{id}', [RequestItemController::class, 'store'])->name('item.store');
         Route::put('user/items/{id}', [RequestItemController::class, 'update'])->name('item.update');
@@ -89,6 +88,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('user/masuk', [UserRequestController::class, 'incommingRequest'])->name('user.incomming');
         Route::get('user/proses', [UserRequestController::class, 'processedRequest'])->name('user.processed');
         Route::get('user/selesai', [UserRequestController::class, 'doneRequest'])->name('user.done');
+
+        // Permohonan user on supervisor side
+        Route::get('spv/masuk', [UserRequestController::class, 'incommingRequestSpv'])->name('spv.incomming');
+        Route::get('spv/proses', [UserRequestController::class, 'incommingRequestSpv'])->name('spv.processed');
+        Route::get('spv/selesai', [UserRequestController::class, 'incommingRequestSpv'])->name('spv.done');
 
         Route::get('user/view/{id}', [UserRequestController::class, 'showHelpdeskSide'])->name('user.view');
         Route::get('user/view/result/{id}', [UserRequestController::class, 'showResult'])->name('user.view.result');

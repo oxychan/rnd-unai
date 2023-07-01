@@ -81,6 +81,13 @@
                                             <p>Tidak Ada</p>
                                         @endif
                                     </div>
+
+                                    @if ($currentReq->status == 3)
+                                        <div class="fw-bold mt-5 mb-2">Catatan Selesai</div>
+                                        <div class="text-gray-600">
+                                            {{ $currentReq->close_note ?? 'Tidak ada catatan' }}
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="separator my-2"></div>
                                 <div class="d-flex flex-column">

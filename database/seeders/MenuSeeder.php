@@ -102,5 +102,38 @@ class MenuSeeder extends Seeder
             'root' => 3,
             'order' => 3,
         ]);
+
+
+        Menu::create([
+            'name' => 'Permohonan Spv',
+            'url' => '/permohonan/spv',
+            'icon' => 'fa-solid fa-circle-info',
+            'root' => null,
+            'order' => 3
+        ]);
+
+        Menu::create([
+            'name' => 'Spv Masuk',
+            'url' => '/permohonan/spv/masuk',
+            'icon' => 'fa-solid fa-inbox',
+            'root' => 12,
+            'order' => 1,
+        ]);
+
+        Menu::create([
+            'name' => 'Spv Proses',
+            'url' => '/permohonan/spv/proses',
+            'icon' => 'fa-solid fa-tasks',
+            'root' => 12,
+            'order' => 2,
+        ]);
+
+        Menu::create([
+            'name' => 'Spv Selesai',
+            'url' => '/permohonan/spv/selesai',
+            'icon' => 'fa-solid fa-check-circle',
+            'root' => 12,
+            'order' => 3,
+        ]);
     }
 }
