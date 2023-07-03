@@ -79,7 +79,7 @@
                         <label class="col-lg-3 col-form-label">File Upload</label>
                         <div class="col-lg-9">
                             <input type="file" class="form-control" name="file" id="file" accept="pdf" />
-                            <span class="form-text text-muted">Hanya pdf</span>
+                            <span class="form-text text-muted">File didukung (pdf, jpg, jpeg, png)</span>
                         </div>
                     </div><br>
                 </div>

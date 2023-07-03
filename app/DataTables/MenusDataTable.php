@@ -44,14 +44,14 @@ class MenusDataTable extends DataTable
                 return $formatedDate->format('d M Y');
             })
             ->editColumn('url', function ($menu) {
-                return "<a href=" . $menu->url . " class='badge badge-light fw-bold'>" . $menu->url  . "</a>";
+                return "<a href=" . $menu->url . " class='badge badge-dark fw-bold'>" . $menu->url  . "</a>";
             })
             ->editColumn('icon', function ($menu) {
                 return "<i class='" . $menu->icon . " text-dark'></i>";
             })
             ->editColumn('root', function ($menu) {
                 $root = $menu->parent->name ?? 'root';
-                return "<div class='badge badge-light-info fw-bold'>" . $root . "</div>";
+                return "<div class='badge badge-dark fw-bold'>" . $root . "</div>";
             })
             ->rawColumns(['action', 'url', 'icon', 'root'])
             ->addIndexColumn()

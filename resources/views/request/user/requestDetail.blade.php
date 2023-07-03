@@ -68,7 +68,7 @@
                                     </div>
 
                                     <div class="fw-bold mt-5 mb-2">Deskripsi</div>
-                                    <div class="text-gray-600">
+                                    <div class="text-gray-600" style="max-width: 500px;">
                                         <p>{{ $currentReq->description }}</p>
                                     </div>
 

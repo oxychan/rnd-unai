@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use Carbon\Carbon;
 use App\Models\Request;
+use Illuminate\Support\Str;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use App\Models\IncommingRequestSpv;
@@ -42,8 +43,11 @@ class IncommingRequestSpvDataTable extends DataTable
             ->editColumn('title', function ($req) {
                 return "<a href='" . route('permohonan.user.view', $req->id) . "'>" .  $req->title . "</a>";
             })
+            ->editColumn('description', function ($req) {
+                return Str::limit($req->description, 50, '...');
+            })
             ->addIndexColumn()
-            ->rawColumns(['title', 'Aksi'])
+            ->rawColumns(['title', 'Aksi', 'description'])
             ->setRowId('id');
     }
 
@@ -96,7 +100,7 @@ class IncommingRequestSpvDataTable extends DataTable
         return [
             Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false),
             Column::make('title')->title('Judul'),
-            Column::make('description')->title('Deskripsi'),
+            Column::make('description')->title('Deskripsi')->width(120),
             Column::make('updated_at')->title('Tgl Permohonan'),
             Column::computed('Aksi')
                 ->exportable(false)

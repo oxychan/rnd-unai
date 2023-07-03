@@ -108,11 +108,13 @@ class UserRequestController extends Controller
             $newReq = $currentReq->replicate();
             $newReq->id_helpdesk = $helpdesk->id;
             $newReq->status = 1;
-            $newReq->is_duplicated = 1;
+            $newReq->is_data_duplicate = 1;
+
             $newReq->save();
 
             $currentReq->id_helpdesk = $helpdesk->id;
             $currentReq->status = 1;
+            $currentReq->is_duplicated = 1;
             $currentReq->save();
 
             $items = $currentReq->items;

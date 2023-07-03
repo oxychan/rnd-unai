@@ -28,7 +28,7 @@ class UserReqRequest extends FormRequest
             'title' => 'required|string',
             'description' => 'required|string',
             'telp' => 'required|string',
-            'file' => 'nullable|mimes:pdf|max:10000'
+            'file' => 'nullable|mimes:pdf,jpg,png,jpeg|max:10000'
         ];
     }
 }

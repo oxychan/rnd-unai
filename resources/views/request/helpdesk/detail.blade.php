@@ -54,7 +54,7 @@
                 </div>
                 <div class="card mb-4">
                     @if ($currentReq->is_duplicated)
-                        <div class='badge badge-light-info fw-bold'>Data duplikat</div>
+                        <div class='badge badge-light-info fw-bold'>Data duplikasi</div>
                     @endif
                     <!--begin::Body-->
                     <div class="card-body py-12">
@@ -227,7 +227,7 @@
                                                     </div>
 
                                                     <div class="fw-bold mt-5 mb-2">Deskripsi</div>
-                                                    <div class="text-gray-600">
+                                                    <div class="text-gray-600" style="max-width: 800px;">
                                                         <p>{{ $currentReq->description }}</p>
                                                     </div>
 
@@ -453,7 +453,7 @@
     {{-- modal for revised task --}}
     <div class="modal fade" id="modalRevisedTask" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
-        <div class="modal-dialog mw-600px">
+        <div class="modal-dialog modal-dialog-centered mw-600px">
             <!--begin::Modal content-->
             <div class="modal-content">
                 <!--begin::Modal header-->
@@ -514,7 +514,7 @@
     {{-- modal for forward to spv --}}
     <div class="modal fade" id="modalForwardToHelpdesk" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
-        <div class="modal-dialog mw-600px">
+        <div class="modal-dialog modal-dialog-centered mw-600px">
             <!--begin::Modal content-->
             <div class="modal-content">
                 <!--begin::Modal header-->
@@ -581,7 +581,7 @@
     {{-- modal for close task --}}
     <div class="modal fade" id="modalCloseTask" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
-        <div class="modal-dialog mw-600px">
+        <div class="modal-dialog modal-dialog-centered mw-600px">
             <!--begin::Modal content-->
             <div class="modal-content">
                 <!--begin::Modal header-->

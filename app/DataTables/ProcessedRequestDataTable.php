@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use Carbon\Carbon;
 use App\Models\Request;
+use Illuminate\Support\Str;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\EloquentDataTable;
@@ -31,8 +32,20 @@ class ProcessedRequestDataTable extends DataTable
             ->editColumn('title', function ($req) {
                 return "<a href='" . route('permohonan.user.view', $req->id) . "'>" . $req->title . "</a>";
             })
+            ->editColumn('Keterangan', function ($req) {
+                $status = '';
+                if ($req->is_duplicated) {
+                    $status = 'Diduplikasi';
+                } else if ($req->is_data_duplicate) {
+                    $status = 'Data Duplikat';
+                }
+                return "<div class='badge badge-dark fw-bold'>" . $status  . "</div>";
+            })
+            ->editColumn('description', function ($req) {
+                return Str::limit($req->description, 50, '...');
+            })
             ->addIndexColumn()
-            ->rawColumns(['title'])
+            ->rawColumns(['title', 'Keterangan', 'description'])
             ->setRowId('id');
     }
 
@@ -83,7 +96,8 @@ class ProcessedRequestDataTable extends DataTable
         return [
             Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false),
             Column::make('title')->title('Judul'),
-            Column::make('description')->title('Deskripsi'),
+            Column::make('Keterangan'),
+            Column::make('description')->title('Deskripsi')->width(120),
             Column::make('updated_at')->title('Tgl Pengajuan'),
         ];
     }

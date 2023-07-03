@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use Carbon\Carbon;
 use App\Models\Request;
+use Illuminate\Support\Str;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\EloquentDataTable;
@@ -34,8 +35,11 @@ class UserRequestDataTable extends DataTable
                 $formatedDate = Carbon::parse($req->updated_at);
                 return $formatedDate->format('d M Y');
             })
+            ->editColumn('description', function ($req) {
+                return Str::limit($req->description, 50, '...');
+            })
             ->addIndexColumn()
-            ->rawColumns(['action', 'status'])
+            ->rawColumns(['action', 'status', 'description'])
             ->setRowId('id');
     }
 
@@ -89,7 +93,7 @@ class UserRequestDataTable extends DataTable
         return [
             Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false),
             Column::make('title')->title('Judul'),
-            Column::make('description')->title('Deskripsi'),
+            Column::make('description')->title('Deskripsi')->width(120),
             Column::make('updated_at')->title('Tgl Pengajuan'),
             Column::make('status')->title('Status'),
             Column::computed('action')

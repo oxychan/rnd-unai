@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use Carbon\Carbon;
 use App\Models\Request;
+use Illuminate\Support\Str;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\EloquentDataTable;
@@ -34,8 +35,11 @@ class DoneRequestDataTable extends DataTable
             ->editColumn('title', function ($req) {
                 return "<a href='" . route('permohonan.user.view.result', $req->id) . "'>" . $req->title . "<a/>";
             })
+            ->editColumn('description', function ($req) {
+                return Str::limit($req->description, 50, '...');
+            })
             ->addIndexColumn()
-            ->rawColumns(['status', 'title'])
+            ->rawColumns(['status', 'title', 'description'])
             ->setRowId('id');
     }
 
@@ -87,7 +91,7 @@ class DoneRequestDataTable extends DataTable
         return [
             Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false),
             Column::make('title')->title('Judul'),
-            Column::make('description')->title('Deskripsi'),
+            Column::make('description')->title('Deskripsi')->width(120),
             Column::make('status')->title('Status'),
             Column::make('updated_at')->title('Tgl Pengajuan'),
         ];

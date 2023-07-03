@@ -68,7 +68,7 @@
     {{-- modal detail pengaduan --}}
     <div class="modal fade" id="modalDetailRequest" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
-        <div class="modal-dialog modal-dialog-centered mw-500px modal-dialog-scrollable">
+        <div class="modal-dialog modal-dialog-centered mw-600px modal-dialog-scrollable">
             <!--begin::Modal content-->
 
             <!-- end::Modal content -->
