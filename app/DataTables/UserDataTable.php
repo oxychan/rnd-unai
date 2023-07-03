@@ -36,7 +36,7 @@ class UserDataTable extends DataTable
                         </div>";
             })
             ->addColumn('role', function ($user) {
-                return '<div class="badge badge-light-info fw-bold">' . $user->roles->pluck('name')[0] . '</div>';
+                return '<div class="badge badge-light-info fw-bold">' . $user->roles->pluck('name')->get(0) . '</div>';
             })
             ->addColumn('avatar', function ($user) {
                 $photoPath = asset('assets/media/avatars/' . $user->avatar);

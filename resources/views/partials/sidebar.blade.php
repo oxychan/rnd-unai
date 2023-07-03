@@ -81,8 +81,8 @@
         <form method="POST" action="{{ route('auth.logout') }}" id="frmLogoutSidebar">
             @csrf
             <a id="btnLogoutSidebar"
-                class="btn btn-flex flex-center btn-custom btn-primary overflow-hidden text-nowrap px-0 h-40px w-100">
-                <span class="text-danger">Logout</span>
+                class="btn btn-flex flex-center btn-custom btn-danger overflow-hidden text-nowrap px-0 h-40px w-100">
+                <span>Logout</span>
             </a>
         </form>
     </div>

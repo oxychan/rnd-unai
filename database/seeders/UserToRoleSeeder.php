@@ -18,7 +18,7 @@ class UserToRoleSeeder extends Seeder
         $admin = User::find(1);
         $user = User::find(2);
         $spvs = User::where('username', 'LIKE', '%' . 'spv' . '%')->get();
-        $worker = User::find(4);
+        $worker = User::find(6);
         $helpdesks = User::where('username',  'LIKE', '%' . 'helpdesk' . '%')->get();
 
         $admin->assignRole('admin');

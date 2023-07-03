@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 
@@ -51,7 +51,7 @@
                     themeMode = defaultThemeMode;
                 }
             }
-            document.documentElement.setAttribute("data-theme", themeMode);
+            document.documentElement.setAttribute("data-theme", "light");
         }
     </script>
     <!--end::Theme mode setup on page load-->
@@ -70,7 +70,7 @@
             }
 
             [data-theme="dark"] body {
-                background-image: url('../../../assets/media/auth/bg10-dark.jpg');
+                background-image: url('../../../assets/media/auth/bg10.jpg');
             }
         </style>
         <!--end::Page bg image-->
@@ -81,9 +81,7 @@
                 <!--begin::Content-->
                 <div class="d-flex flex-column flex-center pb-0 pb-lg-10 p-10 w-100">
                     <!--begin::Image-->
-                    <img class="theme-light-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20"
-                        src="{{ asset('') }}assets/media/illustrasions/airo/pose2.png" alt="" />
-                    <img class="theme-dark-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20"
+                    <img class="mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20"
                         src="{{ asset('') }}assets/media/illustrations/airo/pose2.png" alt="" />
                     <!--end::Image-->
                     <!--begin::Title-->

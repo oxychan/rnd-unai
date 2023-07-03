@@ -7315,7 +7315,7 @@ var KTAppLayoutBuilder = function() {
 				this.checked = true;
 				this.closest('[data-kt-buttons="true"]').querySelector('.form-check-image.active').classList.remove('active');
 				this.closest('.form-check-image').classList.add('active');
-				KTThemeMode.setMode('dark');
+				KTThemeMode.setMode('light');
 			});
 		}
 
@@ -7563,7 +7563,7 @@ var KTThemeMode = function () {
 		element.setAttribute("data-kt-theme-mode-switching", "true");
 		
 		// Set mode to the target element
-		element.setAttribute("data-theme", mode);
+		element.setAttribute("data-theme", "light");
 
 		// Disable switching state
 		setTimeout(function() {
@@ -7596,7 +7596,7 @@ var KTThemeMode = function () {
 	}
 
 	var getSystemMode = function() {
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "light";
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? "light" : "light";
     }
 
 	var initMode = function() {
