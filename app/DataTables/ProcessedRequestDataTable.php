@@ -44,8 +44,11 @@ class ProcessedRequestDataTable extends DataTable
             ->editColumn('description', function ($req) {
                 return Str::limit($req->description, 50, '...');
             })
+            ->editColumn('status', function ($req) {
+                return setStatus($req->status);
+            })
             ->addIndexColumn()
-            ->rawColumns(['title', 'Keterangan', 'description'])
+            ->rawColumns(['title', 'Keterangan', 'description', 'status'])
             ->setRowId('id');
     }
 
@@ -59,7 +62,9 @@ class ProcessedRequestDataTable extends DataTable
     {
         return $model->newQuery()
             ->from('requests')
-            ->where('status', 1);
+            ->where('status', 1)
+            ->orWhere('status', 2)
+            ->orderBy('updated_at', 'desc');
     }
 
     /**
@@ -94,10 +99,11 @@ class ProcessedRequestDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false),
-            Column::make('title')->title('Judul'),
-            Column::make('Keterangan'),
-            Column::make('description')->title('Deskripsi')->width(120),
+            Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false)->width(30),
+            Column::make('title')->title('Judul')->width(250),
+            Column::make('Keterangan')->width(120),
+            Column::make('status')->title('Status')->width(120),
+            Column::make('description')->title('Deskripsi'),
             Column::make('updated_at')->title('Tgl Pengajuan'),
         ];
     }

@@ -3,6 +3,8 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\UserAccountController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\HelpdeskRequestController;
+use App\Http\Controllers\SpvRequestController;
 use App\Http\Controllers\Management\MenuManagementController;
 use App\Http\Controllers\Management\RequestTypeController;
 use App\Http\Controllers\Management\RoleManagementController;
@@ -85,22 +87,21 @@ Route::middleware(['auth'])->group(function () {
         Route::put('user/items/{id}', [RequestItemController::class, 'update'])->name('item.update');
 
         // Permohonan user on helpdesk side
-        Route::get('user/masuk', [UserRequestController::class, 'incommingRequest'])->name('user.incomming');
-        Route::get('user/proses', [UserRequestController::class, 'processedRequest'])->name('user.processed');
-        Route::get('user/selesai', [UserRequestController::class, 'doneRequest'])->name('user.done');
+        Route::get('user/masuk', [HelpdeskRequestController::class, 'incommingRequest'])->name('user.incomming');
+        Route::get('user/proses', [HelpdeskRequestController::class, 'processedRequest'])->name('user.processed');
+        Route::get('user/selesai', [HelpdeskRequestController::class, 'doneRequest'])->name('user.done');
+        Route::delete('user/{id}', [HelpdeskRequestController::class, 'destroy'])->name('user.destroy');
+        Route::get('user/view/{id}', [HelpdeskRequestController::class, 'showHelpdeskSide'])->name('user.view');
+        Route::get('user/view/result/{id}', [HelpdeskRequestController::class, 'showResult'])->name('user.view.result');
+        Route::put('user/revise/{id}', [HelpdeskRequestController::class, 'updateRequestRevise'])->name('user.revise');
+        Route::post('user/duplicate/{id}', [HelpdeskRequestController::class, 'duplicateRequest'])->name('user.duplicate');
+        Route::put('user/forward/{id}', [HelpdeskRequestController::class, 'forwardToSpv'])->name('user.forward');
+        Route::put('user/close/{id}', [HelpdeskRequestController::class, 'closeTask'])->name('user.close');
 
         // Permohonan user on supervisor side
-        Route::get('spv/masuk', [UserRequestController::class, 'incommingRequestSpv'])->name('spv.incomming');
-        Route::get('spv/proses', [UserRequestController::class, 'incommingRequestSpv'])->name('spv.processed');
-        Route::get('spv/selesai', [UserRequestController::class, 'incommingRequestSpv'])->name('spv.done');
-
-        Route::get('user/view/{id}', [UserRequestController::class, 'showHelpdeskSide'])->name('user.view');
-        Route::get('user/view/result/{id}', [UserRequestController::class, 'showResult'])->name('user.view.result');
-        Route::put('user/revise/{id}', [UserRequestController::class, 'updateRequestRevise'])->name('user.revise');
-        Route::delete('user/{id}', [UserRequestController::class, 'refuseRequest'])->name('user.refuse');
-        Route::post('user/duplicate/{id}', [UserRequestController::class, 'duplicateRequest'])->name('user.duplicate');
-        Route::put('user/forward/{id}', [UserRequestController::class, 'forwardToSpv'])->name('user.forward');
-        Route::put('user/close/{id}', [UserRequestController::class, 'closeTask'])->name('user.close');
+        Route::get('spv/masuk', [SpvRequestController::class, 'incommingRequest'])->name('spv.incomming');
+        Route::get('spv/proses', [SpvRequestController::class, 'incommingRequest'])->name('spv.processed');
+        Route::get('spv/selesai', [SpvRequestController::class, 'incommingRequest'])->name('spv.done');
     });
 
     // logout

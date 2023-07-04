@@ -63,7 +63,9 @@ class IncommingRequestSpvDataTable extends DataTable
         return $model->newQuery()
             ->from('requests')
             ->where('id_spv', $spv->id)
-            ->where('is_spv_approved', 0);
+            ->where('is_spv_approved', 0)
+            ->orderBy('updated_at', 'desc')
+            ->orderBy('id_weight', 'asc');
     }
 
     /**
@@ -98,9 +100,9 @@ class IncommingRequestSpvDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false),
-            Column::make('title')->title('Judul'),
-            Column::make('description')->title('Deskripsi')->width(120),
+            Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false)->width(30),
+            Column::make('title')->title('Judul')->width(250),
+            Column::make('description')->title('Deskripsi'),
             Column::make('updated_at')->title('Tgl Permohonan'),
             Column::computed('Aksi')
                 ->exportable(false)

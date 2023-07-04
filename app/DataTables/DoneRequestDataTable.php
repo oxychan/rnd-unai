@@ -53,8 +53,8 @@ class DoneRequestDataTable extends DataTable
     {
         return $model->newQuery()
             ->from('requests')
-            ->where('status', 2)
-            ->orWhere('status', 3);
+            ->where('status', 3)
+            ->orderBy('updated_at', 'desc');
     }
 
     /**
@@ -89,9 +89,9 @@ class DoneRequestDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false),
-            Column::make('title')->title('Judul'),
-            Column::make('description')->title('Deskripsi')->width(120),
+            Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false)->width(30),
+            Column::make('title')->title('Judul')->width(250),
+            Column::make('description')->title('Deskripsi'),
             Column::make('status')->title('Status'),
             Column::make('updated_at')->title('Tgl Pengajuan'),
         ];

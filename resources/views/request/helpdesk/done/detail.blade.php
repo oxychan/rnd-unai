@@ -216,7 +216,7 @@
                                                     </div>
 
                                                     <div class="fw-bold mt-5 mb-2">Deskripsi</div>
-                                                    <div class="text-gray-600">
+                                                    <div class="text-gray-600" style="max-width: 800px;">
                                                         <p>{{ $currentReq->description }}</p>
                                                     </div>
 
@@ -328,11 +328,7 @@
                                             style="{{ $currentReq->id_helpdesk == null || $currentReq->id_spv ? 'border-style: solid;' : '' }}">
                                             <!--begin::Wrapper-->
                                             <div class="d-flex flex-column flex-grow-1 pe-8">
-                                                @if ($currentReq->id_helpdesk == null)
-                                                    <div class="d-flex justify-content-center">
-                                                        <h4 class="fs-4 my-4">Helpdesk belum melakukan disposisi!</h4>
-                                                    </div>
-                                                @elseif ($currentReq->id_spv && $currentReq->is_spv_approved == 0)
+                                                @if ($currentReq->id_spv && $currentReq->is_spv_approved == 0)
                                                     <div class="d-flex justify-content-center">
                                                         <h4 class="fs-4 my-4">Menunggu persetujuan supervisor!</h4>
                                                     </div>
@@ -425,7 +421,7 @@
                                                         </div>
 
                                                         <div class="fw-bold mt-5 mb-2">Deskripsi</div>
-                                                        <div class="text-gray-600">
+                                                        <div class="text-gray-600" style="max-width: 800px;">
                                                             <p>{{ $currentReq->description }}</p>
                                                         </div>
 

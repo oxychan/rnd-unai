@@ -50,7 +50,8 @@ class IncommingRequestDataTable extends DataTable
     {
         return $model->newQuery()
             ->from('requests')
-            ->where('status', 0);
+            ->where('status', 0)
+            ->orderBy('updated_at', 'desc');
     }
 
     /**
@@ -85,9 +86,9 @@ class IncommingRequestDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false),
-            Column::make('title')->title('Judul'),
-            Column::make('description')->title('Deskripsi')->width(120),
+            Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false)->width(30),
+            Column::make('title')->title('Judul')->width(250),
+            Column::make('description')->title('Deskripsi'),
             Column::make('updated_at')->title('Tgl Pengajuan'),
         ];
     }
