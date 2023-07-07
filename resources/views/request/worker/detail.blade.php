@@ -38,19 +38,6 @@
                                     </span>
                                 </div>
                             </div>
-                            @hasrole('helpdesk')
-                                <div class="col-md-6 d-flex align-items-center justify-content-end">
-                                    <form action="{{ route('permohonan.user.destroy', $currentReq->id) }}"
-                                        id="formDeletePermohonan" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" id="btnDeletePermohonan" class="btn btn-danger"
-                                            {{ $currentReq->is_data_duplicate ? '' : 'disabled' }}>
-                                            Hapus Permohonan
-                                        </button>
-                                    </form>
-                                </div>
-                            @endhasrole
                         </div>
                     </div>
                 </div>
@@ -136,7 +123,7 @@
                                             {{-- <div class="symbol symbol-50px mb-1">
                                                 <img src="{{ asset('assets/media/avatars/default.jpg') }}">
                                             </div> --}}
-                                            @if ($currentReq->id_spv && $currentReq->is_spv_approved)
+                                            @if ($currentReq->id_spv)
                                                 <div class="symbol symbol-50px mb-1">
                                                     <img
                                                         src="{{ asset('assets/media/avatars/' . $currentReq->spv->avatar) }}">
@@ -166,13 +153,16 @@
                                             id="kt_stats_widget_16_tab_link_4" data-bs-toggle="pill"
                                             href="#kt_stats_widget_16_tab_4" aria-selected="false" tabindex="-1"
                                             role="tab">
-                                            <!--begin::Icon-->
-                                            {{-- <div class="symbol symbol-50px mb-1">
-                                                <img src="{{ asset('assets/media/avatars/default.jpg') }}">
-                                            </div> --}}
-                                            <div class="nav-icon mb-3">
-                                                <i class="fa-solid fa-briefcase fs-1 p-0"></i>
-                                            </div>
+                                            @if ($currentReq->id_worker)
+                                                <div class="symbol symbol-50px mb-1">
+                                                    <img
+                                                        src="{{ asset('assets/media/avatars/' . $currentReq->worker->avatar) }}">
+                                                </div>
+                                            @else
+                                                <div class="nav-icon mb-3">
+                                                    <i class="fa-solid fa-briefcase fs-1 p-0"></i>
+                                                </div>
+                                            @endif
                                             <!--end::Icon-->
                                             <!--begin::Title-->
                                             <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">Worker</span>
@@ -324,81 +314,26 @@
                                         <!--end::Stats-->
                                     </div>
                                     <!--end::Tap pane-->
-                                    <!--begin::Tap pane-->
+                                    <!--begin::Tap pane helpdesk-->
                                     <div class="tab-pane fade" id="kt_stats_widget_16_tab_2" role="tabpanel"
                                         aria-labelledby="#kt_stats_widget_16_tab_link_2">
                                         <!--begin::Stats-->
-                                        @hasrole('helpdesk')
-                                            <div class="d-flex justify-content-end my-5">
-                                                <button class="btn btn-warning mx-2" id="btnRevise"
-                                                    {{ $currentReq->is_revised ? 'disabled' : '' }}
-                                                    {{ $currentReq->id_spv ? 'disabled' : '' }}
-                                                    {{ $currentReq->status == 3 || $currentReq->is_duplicated ? 'disabled' : '' }}>Revisi
-                                                    User</button>
-                                                <button class="btn btn-primary mx-2" id="btnForward"
-                                                    {{ $currentReq->id_spv || $currentReq->is_revised || $currentReq->status == 3 ? 'disabled' : '' }}>Teruskan</button>
-                                                <form action="{{ route('permohonan.user.duplicate', $currentReq->id) }}"
-                                                    method="POST" id="formDuplicate">
-                                                    <button type="submit" class="btn btn-info mx-2" id="btnDuplicate"
-                                                        {{ $currentReq->is_revised || $currentReq->status == 3 || $currentReq->is_data_duplicate ? 'disabled' : '' }}>Duplikasi
-                                                        Task</button>
-                                                </form>
-                                            </div>
-                                            @if ($currentReq->is_revised)
-                                                <div class="d-flex flex-wrap flex-stack px-4 rounded"
-                                                    style="border-style: solid; border-color: yellow;">
-                                                    <!--begin::Wrapper-->
-                                                    <div class="d-flex flex-column flex-grow-1 pe-8">
-                                                        <div class="py-5 fs-6">
-                                                            <div class="fw-bold mt-5 mb-2">Tanggal Revisi</div>
-                                                            <div class="text-gray-600">
-                                                                {{ Carbon::parse($currentReq->updated_at)->format('d M Y') }}
-                                                            </div>
-                                                            <div class="fw-bold mt-5 mb-2">Catatan</div>
-                                                            <div class="text-gray-600">
-                                                                {{ $currentReq->revise_note }}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--end::Wrapper-->
-                                                </div>
-                                            @endif
-                                        @endhasrole
-                                        <div class="d-flex flex-wrap flex-stack px-4 rounded mt-4"
-                                            style="{{ $currentReq->id_helpdesk == null || $currentReq->id_spv || $currentReq->id_helpdesk ? 'border-style: solid;' : '' }}">
+                                        <div class="d-flex flex-wrap flex-stack px-4 rounded"
+                                            style="{{ $currentReq->id_helpdesk ? 'border-style: solid;' : '' }}">
                                             <!--begin::Wrapper-->
                                             <div class="d-flex flex-column flex-grow-1 pe-8">
-                                                @hasrole('helpdesk')
-                                                    <form action="{{ route('permohonan.user.close', $currentReq->id) }}"
-                                                        id="formCloseTask" method="POST">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <div class="form-group">
-                                                            <label class="col-form-label">Catatan</label>
-                                                            <textarea class="form-control" rows="5" id="close_note" name="close_note"
-                                                                placeholder="e.g: Task terselesaikan dengan ...." required></textarea>
-                                                        </div> <br>
-                                                        <div class="row justify-content-end">
-                                                            <button class="btn btn-success col-md-2" type="submit"
-                                                                id="btnSubmitCloseTask"
-                                                                {{ $currentReq->id_spv || $currentReq->is_revised || $currentReq->status == 3 ? 'disabled' : '' }}>Tutup
-                                                                Task</button>
-                                                        </div>
-                                                    </form>
-                                                @else
-                                                    <div class="d-flex justify-content-center">
-                                                        <h4 class="fs-4 my-4">Task diproses oleh
-                                                            {{ $currentReq->helpdesk->name }}</h4>
-                                                    </div>
-                                                @endhasrole
-
+                                                <div class="d-flex justify-content-center">
+                                                    <h4 class="fs-4 my-4">Task diteruskan oleh
+                                                        {{ $currentReq->helpdesk->name }} kepada
+                                                        {{ $currentReq->spv->name ?? '' }}</h4>
+                                                </div>
                                             </div>
                                             <!--end::Wrapper-->
                                         </div>
                                         <!--end::Stats-->
                                     </div>
                                     <!--end::Tap pane-->
-                                    <!--begin::Tap pane-->
+                                    <!--begin::Tap pane spv-->
                                     <div class="tab-pane fade" id="kt_stats_widget_16_tab_3" role="tabpanel"
                                         aria-labelledby="#kt_stats_widget_16_tab_link_3">
                                         <!--begin::Stats-->
@@ -406,27 +341,18 @@
                                             style="border-style: solid;">
                                             <!--begin::Wrapper-->
                                             <div class="d-flex flex-column flex-grow-1 pe-8">
-                                                @if ($currentReq->id_spv && $currentReq->is_spv_approved == 0)
-                                                    <div class="d-flex justify-content-center">
-                                                        <h4 class="fs-4 my-4">Menunggu persetujuan supervisor!</h4>
-                                                    </div>
-                                                @elseif ($currentReq->id_spv == null)
-                                                    <div class="d-flex justify-content-center">
-                                                        <h4 class="fs-4 my-4">Supervisor belum melakukan disposisi!</h4>
-                                                    </div>
-                                                @elseif ($currentReq->id_spv && $currentReq->is_spv_approved == 1)
-                                                    <div class="d-flex justify-content-center">
-                                                        <h4 class="fs-4 my-4">Task didisposisi oleh
-                                                            {{ $currentReq->spv->name }}</h4>
-                                                    </div>
-                                                @endif
+                                                <div class="d-flex justify-content-center">
+                                                    <h4 class="fs-4 my-4">Task diteruskan oleh
+                                                        {{ $currentReq->spv->name }} kepada
+                                                        {{ $currentReq->worker->name }}</h4>
+                                                </div>
                                             </div>
                                             <!--end::Wrapper-->
                                         </div>
                                         <!--end::Stats-->
                                     </div>
                                     <!--end::Tap pane-->
-                                    <!--begin::Tap pane-->
+                                    <!--begin::Tap pane worker-->
                                     <div class="tab-pane fade" id="kt_stats_widget_16_tab_4" role="tabpanel"
                                         aria-labelledby="#kt_stats_widget_16_tab_link_4">
                                         <!--begin::Stats-->
@@ -434,12 +360,22 @@
                                             style="border-style: solid;">
                                             <!--begin::Wrapper-->
                                             <div class="d-flex flex-column flex-grow-1 pe-8">
-                                                @if ($currentReq->id_worker != null)
-                                                @else
-                                                    <div class="d-flex justify-content-center">
-                                                        <h4 class="fs-4 my-4">Worker belum melakukan disposisi!</h4>
+                                                <form action="{{ route('permohonan.worker.close', $currentReq->id) }}"
+                                                    id="formCloseTask" method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <div class="form-group">
+                                                        <label class="col-form-label">Catatan</label>
+                                                        <textarea class="form-control" rows="5" id="close_note" name="close_note"
+                                                            placeholder="e.g: Task terselesaikan dengan ...." required></textarea>
+                                                    </div> <br>
+                                                    <div class="row justify-content-end">
+                                                        <button class="btn btn-success col-md-2" type="submit"
+                                                            id="btnSubmitCloseTask"
+                                                            {{ $currentReq->status == 3 ? 'disabled' : '' }}>Tutup
+                                                            Task</button>
                                                     </div>
-                                                @endif
+                                                </form>
                                             </div>
                                             <!--end::Wrapper-->
                                         </div>
@@ -475,267 +411,12 @@
     </div>
     <!--end::Content-->
 
-    {{-- modal for revised task --}}
-    <div class="modal fade" id="modalRevisedTask" tabindex="-1" aria-hidden="true">
-        <!--begin::Modal dialog-->
-        <div class="modal-dialog modal-dialog-centered mw-600px">
-            <!--begin::Modal content-->
-            <div class="modal-content">
-                <!--begin::Modal header-->
-                <div class="modal-header">
-                    <!--begin::Modal title-->
-                    <h2 id="modal-judul" style="color: white">Revisi User Task</h2>
-                    <!--end::Modal title-->
-                    <!--begin::Close-->
-                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                        <span class="svg-icon svg-icon-1">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2"
-                                    rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
-                                <rect x="7.41422" y="6" width="16" height="2" rx="1"
-                                    transform="rotate(45 7.41422 6)" fill="currentColor" />
-                            </svg>
-                        </span>
-                        <!--end::Svg Icon-->
-                    </div>
-                    <!--end::Close-->
-                </div>
-                <!--end::Modal header-->
-                <!--begin::Modal body-->
-                <div class="modal-body" id="actionRevisedUserTask">
-                    <div class="card mb-5 mb-xl-10">
-                        <div class="card-body pb-0">
-                            <form action="{{ route('permohonan.user.revise', $currentReq->id) }}" id="formRevise"
-                                method="POST">
-                                @csrf
-                                @method('PUT')
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label">Revisi</label>
-                                    <div class="col-lg-9">
-                                        <textarea class="form-control" rows="3" id="revise_note" name="revise_note"
-                                            placeholder="e.g: Revisi bagian item" required></textarea>
-                                    </div>
-                                </div> <br>
-                                <div class="form-group row justify-content-end">
-                                    <div class="col-md-3">
-                                        <input class="btn btn-primary" type="submit" id="btnSubmitRevise"
-                                            value="Submit" />
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <!--end::Modal body-->
-            </div>
-            <!-- end::Modal content -->
-        </div>
-        <!--end::Modal dialog-->
-    </div>
-    {{-- end of modal revised task --}}
-
-    {{-- modal for forward to spv --}}
-    <div class="modal fade" id="modalForwardToHelpdesk" tabindex="-1" aria-hidden="true">
-        <!--begin::Modal dialog-->
-        <div class="modal-dialog modal-dialog-centered mw-600px">
-            <!--begin::Modal content-->
-            <div class="modal-content">
-                <!--begin::Modal header-->
-                <div class="modal-header">
-                    <!--begin::Modal title-->
-                    <h2 id="modal-judul" style="color: white">Teruskan ke SPV</h2>
-                    <!--end::Modal title-->
-                    <!--begin::Close-->
-                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                        <span class="svg-icon svg-icon-1">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2"
-                                    rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
-                                <rect x="7.41422" y="6" width="16" height="2" rx="1"
-                                    transform="rotate(45 7.41422 6)" fill="currentColor" />
-                            </svg>
-                        </span>
-                        <!--end::Svg Icon-->
-                    </div>
-                    <!--end::Close-->
-                </div>
-                <!--end::Modal header-->
-                <!--begin::Modal body-->
-                <div class="modal-body" id="actionForwardToSpv">
-                    <div class="card mb-5 mb-xl-10">
-                        <div class="card-body pb-0">
-                            <form action="{{ route('permohonan.user.forward', $currentReq->id) }}" id="formForwardToSpv"
-                                method="POST">
-                                @csrf
-                                @method('PUT')
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label">Pilih SPV</label>
-                                    <div class="col-lg-9">
-                                        <select class="form-control select2" id="spv" name="spv"
-                                            style="width: 100%;" required>
-                                            <option value="">Choose spv</option>
-                                            @foreach ($spvs as $spv)
-                                                <option value="{{ $spv->id }}">{{ $spv->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        <span class="form-text text-muted">Please choose spv</span>
-                                    </div>
-                                </div> <br>
-                                <div class="form-group row justify-content-end">
-                                    <div class="col-md-3">
-                                        <input class="btn btn-primary" type="submit" id="btnSubmitHelpdesk"
-                                            value="Teruskan" />
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <!--end::Modal body-->
-            </div>
-            <!-- end::Modal content -->
-        </div>
-        <!--end::Modal dialog-->
-    </div>
-    {{-- end of modal forward to helpdesk --}}
-
 @endsection
 
 @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script>
-        // create instance modal
-        const modalRevisedTask = new bootstrap.Modal($('#modalRevisedTask'))
-        const modalForwardToHelpdesk = new bootstrap.Modal($('#modalForwardToHelpdesk'))
-
-        $('#formDeletePermohonan').on('submit', function(e) {
-            e.preventDefault()
-            const url = this.getAttribute('action')
-
-            Swal.fire({
-                title: 'Are you sure to delete this?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        method: 'DELETE',
-                        url,
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
-                        },
-                        success: function(response) {
-                            Swal.fire(
-                                'Deleted!',
-                                'User berhasil dihapus.',
-                                'success'
-                            ).then((result) => {
-                                if (result.isConfirmed) {
-                                    window.location.href = '/permohonan/user/masuk';
-                                }
-                            })
-
-                        }
-                    })
-
-                }
-            })
-        })
-
-        $('#formRevise').on('submit', function(e) {
-            e.preventDefault()
-            const form = this
-            const formData = new FormData(form)
-
-            const url = this.getAttribute('action')
-
-            $.ajax({
-                method: 'POST',
-                url,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
-                },
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    Swal.fire(
-                        'Revised!',
-                        'Data berhasil direvisi.',
-                        'success'
-                    )
-                    modalRevisedTask.hide()
-                    location.reload()
-                }
-            })
-
-        })
-
-        $('#formDuplicate').on('submit', function(e) {
-            e.preventDefault()
-
-            const form = this
-            const formData = new FormData(form)
-
-            const url = this.getAttribute('action')
-
-            $.ajax({
-                method: 'POST',
-                url,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
-                },
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    Swal.fire(
-                        'Duplicated!',
-                        response.message,
-                        'success'
-                    )
-                    location.reload()
-                }
-            })
-        })
-
-        $('#formForwardToSpv').on('submit', function(e) {
-            e.preventDefault()
-
-            const form = this
-            const formData = new FormData(form)
-
-            const url = this.getAttribute('action')
-
-            $.ajax({
-                method: 'POST',
-                url,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
-                },
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    Swal.fire(
-                        'Forwarded!',
-                        response.message,
-                        'success'
-                    )
-                    location.reload()
-                }
-            })
-        })
-
         $('#formCloseTask').on('submit', function(e) {
             e.preventDefault()
             const form = this
@@ -755,22 +436,13 @@
                 success: function(response) {
                     Swal.fire(
                         'Closed!',
-                        'Data berhasil diselesaikan.',
+                        response.message,
                         'success'
                     )
-                    modalRevisedTask.hide()
-                    window.location.href = '/permohonan/user/selesai'
+                    window.location.href = '/permohonan/worker/selesai'
                 }
             })
 
-        })
-
-        $('#btnRevise').on('click', function() {
-            modalRevisedTask.show()
-        })
-
-        $('#btnForward').on('click', function() {
-            modalForwardToHelpdesk.show()
         })
     </script>
 @endpush

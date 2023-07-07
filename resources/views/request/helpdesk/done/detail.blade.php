@@ -372,7 +372,11 @@
                                             style="border-style: solid;">
                                             <!--begin::Wrapper-->
                                             <div class="d-flex flex-column flex-grow-1 pe-8">
-                                                @if ($currentReq->id_worker != null)
+                                                @if ($currentReq->id_worker != null && $currentReq->status == 3)
+                                                    <div class="d-flex justify-content-center">
+                                                        <h4 class="fs-4 my-4">Task diselesaikan oleh
+                                                            {{ $currentReq->worker->name }}</h4>
+                                                    </div>
                                                 @else
                                                     <div class="d-flex justify-content-center">
                                                         <h4 class="fs-4 my-4">Worker belum melakukan disposisi!</h4>
@@ -417,6 +421,13 @@
                                                             <div class="fw-bold mt-5 mb-2">Supervisor</div>
                                                             <div class="text-gray-600">
                                                                 {{ $currentReq->spv->name }}
+                                                            </div>
+                                                        @endif
+
+                                                        @if ($currentReq->id_worker && $currentReq->is_worker_approved)
+                                                            <div class="fw-bold mt-5 mb-2">Worker</div>
+                                                            <div class="text-gray-600">
+                                                                {{ $currentReq->worker->name }}
                                                             </div>
                                                         @endif
 

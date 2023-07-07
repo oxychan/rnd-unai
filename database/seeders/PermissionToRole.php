@@ -52,6 +52,11 @@ class PermissionToRole extends Seeder
         $spv->givePermissionTo('read /permohonan/spv/proses');
         $spv->givePermissionTo('read /permohonan/spv/selesai');
 
+        // permohonan user worker
+        $worker->givePermissionTo('read /permohonan/worker/masuk');
+        $worker->givePermissionTo('read /permohonan/worker/proses');
+        $worker->givePermissionTo('read /permohonan/worker/selesai');
+
         // other
         $admin->givePermissionTo('read /dashboard');
         $admin->givePermissionTo('read /management');
@@ -59,6 +64,7 @@ class PermissionToRole extends Seeder
         $helpdesk->givePermissionTo('read /permohonan');
 
         $spv->givePermissionTo('read /permohonan/spv');
+        $worker->givePermissionTo('read /permohonan/worker');
 
         $user->givePermissionTo('read /dashboard');
         $user->givePermissionTo('read /permohonan/user');

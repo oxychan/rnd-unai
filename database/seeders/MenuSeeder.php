@@ -135,5 +135,37 @@ class MenuSeeder extends Seeder
             'root' => 12,
             'order' => 3,
         ]);
+
+        Menu::create([
+            'name' => 'Permohonan Worker',
+            'url' => '/permohonan/worker',
+            'icon' => 'fa-solid fa-circle-info',
+            'root' => null,
+            'order' => 3,
+        ]);
+
+        Menu::create([
+            'name' => 'Worker Masuk',
+            'url' => '/permohonan/worker/masuk',
+            'icon' => 'fa-solid fa-inbox',
+            'root' => 16,
+            'order' => 1,
+        ]);
+
+        Menu::create([
+            'name' => 'Worker Proses',
+            'url' => '/permohonan/worker/proses',
+            'icon' => 'fa-solid fa-tasks',
+            'root' => 16,
+            'order' => 2,
+        ]);
+
+        Menu::create([
+            'name' => 'Worker Selesai',
+            'url' => '/permohonan/worker/selesai',
+            'icon' => 'fa-solid fa-check-circle',
+            'root' => 16,
+            'order' => 3,
+        ]);
     }
 }

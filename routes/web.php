@@ -11,6 +11,7 @@ use App\Http\Controllers\Management\RoleManagementController;
 use App\Http\Controllers\Management\UserManagementController;
 use App\Http\Controllers\RequestItemController;
 use App\Http\Controllers\UserRequestController;
+use App\Http\Controllers\WorkerRequestController;
 use App\Http\Requests\UserManagementRequest;
 use App\Http\Requests\UserReqRequest;
 use App\Models\Menu;
@@ -108,6 +109,15 @@ Route::middleware(['auth'])->group(function () {
         Route::put('spv/close/{id}', [SpvRequestController::class, 'closeTask'])->name('spv.close');
         Route::put('spv/forward/{id}', [SpvRequestController::class, 'forwardToWorker'])->name('spv.forward');
         Route::put('spv/pembobotan/{id}', [SpvRequestController::class, 'requestWeight'])->name('spv.weight');
+
+        // permohonan user on worker side
+        Route::get('worker/masuk', [WorkerRequestController::class, 'incommingRequest'])->name('worker.incomming');
+        Route::get('worker/proses', [WorkerRequestController::class, 'processedRequest'])->name('worker.processed');
+        Route::get('worker/selesai', [WorkerRequestController::class, 'doneRequest'])->name('worker.done');
+        Route::put('worker/accept/{id}', [WorkerRequestController::class, 'acceptTask'])->name('worker.accept');
+        Route::put('worker/reject/{id}', [WorkerRequestController::class, 'rejectTask'])->name('worker.reject');
+        Route::get('worker/view/{id}', [WorkerRequestController::class, 'showWorkerSide'])->name('worker.view');
+        Route::put('worker/close/{id}', [WorkerRequestController::class, 'closeTask'])->name('worker.close');
     });
 
     // logout
