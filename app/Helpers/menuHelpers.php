@@ -38,3 +38,14 @@ function setStatus($statusCode)
 
     return $statusMap[$statusCode] ?? '';
 }
+
+function setPriority($priorityCode)
+{
+    $priorityMap = [
+        1 => '<span class="badge py-3 px-4 fs-7 badge-light-danger">Tinggi</span>',
+        2 => '<span class="badge py-3 px-4 fs-7 badge-light-warning">Sedang</span>',
+        3 => '<span class="badge py-3 px-4 fs-7 badge-light-info">Rendah</span>',
+    ];
+
+    return $priorityMap[$priorityCode] ?? '';
+}

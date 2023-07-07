@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('requests', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_weight')->default(3);
+            $table->unsignedBigInteger('id_weight')->nullable();
 
             $table->foreign('id_weight')->references('id')->on('weights');
         });

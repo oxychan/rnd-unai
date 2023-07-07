@@ -136,9 +136,17 @@
                                             {{-- <div class="symbol symbol-50px mb-1">
                                                 <img src="{{ asset('assets/media/avatars/default.jpg') }}">
                                             </div> --}}
-                                            <div class="nav-icon mb-3">
-                                                <i class="fa-solid fa-address-card fs-1 p-0"></i>
-                                            </div>
+                                            @if ($currentReq->id_spv && $currentReq->is_spv_approved)
+                                                <div class="symbol symbol-50px mb-1">
+                                                    <img
+                                                        src="{{ asset('assets/media/avatars/' . $currentReq->spv->avatar) }}">
+                                                </div>
+                                            @else
+                                                <div class="nav-icon mb-3">
+                                                    <i class="fa-solid fa-address-card fs-1 p-0"></i>
+                                                </div>
+                                            @endif
+
                                             <!--end::Icon-->
                                             <!--begin::Title-->
                                             <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">SPV</span>
@@ -709,7 +717,7 @@
                 contentType: false,
                 success: function(response) {
                     Swal.fire(
-                        'Duplicated!',
+                        'Forwarded!',
                         response.message,
                         'success'
                     )

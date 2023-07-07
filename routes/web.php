@@ -100,8 +100,14 @@ Route::middleware(['auth'])->group(function () {
 
         // Permohonan user on supervisor side
         Route::get('spv/masuk', [SpvRequestController::class, 'incommingRequest'])->name('spv.incomming');
-        Route::get('spv/proses', [SpvRequestController::class, 'incommingRequest'])->name('spv.processed');
-        Route::get('spv/selesai', [SpvRequestController::class, 'incommingRequest'])->name('spv.done');
+        Route::get('spv/proses', [SpvRequestController::class, 'processedRequest'])->name('spv.processed');
+        Route::get('spv/selesai', [SpvRequestController::class, 'doneRequest'])->name('spv.done');
+        Route::put('spv/accept/{id}', [SpvRequestController::class, 'acceptTask'])->name('spv.accept');
+        Route::put('spv/reject/{id}', [SpvRequestController::class, 'rejectTask'])->name('spv.reject');
+        Route::get('spv/view/{id}', [SpvRequestController::class, 'showSpvSide'])->name('spv.view');
+        Route::put('spv/close/{id}', [SpvRequestController::class, 'closeTask'])->name('spv.close');
+        Route::put('spv/forward/{id}', [SpvRequestController::class, 'forwardToWorker'])->name('spv.forward');
+        Route::put('spv/pembobotan/{id}', [SpvRequestController::class, 'requestWeight'])->name('spv.weight');
     });
 
     // logout

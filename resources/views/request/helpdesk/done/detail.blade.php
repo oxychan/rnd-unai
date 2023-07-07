@@ -118,9 +118,16 @@
                                                 id="kt_stats_widget_16_tab_link_3" data-bs-toggle="pill"
                                                 href="#kt_stats_widget_16_tab_3" aria-selected="false" tabindex="-1"
                                                 role="tab">
-                                                <div class="nav-icon mb-3">
-                                                    <i class="fa-solid fa-address-card fs-1 p-0"></i>
-                                                </div>
+                                                @if ($currentReq->id_spv)
+                                                    <div class="symbol symbol-50px mb-1">
+                                                        <img
+                                                            src="{{ asset('assets/media/avatars/' . $currentReq->spv->avatar) }}">
+                                                    </div>
+                                                @else
+                                                    <div class="nav-icon mb-3">
+                                                        <i class="fa-solid fa-address-card fs-1 p-0"></i>
+                                                    </div>
+                                                @endif
                                                 <!--end::Icon-->
                                                 <!--begin::Title-->
                                                 <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">SPV</span>
@@ -144,12 +151,16 @@
                                                 href="#kt_stats_widget_16_tab_4" aria-selected="false" tabindex="-1"
                                                 role="tab">
                                                 <!--begin::Icon-->
-                                                {{-- <div class="symbol symbol-50px mb-1">
-                                                <img src="{{ asset('assets/media/avatars/default.jpg') }}">
-                                            </div> --}}
-                                                <div class="nav-icon mb-3">
-                                                    <i class="fa-solid fa-briefcase fs-1 p-0"></i>
-                                                </div>
+                                                @if ($currentReq->id_worker)
+                                                    <div class="symbol symbol-50px mb-1">
+                                                        <img
+                                                            src="{{ asset('assets/media/avatars/' . $currentReq->worker->avatar) }}">
+                                                    </div>
+                                                @else
+                                                    <div class="nav-icon mb-3">
+                                                        <i class="fa-solid fa-briefcase fs-1 p-0"></i>
+                                                    </div>
+                                                @endif
                                                 <!--end::Icon-->
                                                 <!--begin::Title-->
                                                 <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">Worker</span>
@@ -301,36 +312,24 @@
                                         <!--end::Stats-->
                                     </div>
                                     <!--end::Tap pane-->
-                                    <!--begin::Tap pane-->
+                                    <!--begin::Tap pane helpdesk-->
                                     <div class="tab-pane fade" id="kt_stats_widget_16_tab_2" role="tabpanel"
                                         aria-labelledby="#kt_stats_widget_16_tab_link_2">
                                         <!--begin::Stats-->
-                                        @if ($currentReq->is_revised)
-                                            <div class="d-flex flex-wrap flex-stack px-4 rounded"
-                                                style="border-style: solid; border-color: yellow;">
-                                                <!--begin::Wrapper-->
-                                                <div class="d-flex flex-column flex-grow-1 pe-8">
-                                                    <div class="py-5 fs-6">
-                                                        <div class="fw-bold mt-5 mb-2">Tanggal Revisi</div>
-                                                        <div class="text-gray-600">
-                                                            {{ Carbon::parse($currentReq->updated_at)->format('d M Y') }}
-                                                        </div>
-                                                        <div class="fw-bold mt-5 mb-2">Catatan</div>
-                                                        <div class="text-gray-600">
-                                                            {{ $currentReq->revise_note }}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--end::Wrapper-->
-                                            </div>
-                                        @endif
                                         <div class="d-flex flex-wrap flex-stack px-4 rounded mt-4"
-                                            style="{{ $currentReq->id_helpdesk == null || $currentReq->id_spv ? 'border-style: solid;' : '' }}">
+                                            style="border-style: solid;">
                                             <!--begin::Wrapper-->
                                             <div class="d-flex flex-column flex-grow-1 pe-8">
-                                                @if ($currentReq->id_spv && $currentReq->is_spv_approved == 0)
+                                                @if ($currentReq->id_spv == null)
                                                     <div class="d-flex justify-content-center">
-                                                        <h4 class="fs-4 my-4">Menunggu persetujuan supervisor!</h4>
+                                                        <h4 class="fs-4 my-4">Task diselesaikan oleh
+                                                            {{ $currentReq->helpdesk->name }}</h4>
+                                                    </div>
+                                                @elseif ($currentReq->id_spv && $currentReq->is_spv_approved)
+                                                    <div class="d-flex justify-content-center">
+                                                        <h4 class="fs-4 my-4">Task diteruskan oleh
+                                                            {{ $currentReq->helpdesk->name }} kepada
+                                                            {{ $currentReq->spv->name }}</h4>
                                                     </div>
                                                 @endif
                                             </div>
@@ -347,10 +346,16 @@
                                             style="border-style: solid;">
                                             <!--begin::Wrapper-->
                                             <div class="d-flex flex-column flex-grow-1 pe-8">
-                                                @if ($currentReq->id_spv != null)
-                                                @else
+                                                @if ($currentReq->id_worker == null)
                                                     <div class="d-flex justify-content-center">
-                                                        <h4 class="fs-4 my-4">Supervisor belum melakukan disposisi!</h4>
+                                                        <h4 class="fs-4 my-4">Task diselesaikan oleh
+                                                            {{ $currentReq->spv->name }}</h4>
+                                                    </div>
+                                                @elseif ($currentReq->id_worker && $currentReq->is_worker_approved)
+                                                    <div class="d-flex justify-content-center">
+                                                        <h4 class="fs-4 my-4">Task diteruskan oleh
+                                                            {{ $currentReq->spv->name }} kepada
+                                                            {{ $currentReq->worker->name }}</h4>
                                                     </div>
                                                 @endif
                                             </div>

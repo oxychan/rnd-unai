@@ -21,7 +21,7 @@
                 <div class="card card-custom gutter-b">
                     <div class="card-header flex-wrap py-3">
                         <div class="card-title">
-                            <h3 class="card-label">Data Permohonan Diajukan
+                            <h3 class="card-label">Data Permohonan Selesai
                                 <span class="d-block text-muted pt-2 font-size-sm"></span>
                             </h3>
                         </div>
@@ -50,52 +50,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script>
-        $('#incommingrequestspv-table').on('click', '#btnAccept', function() {
-            let data = $(this).data()
-            let id = data.id
-
-            $.ajax({
-                method: 'PUT',
-                url: 'accept/' + id,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
-                },
-                success: function(response) {
-                    Swal.fire(
-                        'Accepted!',
-                        response.message,
-                        'success'
-                    )
-                    location.reload()
-                }
-            })
-        })
-
-        $('#incommingrequestspv-table').on('click', '#btnReject', function() {
-            let data = $(this).data()
-            let id = data.id
-
-            $.ajax({
-                method: 'PUT',
-                url: 'reject/' + id,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
-                },
-                success: function(response) {
-                    Swal.fire(
-                        'Rejected!',
-                        response.message,
-                        'success'
-                    )
-                    location.reload()
-                }
-            })
-        })
-
-        $('#incommingrequestspv-table')
+        $('#donerequestspv-table')
             .on('processing.dt', function(e, settings, processing) {
                 if (settings) {
-                    $('#incommingrequestspv-table_processing').css('display', 'none')
+                    $('#donerequestspv-table_processing').css('display', 'none')
                 }
             })
     </script>
