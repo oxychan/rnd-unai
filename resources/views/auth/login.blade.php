@@ -127,7 +127,6 @@
                             <div class="row g-3 mb-9">
 
                             </div>
-
                             <!--begin::Input group=-->
                             <div class="fv-row mb-8">
                                 <!--begin::Username-->
@@ -142,6 +141,11 @@
                                     class="form-control bg-transparent" />
                                 <!--end::Password-->
                             </div>
+                            @if (session('message'))
+                                <div class="alert alert-danger">
+                                    <span>{{ session('message') }}</span>
+                                </div>
+                            @endif
                             <!--end::Input group=-->
                             <!--begin::Wrapper-->
                             {{-- <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
