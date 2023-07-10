@@ -167,5 +167,13 @@ class MenuSeeder extends Seeder
             'root' => 16,
             'order' => 3,
         ]);
+
+        Menu::create([
+            'name' => 'Riwayat Pengajuan',
+            'url' => '/permohonan/user/history',
+            'icon' => 'fa-solid fa-history',
+            'root' => null,
+            'order' => 3,
+        ]);
     }
 }

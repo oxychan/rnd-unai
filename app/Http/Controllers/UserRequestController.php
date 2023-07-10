@@ -6,6 +6,7 @@ use App\DataTables\DoneRequestDataTable;
 use App\DataTables\IncommingRequestDataTable;
 use App\DataTables\IncommingRequestSpvDataTable;
 use App\DataTables\ProcessedRequestDataTable;
+use App\DataTables\UserHistoryRequestDataTable;
 use Exception;
 use Carbon\Carbon;
 use App\Models\User;
@@ -30,6 +31,12 @@ class UserRequestController extends Controller
         $user = Auth::user();
 
         return $dataTable->with(['user' => $user])->render('request.user.index');
+    }
+
+    public function history(UserHistoryRequestDataTable $dataTable)
+    {
+        $user = Auth::user();
+        return $dataTable->with(['user' => $user])->render('request.user.history');
     }
 
     public function create()

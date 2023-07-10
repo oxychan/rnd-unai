@@ -349,7 +349,7 @@
                                                 @if ($currentReq->id_worker == null)
                                                     <div class="d-flex justify-content-center">
                                                         <h4 class="fs-4 my-4">Task diselesaikan oleh
-                                                            {{ $currentReq->spv->name }}</h4>
+                                                            {{ $currentReq->spv->name ?? '' }}</h4>
                                                     </div>
                                                 @elseif ($currentReq->id_worker && $currentReq->is_worker_approved)
                                                     <div class="d-flex justify-content-center">

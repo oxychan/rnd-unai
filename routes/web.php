@@ -77,6 +77,7 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['prefix' => 'permohonan', 'as' => 'permohonan.'], function () {
         // Permohonan user
         Route::get('user', [UserRequestController::class, 'index'])->name('user.index');
+        Route::get('user/history', [UserRequestController::class, 'history'])->name('user.history');
         Route::post('user', [UserRequestController::class, 'store'])->name('user.store');
         Route::get('user/create', [UserRequestController::class, 'create'])->name('user.create');
         Route::get('user/show/{id}', [UserRequestController::class, 'show'])->name('user.show');

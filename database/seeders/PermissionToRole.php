@@ -68,6 +68,7 @@ class PermissionToRole extends Seeder
 
         $user->givePermissionTo('read /dashboard');
         $user->givePermissionTo('read /permohonan/user');
+        $user->givePermissionTo('read /permohonan/user/history');
 
         $spv->givePermissionTo('read /dashboard');
 

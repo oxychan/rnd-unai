@@ -39,11 +39,16 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'update /management/request-type']);
         Permission::create(['name' => 'delete /management/request-type']);
 
-        // permohonan
+        // permohonan user
         Permission::create(['name' => 'read /permohonan/user']);
         Permission::create(['name' => 'create /permohonan/user']);
         Permission::create(['name' => 'update /permohonan/user']);
         Permission::create(['name' => 'delete /permohonan/user']);
+
+        Permission::create(['name' => 'read /permohonan/user/history']);
+        Permission::create(['name' => 'create /permohonan/user/history']);
+        Permission::create(['name' => 'update /permohonan/user/history']);
+        Permission::create(['name' => 'delete /permohonan/user/history']);
 
         Permission::create(['name' => 'read /dashboard']);
         Permission::create(['name' => 'create /dashboard']);

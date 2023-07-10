@@ -77,6 +77,24 @@
   box-sizing: border-box;
 }
 
+/* for datatables header */
+#userrequest-table thead,
+#user-table thead,
+#roles-table thead,
+#requeststypes-table thead,
+#processedrequestworker-table thead,
+#processedrequeststpvworker-table thead,
+#processedrequest-table thead
+#menus-table thead,
+#incommingrequestworker-table thead,
+#incommingrequestspv-table thead,
+#incommingrequest-table thead,
+#donerequestworker-table thead,
+#donerequestspv-table thead,
+#donerequest-table thead {
+  background-color: #bcbec4;
+}
+
 body {
   margin: 0;
   font-family: var(--bs-body-font-family);

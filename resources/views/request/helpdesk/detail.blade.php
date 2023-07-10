@@ -613,6 +613,7 @@
         const modalRevisedTask = new bootstrap.Modal($('#modalRevisedTask'))
         const modalForwardToHelpdesk = new bootstrap.Modal($('#modalForwardToHelpdesk'))
 
+
         $('#formDeletePermohonan').on('submit', function(e) {
             e.preventDefault()
             const url = this.getAttribute('action')
@@ -755,14 +756,13 @@
                 success: function(response) {
                     Swal.fire(
                         'Closed!',
-                        'Data berhasil diselesaikan.',
+                        response.message,
                         'success'
                     )
                     modalRevisedTask.hide()
                     window.location.href = '/permohonan/user/selesai'
                 }
             })
-
         })
 
         $('#btnRevise').on('click', function() {

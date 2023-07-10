@@ -56,6 +56,7 @@ class UserRequestDataTable extends DataTable
         return $model->newQuery()
             ->from('requests')
             ->where('id_user', $user->id)
+            ->where('status', '!=', 3)
             ->where('is_duplicated', 0)
             ->orderBy('updated_at', 'desc');
     }
