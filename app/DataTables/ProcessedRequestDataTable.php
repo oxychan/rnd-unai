@@ -32,15 +32,15 @@ class ProcessedRequestDataTable extends DataTable
             ->editColumn('title', function ($req) {
                 return "<a href='" . route('permohonan.user.view', $req->id) . "'>" . $req->title . "</a>";
             })
-            ->editColumn('Keterangan', function ($req) {
-                $status = '';
-                if ($req->is_duplicated) {
-                    $status = 'Diduplikasi';
-                } else if ($req->is_data_duplicate) {
-                    $status = 'Data Duplikat';
-                }
-                return "<div class='badge badge-dark fw-bold'>" . $status  . "</div>";
-            })
+            // ->editColumn('Keterangan', function ($req) {
+            //     $status = '';
+            //     if ($req->is_duplicated) {
+            //         $status = 'Diduplikasi';
+            //     } else if ($req->is_data_duplicate) {
+            //         $status = 'Data Duplikat';
+            //     }
+            //     return "<div class='badge badge-dark fw-bold'>" . $status  . "</div>";
+            // })
             ->editColumn('description', function ($req) {
                 return Str::limit($req->description, 50, '...');
             })
@@ -48,7 +48,7 @@ class ProcessedRequestDataTable extends DataTable
                 return setStatus($req->status);
             })
             ->addIndexColumn()
-            ->rawColumns(['title', 'Keterangan', 'description', 'status'])
+            ->rawColumns(['title', 'description', 'status'])
             ->setRowId('id');
     }
 
@@ -101,7 +101,7 @@ class ProcessedRequestDataTable extends DataTable
         return [
             Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false)->width(30),
             Column::make('title')->title('Judul')->width(250),
-            Column::make('Keterangan')->width(120),
+            // Column::make('Keterangan')->width(120),
             Column::make('status')->title('Status')->width(120),
             Column::make('description')->title('Deskripsi'),
             Column::make('updated_at')->title('Tgl Pengajuan'),
