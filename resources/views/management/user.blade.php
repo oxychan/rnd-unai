@@ -54,7 +54,9 @@
     <!--begin::Modal - Create App-->
     <div class="modal fade" id="modalCreateUpdate" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
-        <div class="modal-dialog modal-dialog-centered mw-900px modal-dialog-scrollable"></div>
+        <div class="modal-dialog modal-dialog-centered mw-900px modal-dialog-scrollable">
+            {{-- insert the body from the controller --}}
+        </div>
         <!--end::Modal dialog-->
     </div>
 
@@ -73,7 +75,7 @@
         // create instance modal
         const modalCreateUpdate = new bootstrap.Modal($('#modalCreateUpdate'))
 
-        // add new user
+        // add new user js -> jquery
         $('#addUserButton').on('click', function() {
             $.ajax({
                 method: 'GET',

@@ -71,27 +71,6 @@
             })
         })
 
-        $('#incommingrequestspv-table').on('click', '#btnReject', function() {
-            let data = $(this).data()
-            let id = data.id
-
-            $.ajax({
-                method: 'PUT',
-                url: 'reject/' + id,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
-                },
-                success: function(response) {
-                    Swal.fire(
-                        'Rejected!',
-                        response.message,
-                        'success'
-                    )
-                    location.reload()
-                }
-            })
-        })
-
         $('#incommingrequestspv-table')
             .on('processing.dt', function(e, settings, processing) {
                 if (settings) {

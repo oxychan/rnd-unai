@@ -29,10 +29,7 @@ class IncommingRequestSpvDataTable extends DataTable
             ->addColumn('Aksi', function ($req) {
                 return "<div class='row row-reverse justify-content-end'>
                     <div class='col'>
-                        <a class='btn btn-info' href='javascript:void(0)' id='btnAccept' data-id='" . $req->id . "'>Terima</a>
-                    </div>
-                    <div class='col'>
-                        <a class='btn btn-danger' href='javascript:void(0)' id='btnReject' data-id='" . $req->id . "'>Tolak</a>
+                        <a class='btn btn-info' href='javascript:void(0)' id='btnAccept' data-id='" . $req->id . "'>Tindakan</a>
                     </div>
                 </div>";
             })

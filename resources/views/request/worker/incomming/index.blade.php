@@ -70,6 +70,7 @@
                 }
             })
         })
+        
 
         $('#incommingrequestworker-table').on('click', '#btnReject', function() {
             let data = $(this).data()

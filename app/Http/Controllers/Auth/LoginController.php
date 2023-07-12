@@ -18,7 +18,7 @@ class LoginController extends Controller
     {
         $credentials = $request->safe()->except('_token');
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials)) { // returning boolean | true : false
             $request->session()->regenerate();
 
             return redirect()->intended('dashboard');

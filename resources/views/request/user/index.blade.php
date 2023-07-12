@@ -32,7 +32,7 @@
                                 <span class="svg-icon svg-icon-md">
                                     <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
                                     <!--end::Svg Icon-->
-                                </span>+ Ajukan Baru</a>
+                                </span>Tambah Ajuan</a>
                             </a>
                             <!--end::Button-->
                         </div>

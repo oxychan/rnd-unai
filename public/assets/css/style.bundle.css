@@ -84,8 +84,8 @@
 #roles-table thead,
 #requeststypes-table thead,
 #processedrequestworker-table thead,
-#processedrequeststpvworker-table thead,
-#processedrequest-table thead
+#processedrequestspv-table thead,
+#processedrequest-table thead,
 #menus-table thead,
 #incommingrequestworker-table thead,
 #incommingrequestspv-table thead,
@@ -93,7 +93,7 @@
 #donerequestworker-table thead,
 #donerequestspv-table thead,
 #donerequest-table thead {
-  background-color: #bcbec4;
+  background-color: #F3F6F9;
 }
 
 body {

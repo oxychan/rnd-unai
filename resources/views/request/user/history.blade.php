@@ -25,7 +25,7 @@
                                 <span class="d-block text-muted pt-2 font-size-sm"></span>
                             </h3>
                         </div>
-                        <div class="card-toolbar">
+                        {{-- <div class="card-toolbar">
                             <!--begin::Button-->
                             <a id="addRequestButton" name="addRequest" class="btn btn-primary font-weight-bolder btn-sm"
                                 href="javascript:void(0)">
@@ -35,7 +35,7 @@
                                 </span>+ Ajukan Baru</a>
                             </a>
                             <!--end::Button-->
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="card-body">
                         <!--begin: Datatable-->

@@ -131,10 +131,10 @@ class RoleManagementController extends Controller
             // Update permissions for each menu
             $permissions = [];
 
-            foreach ($menus as $menu) {
-                $menuName = str_replace(' ', '_', $menu->name);
+            foreach ($menus as $menu) { 
+                $menuName = str_replace(' ', '_', $menu->name); // to replace Permohonan Saya to Permohonan_Saya
 
-                $actions = ['read', 'update', 'create', 'delete'];
+                $actions = ['read', 'update', 'create', 'delete']; // /role/{role}/permission -> read role/{role}/permission | update role/{role}/permission
 
                 foreach ($actions as $action) {
                     if ($request["{$menuName}_{$action}"]) {
