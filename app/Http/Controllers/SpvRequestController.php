@@ -86,6 +86,7 @@ class SpvRequestController extends Controller
 
             $currentReq->status = 3;
             $currentReq->close_note = $request['close_note'];
+            $currentReq->refuse_note = null;
             $currentReq->save();
         } catch (Exception $e) {
             return response()->json([
@@ -107,6 +108,7 @@ class SpvRequestController extends Controller
 
             $currentReq->id_spv = $spv->id;
             $currentReq->id_worker = $request['worker'];
+            $currentReq->refuse_note = null;
             $currentReq->save();
         } catch (Exception $e) {
             return response()->json([

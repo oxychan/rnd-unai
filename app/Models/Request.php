@@ -13,7 +13,7 @@ class Request extends Model
 
     protected $fillable = [
         'title', 'description', 'telp', 'file_name', 'id_type', 'id_user',
-        'id_helpdesk', 'id_spv', 'id_worker', 'status'
+        'id_helpdesk', 'id_spv', 'id_worker', 'status', 'refuse_note', 'close_note'
     ];
 
     public function items()

@@ -40,6 +40,65 @@
     </div>
     <!--end::Content-->
 
+    {{-- modal for forward to worker --}}
+    <div class="modal fade" id="modalTolak" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-600px">
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <!--begin::Modal header-->
+                <div class="modal-header">
+                    <!--begin::Modal title-->
+                    <h2 id="modal-judul" style="color: white">Tolak Permohonan</h2>
+                    <!--end::Modal title-->
+                    <!--begin::Close-->
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2"
+                                    rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                    transform="rotate(45 7.41422 6)" fill="currentColor" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <!--end::Modal header-->
+                <!--begin::Modal body-->
+                <div class="modal-body" id="actionRefuseTask">
+                    <div class="card mb-5 mb-xl-10">
+                        <div class="card-body pb-0">
+                            <form id="formRejectTask" action="" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Catatan</label>
+                                    <div class="col-lg-9">
+                                        <textarea class="form-control" rows="5" id="refuse_note" name="refuse_note"
+                                            placeholder="e.g: Load pekerjaan terlalu banyak" required></textarea>
+                                    </div>
+                                </div> <br>
+                                <div class="form-group row justify-content-end">
+                                    <div class="col-md-3">
+                                        <input class="btn btn-primary" type="submit" id="btnSubmit" value="Submit" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!--end::Modal body-->
+            </div>
+            <!-- end::Modal content -->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    {{-- end of modal forward to helpdesk --}}
+
 @endsection
 
 @push('data_tables')
@@ -50,6 +109,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script>
+        const modalRefuseTask = new bootstrap.Modal($('#modalTolak'))
+
         $('#incommingrequestworker-table').on('click', '#btnAccept', function() {
             let data = $(this).data()
             let id = data.id
@@ -70,24 +131,43 @@
                 }
             })
         })
-        
+
 
         $('#incommingrequestworker-table').on('click', '#btnReject', function() {
             let data = $(this).data()
             let id = data.id
 
+            console.log(id)
+            modalRefuseTask.show()
+
+            $('#formRejectTask').attr('action', 'reject/' + id)
+        })
+
+        $('#formRejectTask').on('submit', function(e) {
+            e.preventDefault()
+
+            const form = this
+            const formData = new FormData(form)
+
+            const url = this.getAttribute('action')
+            console.log(url);
+
             $.ajax({
-                method: 'PUT',
-                url: 'reject/' + id,
+                method: 'POST',
+                url,
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
                 },
+                data: formData,
+                processData: false,
+                contentType: false,
                 success: function(response) {
                     Swal.fire(
-                        'Rejected!',
+                        'Refused!',
                         response.message,
                         'success'
                     )
+                    modalRefuseTask.hide()
                     location.reload()
                 }
             })

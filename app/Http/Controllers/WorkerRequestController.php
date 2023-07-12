@@ -10,6 +10,7 @@ use App\Http\Requests\UserReqCloseTask;
 use App\Models\Request as ModelsRequest;
 use App\DataTables\IncommingRequestWorkerDataTable;
 use App\DataTables\ProcessedRequestWorkerDataTable;
+use App\Http\Requests\WorkerRefuseTaskRequest;
 
 class WorkerRequestController extends Controller
 {
@@ -48,16 +49,18 @@ class WorkerRequestController extends Controller
         ], 200);
     }
 
-    public function rejectTask($id)
+    public function rejectTask(WorkerRefuseTaskRequest $request, $id)
     {
         try {
             $currentReq = ModelsRequest::findOrFail($id);
             $currentReq->id_worker = null;
             $currentReq->is_worker_approved = 0;
+            $currentReq->refuse_note = $request['refuse_note'];
             $currentReq->save();
         } catch (Exception $exception) {
             return response()->json([
                 'message' => 'Menolak task gagal!',
+                'er' => $exception->getMessage()
             ], 500);
         }
 

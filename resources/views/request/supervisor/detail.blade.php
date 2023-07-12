@@ -339,7 +339,27 @@
                                                 {{ $currentReq->id_worker || $currentReq->status == 3 ? 'disabled' : '' }}>Teruskan</button>
                                         </div>
 
-                                        <div class="d-flex flex-wrap flex-stack px-4 rounded"
+                                        @if ($currentReq->refuse_note)
+                                            <div class="d-flex flex-wrap flex-stack px-4 rounded"
+                                                style="border-style: solid; border-color: yellow;">
+                                                <!--begin::Wrapper-->
+                                                <div class="d-flex flex-column flex-grow-1 pe-8">
+                                                    <div class="py-5 fs-6">
+                                                        <div class="fw-bold mt-5 mb-2">Tanggal Worker Menolak</div>
+                                                        <div class="text-gray-600">
+                                                            {{ Carbon::parse($currentReq->updated_at)->format('d M Y') }}
+                                                        </div>
+                                                        <div class="fw-bold mt-5 mb-2">Catatan</div>
+                                                        <div class="text-gray-600">
+                                                            {{ $currentReq->refuse_note }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--end::Wrapper-->
+                                            </div>
+                                        @endif
+
+                                        <div class="d-flex flex-wrap flex-stack px-4 mt-4 rounded"
                                             style="border-style: solid;">
                                             <!--begin::Wrapper-->
                                             <div class="d-flex flex-column flex-grow-1 pe-8">

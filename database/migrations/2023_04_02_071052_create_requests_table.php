@@ -32,6 +32,7 @@ return new class extends Migration
             $table->boolean('is_data_duplicate')->default(0);
             $table->string('revise_note')->nullable();
             $table->string('close_note')->nullable();
+            $table->string('refuse_note')->nullable();
             $table->timestamps();
 
             $table->foreign('id_type')->references('id')->on('request_types');
