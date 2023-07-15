@@ -117,15 +117,15 @@ class UserAccountController extends Controller
 
         // role spv
         if ($user->roles[0]->id == 3) {
-            $diajukan = ModelsRequest::where('id_spv', $user->id)->where('status', 0)->count();
-            $diproses = ModelsRequest::where('id_spv', $user->id)->where('status', 1)->count();
+            $diajukan = ModelsRequest::where('id_spv', $user->id)->where('status', 1)->where('is_spv_approved', 0)->count();
+            $diproses = ModelsRequest::where('id_spv', $user->id)->where('status', 1)->where('is_spv_approved', 1)->count();
             $selesai = ModelsRequest::where('id_spv', $user->id)->where('status', 3)->count();
         }
 
         // role worker
         if ($user->roles[0]->id == 4) {
-            $diajukan = ModelsRequest::where('id_worker', $user->id)->where('status', 0)->count();
-            $diproses = ModelsRequest::where('id_worker', $user->id)->where('status', 1)->count();
+            $diajukan = ModelsRequest::where('id_worker', $user->id)->where('status', 1)->where('is_worker_approved', 0)->count();
+            $diproses = ModelsRequest::where('id_worker', $user->id)->where('status', 1)->where('is_worker_approved', 1)->count();
             $selesai = ModelsRequest::where('id_worker', $user->id)->where('status', 3)->count();
         }
 
