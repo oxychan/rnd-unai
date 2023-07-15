@@ -138,26 +138,4 @@ class UserRequestController extends Controller
             ], 500);
         }
     }
-
-    public function refuseRequest($id)
-    {
-        try {
-            $currentReq = ModelsRequest::findOrFail($id);
-            $helpdesk = auth()->user();
-
-            $currentReq->is_revised = 0;
-            $currentReq->status = 2;
-            $currentReq->id_helpdesk = $helpdesk->id;
-            $currentReq->save();
-        } catch (Exception $e) {
-            return response()->json([
-                'message' => 'Gagal menolak permohonan!',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
-
-        return response()->json([
-            'message' => 'Permohonan berhasil ditolak!',
-        ], 200);
-    }
 }

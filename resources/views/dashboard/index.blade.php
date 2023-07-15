@@ -6,7 +6,7 @@
         <!--begin::Col-->
         <div class="col-xxl-6">
             <!--begin::Engage widget 10-->
-            <div class="card card-flush" style="background-color: rgb(155, 87, 219); height: 160px;">
+            <div class="card card-flush" style="background-color: #3C549F; height: 160px;">
                 <!--begin::Body-->
                 <div class="card-body d-flex flex-column justify-content-between">
                     <div class="row align-items-center justify-content-between">
@@ -54,7 +54,7 @@
         <!--begin::Col-->
         <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
             <!--begin::Card widget 17-->
-            <div class="card card-flush" style="background-color: rgb(155, 87, 219); height: 160px;">
+            <div class="card card-flush" style="background-color: #3C549F; height: 160px;">
                 <!--begin::Card body-->
                 <div class="card-body d-flex flex-wrap align-items-center">
                     <!--begin::Labels-->
@@ -80,7 +80,7 @@
                     <!--begin::Title-->
                     <div class="card-title d-flex">
                         @hasrole('admin')
-                            <i class="fa-solid fa-user"></i>
+                            <i class="fa-solid fa-user" style="color: #7239EA"></i>
                         @else
                             {!! setStatus(0) !!}
                         @endhasrole
@@ -110,7 +110,7 @@
                     <!--begin::Title-->
                     <div class="card-title d-flex">
                         @hasrole('admin')
-                            <i class="fa-solid fa-comments"></i>
+                            <i class="fa-solid fa-comments" style="color: #7239EA"></i>
                         @else
                             {!! setStatus(3) !!}
                         @endhasrole
@@ -144,7 +144,7 @@
                     <!--begin::Title-->
                     <div class="card-title d-flex">
                         @hasrole('admin')
-                            <i class="fa-solid fa-users"></i>
+                            <i class="fa-solid fa-users" style="color: #7239EA"></i>
                         @else
                             {!! setStatus(1) !!}
                         @endhasrole
@@ -175,7 +175,7 @@
                         <!--begin::Title-->
                         <div class="card-title d-flex">
                             @hasrole('admin')
-                                <i class="fa-solid fa-list"></i>
+                                <i class="fa-solid fa-list" style="color: #7239EA"></i>
                             @else
                                 {!! setStatus(2) !!}
                             @endhasrole
@@ -221,8 +221,6 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            alert('work');
-
             function updateTime() {
                 var now = new Date();
                 var dayOfWeek = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'][now.getDay()];
