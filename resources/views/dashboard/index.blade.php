@@ -74,7 +74,7 @@
         <!--begin::Col-->
         <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
             <!--begin::Card widget 20-->
-            <div class="card card-flush mb-5" style="height: 160px;">
+            <div class="card card-flush mb-5" style="height: 160px;" id="firstCard">
                 <!--begin::Header-->
                 <div class="card-header pt-5">
                     <!--begin::Title-->
@@ -104,7 +104,7 @@
             </div>
             <!--end::Card widget 20-->
             <!--begin::Card widget 20-->
-            <div class="card card-flush mb-5" style="height: 160px;">
+            <div class="card card-flush mb-5" style="height: 160px;" id="secondCard">
                 <!--begin::Header-->
                 <div class="card-header pt-5">
                     <!--begin::Title-->
@@ -138,7 +138,7 @@
         <!--begin::Col-->
         <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
             <!--begin::Card widget 20-->
-            <div class="card card-flush mb-5" style="height: 160px;">
+            <div class="card card-flush mb-5" style="height: 160px;" id="thirdCard">
                 <!--begin::Header-->
                 <div class="card-header pt-5">
                     <!--begin::Title-->
@@ -169,7 +169,7 @@
             <!--end::Card widget 20-->
             <!--begin::Card widget 20-->
             @hasanyrole('admin|user|helpdesk')
-                <div class="card card-flush mb-5" style="height: 160px;">
+                <div class="card card-flush mb-5" style="height: 160px;" id="forthCard">
                     <!--begin::Header-->
                     <div class="card-header pt-5">
                         <!--begin::Title-->
@@ -240,5 +240,26 @@
 
             setInterval(updateTime, 1000);
         });
+
+        $('#firstCard').on('click', function() {
+            // location.href = 'permohonan/worker/masuk';
+            var url = {!! json_encode($urls[0]) !!}
+            if (url != '') location.href = url;
+        })
+
+        $('#secondCard').on('click', function() {
+            var url = {!! json_encode($urls[1]) !!}
+            if (url != '') location.href = url;
+        })
+
+        $('#thirdCard').on('click', function() {
+            var url = {!! json_encode($urls[2]) !!}
+            if (url != '') location.href = url;
+        })
+
+        $('#forthCard').on('click', function() {
+            var url = {!! json_encode($urls[3]) !!}
+            if (url != '') location.href = url;
+        })
     </script>
 @endpush

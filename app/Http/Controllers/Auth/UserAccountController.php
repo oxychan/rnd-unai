@@ -90,6 +90,7 @@ class UserAccountController extends Controller
         $diproses = 0;
         $ditolak = 0;
         $selesai = 0;
+        $urls = [];
 
         // role admin 
         if ($user->roles[0]->id == 1) {
@@ -97,6 +98,10 @@ class UserAccountController extends Controller
             $jumlah_jenis_permohonan = RequestType::count();
             $jumlah_role = Role::count();
             $jumlah_menu = Menu::count();
+            $urls[] = 'management/user';
+            $urls[] = 'management/request-type';
+            $urls[] = 'management/role';
+            $urls[] = 'management/menu';
         }
 
         // role user
@@ -105,6 +110,10 @@ class UserAccountController extends Controller
             $diproses = ModelsRequest::where('id_user', $user->id)->where('status', 1)->count();
             $ditolak = ModelsRequest::where('id_user', $user->id)->where('status', 2)->count();
             $selesai = ModelsRequest::where('id_user', $user->id)->where('status', 3)->count();
+            $urls[] = 'permohonan/user';
+            $urls[] = 'permohonan/user/history';
+            $urls[] = 'permohonan/user';
+            $urls[] = 'permohonan/user';
         }
 
         // role helpdesk
@@ -113,6 +122,10 @@ class UserAccountController extends Controller
             $diproses = ModelsRequest::where('id_helpdesk', $user->id)->where('status', 1)->count();
             $ditolak = ModelsRequest::where('id_helpdesk', $user->id)->where('status', 2)->count();
             $selesai = ModelsRequest::where('id_helpdesk', $user->id)->where('status', 3)->count();
+            $urls[] = 'permohonan/user/masuk';
+            $urls[] = 'permohonan/user/selesai';
+            $urls[] = 'permohonan/user/proses';
+            $urls[] = 'permohonan/user/proses';
         }
 
         // role spv
@@ -120,6 +133,10 @@ class UserAccountController extends Controller
             $diajukan = ModelsRequest::where('id_spv', $user->id)->where('status', 1)->where('is_spv_approved', 0)->count();
             $diproses = ModelsRequest::where('id_spv', $user->id)->where('status', 1)->where('is_spv_approved', 1)->count();
             $selesai = ModelsRequest::where('id_spv', $user->id)->where('status', 3)->count();
+            $urls[] = 'permohonan/spv/masuk';
+            $urls[] = 'permohonan/spv/selesai';
+            $urls[] = 'permohonan/spv/proses';
+            $urls[] = '';
         }
 
         // role worker
@@ -127,6 +144,10 @@ class UserAccountController extends Controller
             $diajukan = ModelsRequest::where('id_worker', $user->id)->where('status', 1)->where('is_worker_approved', 0)->count();
             $diproses = ModelsRequest::where('id_worker', $user->id)->where('status', 1)->where('is_worker_approved', 1)->count();
             $selesai = ModelsRequest::where('id_worker', $user->id)->where('status', 3)->count();
+            $urls[] = 'permohonan/worker/masuk';
+            $urls[] = 'permohonan/worker/selesai';
+            $urls[] = 'permohonan/worker/proses';
+            $urls[] = '';
         }
 
         $data = [
@@ -141,6 +162,6 @@ class UserAccountController extends Controller
             'jumlah_menu' => $jumlah_menu,
         ];
 
-        return view('dashboard.index', compact('data'));
+        return view('dashboard.index', compact('data', 'urls'));
     }
 }

@@ -53,24 +53,6 @@ class SpvRequestController extends Controller
         ], 200);
     }
 
-    public function rejectTask($id)
-    {
-        try {
-            $currentReq = ModelsRequest::findOrFail($id);
-            $currentReq->id_spv = null;
-            $currentReq->is_spv_approved = 0;
-            $currentReq->save();
-        } catch (Exception $exception) {
-            return response()->json([
-                'message' => 'Menolak task gagal!',
-            ], 500);
-        }
-
-        return response()->json([
-            'message' => 'Task ditolak!',
-        ], 200);
-    }
-
     public function showSpvSide($id)
     {
         $currentReq = ModelsRequest::find($id);

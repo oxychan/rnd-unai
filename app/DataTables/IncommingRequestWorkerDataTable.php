@@ -102,12 +102,12 @@ class IncommingRequestWorkerDataTable extends DataTable
         return [
             Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false)->width(30),
             Column::make('title')->title('Judul')->width(250),
-            Column::make('description')->title('Deskripsi'),
-            Column::make('updated_at')->title('Tgl Permohonan'),
+            Column::make('description')->title('Deskripsi')->width(250),
+            Column::make('updated_at')->title('Tgl Permohonan')->width(120),
             Column::computed('Aksi')
                 ->exportable(false)
                 ->printable(false)
-                ->width(190)
+                ->width(170)
                 ->addClass('text-center'),
         ];
     }
