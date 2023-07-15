@@ -41,7 +41,7 @@ Route::name('auth.')->group(function () {
 Route::middleware(['auth'])->group(function () {
     // dashboard prefix
     Route::prefix('dashboard')->group(function () {
-        Route::view('/', 'dashboard.index')->name('dashboard');
+        Route::get('/', [UserAccountController::class, 'dashboard'])->name('dashboard');
     });
 
     Route::group(['prefix' => 'management', 'as' => 'management.'], function () {
